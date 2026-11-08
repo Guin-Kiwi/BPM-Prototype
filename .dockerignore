@@ -1,0 +1,31 @@
+# Deployable images contain only the app (src/, runtime dependencies, LICENSE).
+# The AI-SDLC process files stay in the repository as development evidence.
+.git
+.venv
+.agents
+.claude
+.cursor
+# BEGIN GENERATED PROCESS PATHS
+AGENTS.md
+CLAUDE.md
+CONTRIBUTING.md
+MAINTAINING.md
+CITATION.cff
+.zenodo.json
+.devcontainer/
+.vscode/
+pytest.ini
+docs/future/
+.dockerignore
+skills/
+scripts/
+docs/INDEX.json
+docs/STANDARDS.md
+docs/AGENT-GUIDANCE.md
+.github/
+.github/copilot-instructions.md
+environments/
+# END GENERATED PROCESS PATHS
+docs/
+tests
+**/__pycache__

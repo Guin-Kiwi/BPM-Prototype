@@ -1,0 +1,66 @@
+# Human review required: changes need a code owner's approval (.github/CODEOWNERS).
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: ${{ hashFiles('.python-version') != '' && '.python-version' || 'environments/python/.python-version' }}
+          cache: pip
+          cache-dependency-path: "**/requirements.txt"
+
+      - name: Install dependencies
+        run: |
+          req=requirements.txt
+          [ -f "$req" ] || req=environments/python/requirements.txt
+          python -m pip install -r "$req"
+
+      - name: Check AI-SDLC lifecycle artefacts
+        run: bash scripts/check-lifecycle.sh
+
+      - name: Check whitespace errors in pull request
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: git diff --check "$BASE_SHA...$HEAD_SHA"
+
+      - name: Check whitespace errors in pushed commit
+        if: github.event_name == 'push'
+        run: git show --check --format= HEAD
+
+      - name: Run project tests
+        run: bash scripts/test.sh
+
+  advisory:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: PR advisory (warnings only, never blocks)
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BRANCH: ${{ github.head_ref }}
+        run: python3 scripts/pr_advisory.py "$BASE_SHA" "$HEAD_SHA" "$BRANCH"
