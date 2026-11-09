@@ -3,7 +3,7 @@
 Prepare a contained CPU-only feasibility experiment, separate from the running
 prototype. This folder contains a manifest, sandbox configuration and a standard-library
 artifact verifier. There is no runtime image, downloader, inference runner, installed
-model dependency or model weight. No model runs today.
+model dependency or model weight. No model inference has been run.
 The active application remains governed by [UC-002](../../docs/specs/UC-002-ASSESSMENT-HANDOFF.md);
 this supporting preparation does not select DEVELOP for that use case.
 
@@ -31,7 +31,7 @@ hashes when staging; do not generate or import another dataset for this experime
 
 ## Artifact verification command
 
-After tomorrow's explicitly authorised download, from repository root:
+After artifact acquisition, from repository root:
 
 ```bash
 python3 experiments/local-classifier/verify_artifacts.py data/local-classifier/model
@@ -56,16 +56,16 @@ requires values but does not validate their contents.
 
 The current command prints the Python version only. It is an intended runtime smoke
 check, not a model benchmark. Runtime build/runner implementation, an enforced wall-
-time limit and isolation verification remain tomorrow's work. A container reduces
+time limit and isolation verification remain subsequent experiment work. A container reduces
 exposure but is not proof of complete isolation or harmless model behavior.
 [Docker service reference](https://docs.docker.com/reference/compose-file/services/)
 documents the configured controls.
 
-## Tomorrow: ordered handoff
+## Next experiment: ordered handoff
 
 1. Re-read the security review and manifest. Check exact CPU-only dependency versions,
    their official sources and known advisories. Resolve label/head config mismatch and
-   explicit preprocessing before using results. No complete lockfile is claimed today.
+   explicit preprocessing before using results. No complete lockfile is available.
 2. Prepare a minimal runtime image with pinned base digest and dependency versions;
    record the installed inventory and final local image ID. Keep acquisition/build
    separate from offline inference; no model weights or credentials in the image.
@@ -85,7 +85,7 @@ documents the configured controls.
    blank/non-coffee/perturbed inputs; technical feasibility does not establish diagnostic
    accuracy, calibrated confidence or absence of a backdoor. No routing/weather work.
 
-## Checks completed today
+## Preparation evidence (9 November 2026)
 
 Docker 29.7.2 and Compose v5.4.0 are installed. A read-only daemon query reported
 AppArmor, built-in seccomp and cgroup namespaces. Access from the agent's normal

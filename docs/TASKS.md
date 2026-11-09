@@ -50,8 +50,12 @@ The [local-model security review](reference/LOCAL-MODEL-SECURITY.md) records met
 findings and containment conditions; no model installation or execution has begun.
 [Experiment preparation](../experiments/local-classifier/README.md) supplies the manifest
 and sandbox configuration. Next: dependency/loader review, isolated runtime build and
-verified artifact acquisition, deferred to tomorrow at the owner's request. No model
-packages, weights or runtime image were installed today.
+verified artifact acquisition in the next experiment session, as requested by Ayla.
+Preparation is complete: manifest, artifact verifier and sandbox configuration are
+committed. `bash scripts/test.sh` passed 46 process tests and 40 pytest tests, including
+eight artifact-verifier checks; Compose configuration and manifest checks passed.
+Effective container isolation and model loading remain unverified. No model packages,
+weights or runtime image have been installed.
 
 ## Selected routing step
 
