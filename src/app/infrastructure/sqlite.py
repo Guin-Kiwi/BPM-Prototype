@@ -1,4 +1,5 @@
 import sqlite3
+from contextlib import contextmanager
 from pathlib import Path
 
 from app.domain.reports import Report
@@ -30,11 +31,16 @@ class SQLiteRepository:
                 ('seed-3', 'farm-2', 'field-3', '2024-03-01', 'Fictional wilting observed.', '2024-03-01T12:00:00.000000+00:00', None, None, None),
             ])
 
+    @contextmanager
     def connect(self):
         db = sqlite3.connect(self.path)
         db.row_factory = sqlite3.Row
-        db.execute('PRAGMA foreign_keys = ON')
-        return db
+        try:
+            db.execute('PRAGMA foreign_keys = ON')
+            with db:
+                yield db
+        finally:
+            db.close()
 
     def farms(self):
         with self.connect() as db:
