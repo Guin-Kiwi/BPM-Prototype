@@ -49,7 +49,8 @@ login or farmer-workflow prerequisite. Authentication and account management are
 dependencies outside this slice; actual field-boundary availability is for DESIGN.
 
 Current demo: local application and writable storage, fictional data, no provider
-credentials; it has no authentication, automatic GPS or mapped-boundary fallback.
+credentials; it uses browser geolocation but has no authentication or mapped-boundary
+fallback.
 Its fictional identity is a simulation, not login or security.
 
 ## Trigger
@@ -100,8 +101,8 @@ A farmer opens report entry to record an observation.
   This is not an approved exception or a claim of offline or durable draft support.
 - Keep farm history even when a report cannot be assigned a geographic group. Grouping
   must not fabricate a field, and unavailable nearby context must be explicit. Existing
-  same-field demo history is evidenced by the existing implementation and tests; the
-  revised farm/nearby history membership, order and proximity rules need a decision.
+  farm-wide demo history and its ordering are implemented below; wider nearby history
+  membership and proximity rules need a decision.
 - The estimate describes affected plants within the area the farmer is estimating, not the
   proportion of land affected. A percentage is affected plants divided by all plants
   in that area, expressed as 0–100%; the denominator is conceptual and need not be
@@ -177,7 +178,8 @@ working demo and its evidence are described in [TASKS](../TASKS.md).
    simulated fixed fictional identity. Label synthetic or manually supplied capture-time
    and location stand-ins and their source; never present upload time as actual capture
    time or a stand-in as GPS. Synthetic mapped field boundaries are explicitly labelled.
-   The current demo has no automatic location or mapped-field fallback.
+   The current demo obtains browser geolocation on request; mapped-field fallback is
+   unavailable.
 8. A new report requires a structured farmer estimate: either an approximate count
    of affected plants (unit: plants) or an approximate percentage of affected plants
    among all plants in the area being observed (unit: percent). Recommend a nonnegative
@@ -226,24 +228,25 @@ Existing automated and live HTTP evidence and manual review limits are recorded 
 [TASKS](../TASKS.md); see the current [intake implementation](../../src/app/application/intake.py)
 and [integration tests](../../tests/integration/test_intake.py). Earlier specification
 and design versions remain in git history (`git log -- docs/specs/UC-001-REPORT-INTAKE.md`).
-These verify the previous demo only; no revised-target implementation, checks, human
-acceptance or visual journey are claimed.
+These include the bounded revised intake implementation and automated checks described
+below. Full target acceptance and a visual/manual journey remain unverified.
 
 ## Open questions / assumptions
 
 - The owner selected one primary farmer view and one technician view focused on the
   primary farm, with neighbouring farm, field, report and case context. Exact synthetic
-  counts and generation remain undecided. Choose the specific simulated identity and
-  mapping of existing seed history; the older two-farm seed remains unchanged. Real
+  counts and generation remain undecided. The demo uses the fixed simulated farm-1
+  identity and preserves both farms and their original history associations. Real
   authentication, authorization and account/farm relationships need separate design.
-- DESIGN must define usable GPS accuracy and actual boundary availability, how farm
+- The bounded demo defines GPS usability below; future work must establish boundary
+  availability, how farm
   ownership and field boundaries are verified and retained, and behavior if neither
   location source is available. Retry without submission is a working recommendation,
   not an approved exception; no offline draft persistence is implied.
-- DESIGN should choose how to convey the area to which an estimate applies; a brief
-  area cue is recommended but extra written narrative is not required. Do not require
+- The demo uses the observed-area prompt and optional area cue; assess usability in
+  manual review. Extra written narrative is not required. Do not require
   field naming, acreage or a survey.
-- Decide farm-history membership/order for backdated and same-time observations,
+- The demo history ordering is defined below. Decide wider event-history ordering,
   geographic grouping source and behavior when unavailable, and nearby radius,
   relevance and privacy boundaries with appropriate owners. Relevance policy is separate
   work; do not silently equate nearby with relevant or invent grouping boundaries.
@@ -259,8 +262,8 @@ provenance. Keep synthetic seed initialization idempotent without overwriting re
 [ADR-001](../adr/ADR-001-local-report-persistence.md)
 remains the accepted local persistence decision; do not assume it resolves account,
 location or migration design. Identify any consequential cross-use-case decision for
-review under the [working agreement](../WORKING-AGREEMENT.md). No code or UI design
-is authorized by this specification task.
+review under the [working agreement](../WORKING-AGREEMENT.md). Further implementation
+requires its own selected and reviewed work.
 
 ## Design — revised prototype
 

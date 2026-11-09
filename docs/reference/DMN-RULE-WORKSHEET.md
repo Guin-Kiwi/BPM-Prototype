@@ -2,8 +2,9 @@
 
 This records the owner's selected prototype direction and a proposed operational
 rule for discussion and personal DMN editing. It is not approved group policy or an
-implementation specification. The group DOCX, BPMN and draft DMN remain unchanged;
-alignment with them is pending. Model assessments are inferences, not diagnoses.
+implementation specification. The selected [comparison pair](../../models/comparison/README.md)
+expresses the prototype process; reconciliation with the group DOCX and draft DMN
+remains pending. Model assessments are inferences, not diagnoses.
 
 ## Sources and limits
 
@@ -16,8 +17,9 @@ alignment with them is pending. Model assessments are inferences, not diagnoses.
 ## Selected prototype direction
 
 1. A farmer who suspects something is wrong submits a **report**, even if it may
-   ultimately turn out that there is no problem. Link it to its farm, field and
-   available history. Receipt confirms submission, not advice or resolution.
+   ultimately turn out that there is no problem. Link it to its farm and available
+   location and history; a field association is not always available. Receipt confirms
+   submission, not advice or resolution.
 2. An LLM assesses the report and available evidence; retain observations separately
    from its inference and any confirmed findings. Deterministic DMN routes the report
    to **routine advisory communication** or **technician required**, with a reason.
@@ -28,9 +30,17 @@ alignment with them is pending. Model assessments are inferences, not diagnoses.
 4. Technicians are assigned farms at minimum and can access their routine reports,
    communications, treatment and available sales information. Purchase-history
    integration is out of scope. A product purchase is optional, never automatic.
-5. Communications staff personalise and relay established advice; they make no
-   diagnostic or agronomic judgment. AI and DMN do not message farmers
-   directly. Communication delivered and issue resolved are separate outcomes.
+5. Communications staff personally relay established guidance; they do not diagnose.
+   In the real concept, technicians deliberately prepare this guidance. A prototype may
+   illustrate it with attributable published sources, subject to suitability and reuse
+   checks; no source or technician approval has been established. AI and DMN do not
+   message farmers directly, and no product order is automatic.
+6. Full available farm and nearby history remains accessible for technician judgment.
+   A needed visit is planned with case status recorded, waits for the appointment and
+   returns to review after the visit. Official guidance and recording are captured in the
+   system; incidental on-site conversation is not a separate modeled task. Review, advice
+   and recording after the visit are intentional and may occur later, for example if the
+   farmer was unavailable. Handling recorded does not mean the case is closed.
 
 ## Proposed operational routing rule
 
@@ -75,8 +85,12 @@ be agreed; they are illustrative, not agronomic protocols.
   missing history, and when a later report links to an existing case.
 - Define technician assignment and access boundaries, the communications handoff,
   and how severe approval and receipt, delivery and resolution are recorded.
-- Reconcile the selected direction with the group's paper and models; the current
-  draft has a repeat gateway and action paths that do not directly express this rule.
+- Reconcile the selected pair with the group paper and earlier BPMN/DMN, including
+  their repeat gateway, action paths, input modes, offline assumption and severe handovers;
+  see the [comparison trace](../../models/comparison/NOTES.md#existing-to-be-comparison-and-alignment).
+- Select and assess a published illustrative guidance source and attribution, applicability
+  and reuse terms; determine how the prototype presents its limits without implying
+  technician validation or treatment approval.
 
 Next agent: prepare a minimal routing UC in SPECIFY, separate from
 [UC-001 intake/history](../specs/UC-001-REPORT-INTAKE.md). Trace the owner direction,
@@ -88,5 +102,6 @@ implementation awaits the open operational definitions and alignment.
 Planned acceptance evidence: demonstrate report receipt and farm/field history; exercise
 both routes and each missing/uncertain or escalation condition with a recorded reason;
 show routine reports without cases and later escalation linked or newly created; verify
-staff handoff, assigned-farm access and severe approval; distinguish message delivery
-from resolution. These are planned checks, not results or evidence of group approval.
+staff handoff, full available context and severe approval; walk a planned visit back to
+review including later advice, and distinguish handling and delivery from case closure
+and resolution. These are planned checks, not results or evidence of group approval.

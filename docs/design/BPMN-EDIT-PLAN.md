@@ -1,5 +1,10 @@
 # P1 BPMN comparison edit plan
 
+**Status:** This plan and its recorded checks describe earlier model work. Ayla’s
+[selected edited pair](../../models/comparison/README.md) is now the prototype
+comparison source; confirm its own notation, import and print checks separately.
+The current task does not authorize further BPMN changes.
+
 ## Outcome
 
 Produce one readable A4 landscape page for each P1 model. Make the proposed benefit
@@ -30,7 +35,8 @@ with assembled evidence and history. Necessary visits remain part of both proces
   overview tasks. Quantify routine technician effort and context-preparation effort;
   also account for the communications handover. Benefits remain hypotheses until tested.
 - **R6 — Source and scope discipline.** Use the [working paper/source map](../reference/README.md)
-  and current [AS-IS](../../p1_asis.bpmn) and [TO-BE](../../p1_tobe.bpmn). Phone diagnosis
+  and selected [AS-IS](<../../models/comparison/p1_asis (2).bpmn>) and
+  [TO-BE](<../../models/comparison/p1_tobe (2).bpmn>). Phone diagnosis
   is a labelled group assumption, not verified published practice. Preserve existing
   assumptions and approval limits. Severe P2/P3 actions remain explicitly outside the
   core view; this plan neither approves nor silently removes them from the wider proposal.
@@ -126,8 +132,8 @@ travel or from having fewer diagram boxes.
 | R5: honest improvement argument | Cost/benefit notes include travel and the new handover, distinguish measurements from assumptions and use comparable AS-IS/TO-BE scenarios. |
 | A4 fit | Export each overview to a single A4 landscape page, inspect at 100%/print size, and verify readable labels, no clipping/overlaps and traceable arrows. This is a required check, not yet a result. |
 
-**Current evidence (9 November 2026):** the top-level models now implement this
-plan. AS-IS has 12 overview nodes and four subprocess detail diagrams; TO-BE has
+**Earlier-model evidence (9 November 2026):** the then top-level models implemented this
+plan. These checks do not establish results for the selected edited pair. AS-IS has 12 overview nodes and four subprocess detail diagrams; TO-BE has
 13 overview nodes and three detail diagrams. Assessment/phone choice, scheduling,
 travel and on-site work remain in editable detail. TO-BE retains registration,
 context retrieval, AI assessment and deterministic DMN routing inside triage.
@@ -138,11 +144,10 @@ sequence-flow scope and incoming/outgoing consistency checks. Every flow node is
 reachable from a start and has a path to an end within its process/subprocess.
 These structural checks do not establish routing-policy correctness.
 
-[AS-IS](../../models/exports/p1_asis.svg) and
-[TO-BE](../../models/exports/p1_tobe.svg) overview previews use A4 landscape
+The earlier AS-IS and TO-BE overview previews used A4 landscape
 dimensions (297 × 210 mm), 9.5-point activity labels and 9-point secondary text.
-Both rendered PNGs were visually inspected for clipping, shape overlaps and arrow
-routes; automated text-fit checks reported no warnings. The previews are derived
-from the XML overview layout. Camunda UI import, subprocess navigation and physical
+Both earlier rendered PNGs were visually inspected for clipping, shape overlaps and arrow
+routes; automated text-fit checks reported no warnings. Those earlier previews were derived
+from the XML overview layout; current stable preview filenames refer to the selected pair. Camunda UI import, subprocess navigation and physical
 print legibility remain unverified. Quantified cost/benefit evidence and group
 acceptance of the proposed process remain outstanding. No application code changed.

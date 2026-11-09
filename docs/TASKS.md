@@ -40,21 +40,29 @@ Group paper/model alignment and human acceptance of the revised journey remain o
 
 ## Next smallest step
 
-Complete the map fallback only after
-known boundaries, their provenance and a usable map presentation are supplied.
+Prepare a minimal routing and guidance use case in SPECIFY, separate from UC-001,
+using the [worksheet](reference/DMN-RULE-WORKSHEET.md#open-definitions-and-minimal-next-specify-task).
+This is selected next work, not a phase transition or an implementation authorization.
 
 ## Selected routing step
 
 Ayla selected report-to-case routing as the next business specification step:
 [consolidated routing worksheet](reference/DMN-RULE-WORKSHEET.md). This is the
-prototype direction; alignment with the group paper and models is still pending.
+prototype direction; the selected comparison pair is identified in the
+[source map](reference/README.md), and group paper alignment remains pending.
 The worksheet owns the terminology, routing proposal, open definitions and bounded
 agent handoff. UC-001 remains intake/history only; no routing implementation yet.
 
 ## Deferred decisions / backlog
 
-- LLM provider and image assessment, routing policy/execution and review criteria.
-- Advisory guidance and handover, duplicate handling and experiment export.
-- Offline capture remains a disclosed gap against the paper's assumption.
+- Define routing inputs, uncertainty and reasons, guidance applicability, repeat handling,
+  case linkage, severe approval, access and cross-farm context with the group.
+- Later code: AI/provider boundary, deterministic DMN, human guidance and case/visit
+  workflows, technician view and traceable events/export. Map fallback needs known
+  boundaries, provenance and usable presentation; manually verify the intake journey.
+- Later data: inspect and attribute suitable image and illustrative guidance sources;
+  design synthetic context and permissions without generating a dataset now.
+- Later experiments: agree scenarios, reference truth, leakage controls and measured
+  workload/outcomes; record actual runs. Offline capture remains a paper gap.
 
 Implementation ownership: [working agreement](WORKING-AGREEMENT.md).

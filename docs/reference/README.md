@@ -10,7 +10,7 @@ working models and proposed refinements must be reconciled with that scope.
 | Published Cooxupé case, Ribeiro et al. (2025) | Organisation, reported AS-IS and observed problems; does not establish our proposed solution. |
 | Main working group DOCX below | Group solution baseline, P1 scope and authoritative C/F matrix. |
 | Assignment and grading material | Deliverables and assessment expectations. |
-| Owner-selected prototype refinements in UC/routing/design documents | Prototype direction; differences from the group baseline require explicit alignment. |
+| [Selected prototype comparison pair](../../models/comparison/README.md) and owner-selected UC/routing/design direction | Prototype scope and process; differences from the group baseline require explicit alignment, not silent replacement. |
 | Other working files | Supporting drafts; reconcile conflicts instead of choosing by modification date. |
 
 The published chapter is [Toward the Full Application of BPM](https://doi.org/10.1007/978-3-031-80793-0_12),
@@ -21,7 +21,7 @@ Consult the source when available before attributing a new organisational fact.
 Recent refinements change optional GPS and photo/voice/text submission to a camera-first
 journey with required location context and a mapped-field fallback, and change action
 selection to responsibility routing. These are prototype choices to reconcile with the
-working DOCX/BPMN/DMN. They do not establish a new Cooxupé department. A technical
+working DOCX and earlier group BPMN/DMN; the selected comparison pair reflects the prototype direction. They do not establish a new Cooxupé department. A technical
 case record is also distinct from the C/F matrix's business case types.
 
 ## Local source map
@@ -73,5 +73,5 @@ source-backed context, owner-selected direction and unresolved design proposals.
 [New P1 AS-IS / TO-BE comparison proposals](../../models/comparison/README.md)
 include editable BPMN and previews; source assumptions and group alignment are explicit.
 
-[Planned P1 comparison edits](../design/BPMN-EDIT-PLAN.md) align detail level and
-A4 layout; the plan does not claim that the uploaded models have been revised.
+[P1 comparison edit plan](../design/BPMN-EDIT-PLAN.md) records the intended detail and
+review checks; evidence for earlier diagrams must not be attributed to the selected pair.

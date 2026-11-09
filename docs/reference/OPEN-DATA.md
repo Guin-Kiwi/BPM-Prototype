@@ -18,8 +18,8 @@ call is needed for the intake demo.
   in [UC-001](../specs/UC-001-REPORT-INTAKE.md). Assess whether annotations support
   the intended use; leave missing or ambiguous labels unknown. Do not infer an
   image-level disease or severity label from leaf-instance annotations.
-- UC-001 owns the accepted synthetic farm/field seed requirements, including counts,
-  history and the empty-history case. This plan does not reopen them.
+- UC-001 owns the intake and focused-view direction. Synthetic scenario counts and
+  generation are undecided; no dataset generation is authorized by this plan.
 
 ### Provenance
 
@@ -54,6 +54,13 @@ an explicit justification or turn labels into business actions without a separat
 rule. Where requirements expect uncertainty handling or requests for more evidence,
 assess those behaviors explicitly, without making them universal success criteria
 or substituting model self-confidence for evidence.
+
+## Illustrative guidance sources
+
+The [routing worksheet](DMN-RULE-WORKSHEET.md) distinguishes technician-prepared
+real-world guidance from attributable published material that may illustrate the
+prototype. Inspect applicability, source text, provenance and reuse terms before
+selection. No guidance source, technician approval or validated treatment is claimed.
 
 ## Open choices
 

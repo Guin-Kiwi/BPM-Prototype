@@ -93,7 +93,8 @@ in the diagram. Farmer/account and staff identity relationships await access des
 - Prefer usable device GPS with point, reported accuracy, source and capture time.
   Otherwise select a known mapped field of the account's farm and retain its boundary
   and source. Do not replace the field with a fictitious observed point or centroid.
-  GPS usability, boundary availability and the path when neither is available are open.
+  The bounded demo GPS rule is in UC-001; boundary availability and the target path
+  when neither source is available remain open.
 - Each new report has an approximate affected-plant count or percentage with an
   understandable observed-area basis. An optional area cue can help; no extra written
   narrative is mandatory. Do not invent area, acreage, a plant denominator, measured
@@ -144,8 +145,8 @@ relevance or case membership. Cross-farm access and privacy remain open.
 | --- | --- | --- |
 | Cases | Technician involvement only; link to an appropriate existing case when warranted. Recommend primary farm and optional field scope, with explicit report membership and related cases across farms or fields. | Case scope, multiple memberships, closure/reopening and cross-farm relation/access rules. |
 | History | One chronological view combines reports, cases and proposed typed events; optional filters, unmatched context and original records remain available. | Ordering ties and backdated records, nearby criteria, relevance workflow and permissions. |
-| Prototype focus | One primary farmer view and one technician view focus on the primary farm, with neighbouring farm/field/report/case context. No multiaccount navigation or admin screens now. | Exact synthetic counts and eventual generation remain undecided. |
-| Intake | Camera-first, location and estimate required for new reports; upload is a prototype shortcut. | Specific simulated identity and legacy mapping, area cue, GPS usability, boundary availability and no-location behavior. |
+| Prototype focus | One primary farmer view and one technician view focus on the primary farm, with neighbouring farm/field/report/case context. No multiaccount navigation or admin screens now. | Exact synthetic counts remain undecided; no dataset generation now. |
+| Intake | Camera-first, location and estimate required for new reports; upload is a prototype shortcut. | Boundary availability and target no-location behavior; UC-001 records implemented demo defaults. |
 | Routing | DMN selects responsibility with reason; communications personalises and relays established guidance. | Routing definitions, severe approval, actor/access boundaries and reconciliation with group DOCX/BPMN/DMN. |
 | Data/evaluation | Label synthetic data and protect scoring metadata. | Source suitability/licences, evaluation exclusion policy and eventual scenario design; no dataset generation now. |
 
@@ -156,23 +157,17 @@ and evaluation are proposals or logical future interfaces, not implementation
 commitments for UC-001. Real account
 authentication, transcription, offline capture and external messages are not implemented.
 
-**Implemented demo and preservation:** [current domain](../../src/app/domain/reports.py)
-and [SQLite adapter](../../src/app/infrastructure/sqlite.py) store farms, fields and
-reports with required field, date and text, optional image and a finding embedded in a
-report; history is earlier same-field reports. Its older seed contains two farms and
-remains unchanged. There is no account, boundary, estimate, case, typed history-event
-table or routing. [ADR-001](../adr/ADR-001-local-report-persistence.md) selects local
-SQLite for the existing slice, not this revised model. A later migration design must
-preserve IDs, original text/images, dates, receipts, findings and synthetic provenance;
-record legacy time precision and missing estimate/location as unavailable rather than
-inventing values, map fictional identities explicitly, and keep seed initialization
-idempotent. No migration is specified or performed here.
+**Implemented demo and preservation:** [UC-001](../specs/UC-001-REPORT-INTAKE.md#design--revised-prototype)
+records the bounded intake, farm-wide report history and legacy-preserving migration.
+Cases, events, nearby context and routing remain unimplemented. ADR-001 selects local
+SQLite, not the wider conceptual model. Preserve legacy evidence and missing values
+as described in UC-001 when planning future changes.
 
 **Bounded handoff:** owners resolve the intake and case choices above and align the
-paper/models; specify routing separately as the worksheet requests. Then DESIGN can
-map the agreed intake to domain, application service, repository interface, form and
-SQLite adapter, compare migration alternatives, and propose an ADR only if an actual
-consequential cross-use-case decision is ready for review. Validate with acceptance
+paper/models; specify routing separately as the worksheet requests. Later DESIGN can
+map the agreed routing and guidance slice to the existing intake
+boundary and propose an ADR only if a consequential cross-use-case decision is ready
+for review. Validate with acceptance
 examples for location fallback, estimate scope, legacy preservation, farm history,
 independent reports, case linking, typed-event validation, durable relation judgments,
 neighbour context and evidence separation. These are planned checks,
