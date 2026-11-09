@@ -20,9 +20,12 @@ remains pending. Model assessments are inferences, not diagnoses.
    ultimately turn out that there is no problem. Link it to its farm and available
    location and history; a field association is not always available. Receipt confirms
    submission, not advice or resolution.
-2. An LLM assesses the report and available evidence; retain observations separately
-   from its inference and any confirmed findings. Deterministic DMN routes the report
-   to **routine advisory communication** or **technician required**, with a reason.
+2. The LLM assesses each report independently using only its current image and the
+   farmer's optional note. It returns suspected issue, visible signs and uncertainty;
+   its inference is not a confirmed finding. Farm/nearby history, earlier assessments,
+   treatments and case records are not supplied to the LLM. Code derives history facts
+   separately. Deterministic DMN combines those facts with the assessment and farmer's
+   extent estimate to route responsibility, with a reason.
 3. Only technician involvement creates a **case**; routine reports remain reports.
    If a report escalates later, link it to an appropriate existing case or create a
    new one. Do not require a duplicate case. The technician decides what follow-up,
@@ -41,6 +44,19 @@ remains pending. Model assessments are inferences, not diagnoses.
    system; incidental on-site conversation is not a separate modeled task. Review, advice
    and recording after the visit are intentional and may occur later, for example if the
    farmer was unavailable. Handling recorded does not mean the case is closed.
+
+## Assessment and routing boundary
+
+Keep the original report and its standalone AI assessment linked to the farm. Later
+reports or history changes can affect routing and technician review without changing
+that assessment. Reassessment of the same evidence must be recorded separately.
+
+Code prepares defined history facts, such as repeat reports or an unresolved case;
+DMN applies explicit rules. Guidance matching uses an explicit code/rule mapping to
+prepared entries, not LLM-generated treatment. Mapping and history definitions remain
+open. Technicians can inspect the underlying reports and judge connections the rules
+have not captured. Neither model uncertainty nor deterministic execution guarantees
+that an assessment or route is correct.
 
 ## Proposed operational routing rule
 
@@ -94,7 +110,10 @@ be agreed; they are illustrative, not agronomic protocols.
 
 Next agent: prepare a minimal routing UC in SPECIFY, separate from
 [UC-001 intake/history](../specs/UC-001-REPORT-INTAKE.md). Trace the owner direction,
-proposed rule and unresolved choices to acceptance criteria; identify the authoritative
+proposed rule and unresolved choices to acceptance criteria. Include an input-boundary
+check: farm/nearby history and prior findings never enter the assessment request;
+changing history can change routing while leaving the standalone assessment unchanged.
+Identify the authoritative
 rule version and how consistency with the eventual DMN will be checked. Do not edit the
 group models or implement routing. Agreed intake can progress independently; routing
 implementation awaits the open operational definitions and alignment.

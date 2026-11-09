@@ -56,7 +56,9 @@ agent handoff. UC-001 remains intake/history only; no routing implementation yet
 ## Deferred decisions / backlog
 
 - Define routing inputs, uncertainty and reasons, guidance applicability, repeat handling,
-  case linkage, severe approval, access and cross-farm context with the group.
+  case linkage, severe approval, access and cross-farm context with the group. Preserve
+  the [standalone assessment boundary](reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary):
+  image and farmer note to AI; extent and history to code/DMN, with context for technicians.
 - Later code: AI/provider boundary, deterministic DMN, human guidance and case/visit
   workflows, technician view and traceable events/export. Map fallback needs known
   boundaries, provenance and usable presentation; manually verify the intake journey.

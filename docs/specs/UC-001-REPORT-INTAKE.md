@@ -166,10 +166,11 @@ working demo and its evidence are described in [TASKS](../TASKS.md).
    disease/severity scoring labels and label-bearing source names out of displayed
    attachment names, observations and diagnosis inputs. Separate restricted provenance
    and evaluation metadata as in the [open-data plan](../reference/OPEN-DATA.md).
-   Record reuse and relatedness. For future diagnosis evaluation exclude history that
-   reveals the current image's answer, including the same image or related crops of one
-   parent, and record each exclusion. Ordinary history may show prior findings even for
-   repeated images; those findings must not be presented as new confirmation.
+   Record reuse and relatedness. Future AI assessment receives only the current image
+   and farmer note; history feeds deterministic routing and human review separately,
+   under the [assessment boundary](../reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary).
+   Record exclusions for duplicate/related evaluation images. Ordinary history may show
+   prior findings for repeated images without presenting them as new confirmation.
 6. Invalid or incomplete required evidence, invalid location/time, corrupt, unsupported
    or oversized image, and storage failure yield actionable errors without a partial
    report or false confirmation; unknown IDs yield not found. The existing demo's JPEG/

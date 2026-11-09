@@ -40,9 +40,10 @@ performance or measured incidence.
 
 Keep observations, prior confirmed findings, model inferences and hidden current-image
 scoring labels distinct. Prior confirmed findings may appear as legitimate history,
-including in normal intake when an image repeats. For diagnosis evaluation, exclude
-and record history that reveals the current answer, including findings tied to reused
-or related images such as crops of one parent. Record reuse and relationships; do not
+including in normal intake when an image repeats. Under the selected
+[assessment boundary](DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary), no history
+is sent to the LLM; it receives only the current image and farmer note. Evaluate image
+assessment separately from history-aware routing. Record reuse and relationships; do not
 count crops and their parent as independent samples. Keep current answers and
 label-bearing IDs or filenames out of displayed observations, attachment names,
 intake payloads, prompts and other diagnosis inputs. Keep provenance and scoring
@@ -126,6 +127,6 @@ and do not claim selection or import complete.
 
 **Diagnosis-evaluation readiness:** Separate from inspection and sample completion.
 Require suitable disease truth and known coverage, source-specific label meanings,
-hidden scoring metadata, and recorded exclusions for answer-revealing history and
-related images. Without suitable truth, retain only supported upload/context use and
+hidden scoring metadata, verified image-and-note-only model inputs, and recorded
+exclusions for duplicate/related images. Without suitable truth, retain only supported upload/context use and
 obtain another truth source or expert work before scoring diagnosis.

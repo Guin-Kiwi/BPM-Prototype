@@ -13,8 +13,11 @@ AS-IS receives and assesses a request, arranges and waits for a visit when neede
 provides guidance remotely or on site, and records guidance and progress. The visit
 subprocess includes travel, inspection, on-site guidance and return.
 
-TO-BE registers the report, retrieves farm and nearby history, assesses with AI and
-uncertainty, and uses DMN to route responsibility. Communications personally relays
+TO-BE registers the report and retrieves farm and nearby history for routing and human
+review. AI independently assesses only the current image and farmer note; DMN combines
+that output with the extent estimate and code-derived history facts to route responsibility.
+The subprocess sequence does not imply that retrieved history is passed to the LLM;
+see the [assessment boundary](../../docs/reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary). Communications personally relays
 established guidance for routine reports; technician involvement creates or links a
 technical case. The technician reviews the full available context and judges relevance.
 A needed visit is planned with case status recorded, waits for the appointment, is

@@ -4,7 +4,10 @@
 
 Build a local demonstrator of agricultural technical orientation (P1) for the BPM
 coursework. Farmers submit an issue; AI assesses the evidence with uncertainty; deterministic
-rules route responsibility to communications or a technician.
+rules route responsibility to communications or a technician. The LLM receives only
+one current image and the farmer's optional note; code/DMN uses history separately.
+The [routing worksheet](reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary)
+owns this boundary.
 Ayla leads implementation. This is a prototype, not a deployed agricultural service.
 
 ## Scope and current capability

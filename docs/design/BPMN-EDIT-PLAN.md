@@ -52,7 +52,9 @@ the current assignment. This plan changes no prototype code, dataset or group pa
 
 - Recommend a collapsed **AI-assisted report triage** subprocess with a brief visible
   annotation: “Register report; retrieve farm/nearby history; AI assessment; DMN routing.”
-  Preserve its service/business-rule tasks inside the editable model. If a printed
+  Preserve its service/business-rule tasks inside the editable model. History retrieval
+  feeds deterministic routing and technician review, not the LLM. AI receives only the
+  current image and farmer note; see the [assessment boundary](../reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary). If a printed
   marker/annotation does not make automation sufficiently clear, expose AI assessment
   and DMN as two visible tasks before shrinking text. Confirm any remaining rubric
   interpretation with the lecturer; do not add decorative events to satisfy a count.
