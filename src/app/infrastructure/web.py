@@ -7,6 +7,7 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from PIL import Image, UnidentifiedImageError
+from python_multipart.exceptions import MultipartParseError
 from starlette.datastructures import UploadFile
 from starlette.requests import Request as FormRequest
 from starlette.formparsers import MultiPartException, MultiPartParser
@@ -117,7 +118,7 @@ def create_app(db_path=None):
             finally:
                 await parsed.close()
             return RedirectResponse('/reports/' + report.id, status_code=303)
-        except MultiPartException:
+        except (MultiPartException, MultipartParseError):
             return form(repo, 'Invalid form or too many attachments. Please check the form and try again.', 400)
         except InvalidInput as exc:
             return form(repo, str(exc), 400)
@@ -157,6 +158,3 @@ def create_app(db_path=None):
             return page('Attachment unavailable', '<p>Unable to retrieve the attachment.</p>', 500)
 
     return app
-
-
-app = create_app()

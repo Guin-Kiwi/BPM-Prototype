@@ -110,7 +110,7 @@ def test_history_backdating_and_field_isolation(client):
 
 def test_storage_failure_does_not_confirm_or_persist(client):
     with sqlite3.connect(client.app.state.db_path) as conn:
-        conn.execute("CREATE TRIGGER reject_insert BEFORE INSERT ON reports BEGIN SELECT RAISE(ABORT, 'secret failure'); END")
+        conn.execute("CREATE TRIGGER reject_insert AFTER INSERT ON reports BEGIN SELECT RAISE(ABORT, 'secret failure'); END")
     response = submit(client, files={'image': ('a.png', image_bytes(), 'image/png')})
     assert response.status_code == 500
     assert 'secret failure' not in response.text
@@ -139,6 +139,7 @@ def test_same_day_history_uses_utc_receipt_then_id(client):
 @pytest.mark.parametrize(('content_type', 'body'), [
     ('multipart/form-data', b'bad'),
     ('multipart/form-data; boundary=demo', b'garbage that is not a multipart body'),
+    ('multipart/form-data; boundary=demo', b'--demo\rXbroken'),
 ])
 def test_bad_multipart_is_an_actionable_client_error(client, content_type, body):
     response = client.request('POST', '/reports', headers={'Content-Type': content_type}, content=body)
