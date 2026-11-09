@@ -1,6 +1,6 @@
 # Current work
 
-PHASE: 2
+PHASE: 3
 STATUS: in-progress
 
 ## Active objective
@@ -15,10 +15,9 @@ docs/specs/UC-001-REPORT-INTAKE.md
 
 ## Current slice
 
-The owner selected DESIGN for bounded intake and synthetic history. The spec's
-working defaults and the proposed design and storage decision remain unapproved.
-Human review of the spec and design is outstanding; no routing, AI or case behavior
-is included.
+Ayla reviewed intake/history and accepted the SQLite design, then selected DEVELOP.
+Implement the bounded local form, durable reports/images and field history with TDD.
+Routing, AI, cases and real dataset import remain separate work.
 
 ## Evidence
 
@@ -37,11 +36,8 @@ These are document/process checks, not application acceptance evidence.
 
 ## Next smallest step
 
-Human review of [UC-001](specs/UC-001-REPORT-INTAKE.md) and the proposed
-[storage ADR](adr/ADR-001-local-report-persistence.md); align shared PROJECT wording
-separately, then explicitly select DEVELOP for the bounded journey. Scenario
-preparation follows the [open-data plan](reference/OPEN-DATA.md); no dataset has
-been downloaded.
+Implement UC-001 using the accepted design and targeted TDD. Run required handoff
+checks; preserve actual check evidence and disclose unfinished acceptance work.
 
 ## Selected routing step
 

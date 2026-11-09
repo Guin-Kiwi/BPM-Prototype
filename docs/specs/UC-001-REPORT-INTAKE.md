@@ -75,8 +75,8 @@ User opens report entry to record an observation for a field.
 
 Sources: [main paper and concept](../reference/README.md) for field-linked reports
 and history; the owner’s current request authorizes the bounded intake and synthetic
-history scope. The concrete defaults below are implementation recommendations, not
-owner or group approvals. The [source map](../reference/README.md) identifies the
+history scope. The concrete defaults below are implementation defaults accepted by Ayla for this prototype, not
+group policy. The [source map](../reference/README.md) identifies the
 paper as business-scope authority and the assignment as deliverables authority.
 
 1. Offer at least two fictional farms with two fields each; each field belongs to one
@@ -133,7 +133,7 @@ Record executed application checks during VALIDATE. No application checks have r
 
 ## Open questions / assumptions
 
-- Working defaults recommended for implementation, not owner/group approvals: one
+- Working defaults accepted by Ayla for prototype implementation: one
   nonblank description, a nonfuture local calendar date, and at most one JPEG/PNG
   up to 10 MiB. These keep entry simple and storage bounded. The local date is the
   application host’s date; timezone and clock changes affect future-date validation.
@@ -142,7 +142,7 @@ Record executed application checks during VALIDATE. No application checks have r
   event occurred; receipt time and ID give deterministic same-day order. Same-day
   ordering does not claim the events actually occurred in that order.
 - No material intake policy question remains for DESIGN under these working defaults;
-  human review remains outstanding. Local persistence and upload handling belong to
+  Ayla reviewed the design and selected DEVELOP. Local persistence and upload handling belong to
   DESIGN. No images have been downloaded or scenarios imported.
 - Offline capture is a paper assumption deferred beyond this slice; disclose the gap.
 
@@ -155,8 +155,8 @@ provider, routing policy or new review workflow.
 
 ## Design
 
-This is a proposed design, pending human review; the acceptance criteria and their
-unapproved working defaults remain authoritative for this slice. The existing layer
+Ayla reviewed and accepted this design for prototype development; the acceptance
+criteria and working defaults govern this slice. The existing layer
 structure is sufficient with the following small additions:
 
 - **Domain:** fictional farms and their fields; reports retain submitted observations
@@ -177,7 +177,7 @@ structure is sufficient with the following small additions:
   server-rendered HTML is a proposed simple journey, without choosing a template engine.
 - **Infrastructure:** a local SQLite adapter owns durable fictional scenario and report
   records and stores an optional bounded original image with its report in one
-  transaction, as proposed in [ADR-001](../adr/ADR-001-local-report-persistence.md).
+  transaction, as accepted in [ADR-001](../adr/ADR-001-local-report-persistence.md).
   Image content must be decoded/verified as actual JPEG or PNG, not accepted solely
   from a filename or MIME type. Invalid input creates nothing; a failed transaction
   leaves no retrievable partial report or image and produces no confirmation.
@@ -196,14 +196,14 @@ SQLite keeps report and image atomic with few moving parts, at the cost of datab
 growth and a local writable file; it is a local demo choice, not a distributed store
 or backup strategy. The 10 MiB limit bounds each image, not total storage. The local
 host clock and deterministic same-day tie breaks retain the limitations stated above.
-Proposed minimal additions for DEVELOP are a multipart form parser and an image
+Minimal additions for DEVELOP are a multipart form parser and an image
 verification library if needed (for example python-multipart and Pillow); neither
-is installed or approved, and no template engine, ORM or migration tool is selected.
+is installed yet, and no template engine, ORM or migration tool is selected.
 
 Acceptance mapping: seed and idempotence cover **1**; form, validation and atomic
 save cover **2 and 6**; durable lookup and history cover **3**; typed evidence
 covers **4**; separated provenance and deferred evaluation exclusions cover **5**.
-After human review and explicit selection of DEVELOP, implement the smallest journey
+With DEVELOP selected, implement the smallest journey
 using the existing TDD workflow. Exercise the spec's unit, integration and E2E plan,
 especially image content/size boundaries, transaction failure, restart, seed reruns,
 history ties/backdating and separation of findings and source labels. No application
