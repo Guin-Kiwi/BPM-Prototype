@@ -46,8 +46,12 @@ Neither constitutes human or visual acceptance.
 
 Implementation review and shared project command alignment are complete. Try the
 README run command and perform the manual browser journey when a browser is available;
-record human acceptance before considering this phase done. Offline capture and
-future dataset provenance/evaluation remain outside UC-001 implementation.
+record human acceptance before considering this phase done. Phase 3 remains
+in-progress pending this visual/manual acceptance. Separately, the next data
+inspection priority is BRACOT for a small, provenance-tracked field sample; source
+selection and evaluation preparation remain outside UC-001 implementation. Follow
+the [open-data plan](reference/OPEN-DATA.md) for the single source-selection
+recommendation and its inspection limits. Offline capture remains a disclosed gap.
 
 ## Selected routing step
 

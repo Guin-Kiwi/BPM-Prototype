@@ -1,9 +1,13 @@
 # BRACOL upload examples
 
-Three author-hosted whole-leaf JPEG examples are in the ignored `data/example-images/` folder
-for manual upload through the local intake form. Choose any file with the file
-picker; filenames are neutral and carry no diagnosis label. These are convenience
-examples only, not a representative sample and not a diagnostic evaluation set.
+Three author-hosted detached-leaf JPEG examples are in the ignored
+`data/example-images/` folder for manual upload through the local intake form.
+Choose any file with the file picker; filenames are neutral and carry no diagnosis
+label. They demonstrate upload handling and may be used for a controlled-condition
+comparison. Their plain backgrounds do not resemble on-plant farmer field reports;
+they are not a representative sample, diagnostic evaluation set, or evidence of
+realistic farmer-image performance. The [open-data plan](OPEN-DATA.md) is the single
+authority for dataset selection and the next inspection step.
 
 ## Source and licence
 

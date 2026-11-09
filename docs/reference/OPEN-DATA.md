@@ -1,60 +1,78 @@
 # Open-data intake plan
 
-## First source
+## Selection authority and next inspection
 
-BRACOL version 1, DOI `10.17632/yy2k5y8mxg.1`, Renato A. Krohling,
-Guilherme J. M. Esgario and José A. Ventura, published 6 November 2019.
-[Dataset and licence](https://data.mendeley.com/datasets/yy2k5y8mxg/1)
-(CC BY 4.0; source page checked 9 November 2026).
+The farmer-facing framing is an on-plant field report: images should resemble a
+farmer's view of a plant in the field. BRACOL's detached whole leaves on plain
+backgrounds remain useful as upload examples and for a separately reported
+controlled-condition comparison. They are not evidence of realistic farmer-image
+performance.
 
-The source describes 1,747 original Arabica leaf photographs with disease/severity
-labels and a separate cropped-symptom dataset. Photos use a white background under
-partially controlled conditions. They are not validated farmer submissions or
-operational Cooxupé records. Use whole leaves first; do not count crops and their
-parent images as independent evaluation samples.
+Prioritise **BRACOT version 1** for the next data inspection: [official dataset
+record](https://data.mendeley.com/datasets/pmkbyjpf6k/1), DOI
+`10.17632/pmkbyjpf6k.1`. Its indexed official description reports 300 smartphone
+images of parts of Arabica coffee trees photographed with a Galaxy S8 in a Brazilian
+plantation, and 1,662 annotated leaf instances. The stated purpose is instance
+segmentation. This capture context better matches the intended field-report framing
+than detached-leaf images. It does not establish that every image has a usable
+disease or severity truth label. Before selecting any evaluation image, inspect the
+available annotation files and terms/licence directly; do not infer image-level
+truth from instance annotations or the dataset description. No BRACOT files have
+been downloaded and no new experiments have been run.
 
-## Proposed synthetic seed and import
+Keep the next step small: inspect the archive structure and annotation coverage, then
+propose a small field sample with each original image ID, source path, provenance,
+and available label type/value. Include healthy or nonproblem images as evaluation
+controls even though a farmer's report trigger is a suspected issue. Do not decide
+the final sample until annotations and reuse/related-image structure are understood.
 
-Recommend two fictional farms with two fields each, three earlier reports distributed
-across them, at least one earlier confirmed finding, and one field with no history.
-This gives field isolation, history and empty-state examples with little setup; counts
-are a recommendation, not an approved requirement. Observation dates and descriptions
-are invented scenario context, explicitly labelled synthetic. A confirmed finding is
-also fictional: it represents a prior confirmation within the scenario, not a claim
-that an actual technician confirmed that farm's diagnosis.
+**Backup candidate:** [RoCoLe version 2](https://data.mendeley.com/datasets/c5yvn32dzg/2),
+DOI `10.17632/c5yvn32dzg.2`, is a smartphone-image Robusta dataset whose official
+record describes healthy/unhealthy state and disease severity. Its species differs
+from BRACOT's Arabica. If used, keep its severity labels and scale separate; do not
+pool or translate severity across sources without an explicit, justified mapping.
 
-If images are used, recommend selecting about 6–10 original leaves spanning healthy
-and diseased examples after inspecting the download structure. Counts and selection
-remain open. Keep raw downloads in ignored `data/`; do not invent sample IDs or claim
-a balanced evaluation set before inspecting labels. Dataset images can populate
-synthetic history, but cannot establish real farm history, location, treatment success
-or field incidence. Identify image reuse; it is not independent field evidence.
+**Optional candidate:** [JMuBEN](https://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/)
+is a possible field-acquired Arabica source from Kenya. Inspect the paper, data
+availability, annotations, licence/terms, and preprocessing already applied before deciding
+whether it is suitable. It is not needed to complete the BRACOT inspection step.
 
-For each selected sample record dataset DOI/version, original sample ID/path, download
-URL/date, local neutral filename, SHA-256, original disease/severity label,
-licence/attribution and transformations. Keep scenario context separate from source
-provenance and evaluation labels. Preserve source severity categories without turning
-them into business actions.
+## Existing BRACOL upload examples
 
-## Evidence and evaluation boundaries
+[BRACOL version 1](https://data.mendeley.com/datasets/yy2k5y8mxg/1), DOI
+`10.17632/yy2k5y8mxg.1`, is the source for the three existing detached-leaf upload
+examples documented in the [manifest](EXAMPLE-IMAGES.md). The manifest's source IDs,
+URLs, labels, and SHA-256 hashes are historical provenance and remain unchanged.
+BRACOL is licensed CC BY 4.0; retain the attribution in that manifest.
+These images demonstrate attachment handling and can support a controlled-condition
+comparison. Their plain-background setup differs from on-plant farmer reports, so
+do not use them alone to claim realistic field performance.
 
-Keep submitted observations, fictional earlier confirmed findings, AI inferences and
-hidden current-sample ground truth distinct. A prior confirmed finding can be displayed
-and later supplied as legitimate history. Do not surface current-sample answers or
-label-bearing source filenames in the UI, intake payload, attachment names, prompts
-or other diagnosis inputs. Keep original IDs/paths and labels in restricted provenance
-and evaluation metadata, accessible for scoring rather than diagnosis.
+## Scenario, provenance, and evaluation boundaries
 
-When preparing a later diagnosis evaluation, prevent history or reused/related images
-(including crops of the same parent) from revealing the current sample's answer; omit
-or separate conflicting history and record the exclusion. Compare actual model outputs
-with hidden labels only after inference. No model call is needed for the intake demo.
+UC-001 owns the accepted and implemented synthetic farm/field seed requirements,
+including counts, history, and empty-history behavior; see
+[UC-001](../specs/UC-001-REPORT-INTAKE.md). This document owns open-data source
+selection and evaluation-sample guidance. Do not reopen seed-count decisions here.
 
-## Completion evidence
+For each selected image record dataset DOI/version, original ID/path, download
+URL/date, neutral local filename, SHA-256, available labels, licence/attribution
+and transformations. Keep raw files in ignored `data/`; verify actual image format
+and upload size. Unknown labels stay unknown.
 
-Three author-hosted whole-leaf examples are downloaded locally for manual upload;
-see the [manifest](EXAMPLE-IMAGES.md). They are not seeded into farm history or
-selected as an evaluation set. The planned scenario import is complete only when selected files exist,
-hashes and provenance are recorded, synthetic scenarios and image reuse are identified,
-and the relevant display and evaluation leakage checks pass. A small convenience
-sample cannot establish population performance or measured incidence.
+Images alone are not real farm history, disease incidence, treatment outcomes, or
+business-action labels. Synthetic histories must remain explicitly labelled
+synthetic; any fictional finding or action is scenario context, not source ground
+truth. Current-sample scoring labels and label-bearing identifiers stay separate from
+displayed observations, attachment names and future diagnosis inputs. Earlier
+confirmed findings may be legitimate history; for diagnosis evaluation, exclude and
+record history that reveals the current sample answer. Keep scoring/provenance
+metadata outside inference inputs. Record image reuse and relationships
+(including crops from one parent) and prevent answer leakage through history.
+
+In later experiments, report controlled BRACOL and field-condition results separately.
+Where requirements define uncertainty handling or a request for more evidence as an
+expected behavior, assess and report those behaviors explicitly. Do not treat them
+as universal success criteria or substitute model self-confidence for evidence-based
+uncertainty handling. Keep source label meanings and scales intact; do not convert
+them into business actions without a separately defined rule.
