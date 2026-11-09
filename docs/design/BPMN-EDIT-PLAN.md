@@ -80,7 +80,7 @@ the current assignment. This plan changes no prototype code, dataset or group pa
 
 - Keep **Report received**, then replace the four visible registration/context/AI/DMN
   boxes with **AI-assisted report triage**. Retain those original operations inside it.
-  Keep **Which responsibility?** visible immediately afterwards.
+  Keep **Who handles report?** visible immediately afterwards.
 - Routine: **Relay established guidance** in coordination/communications → shared
   recording step. This path visibly avoids technician assessment and case creation.
 - Technician: **Create or link technical case** → **Review context and advise farmer**
@@ -126,6 +126,23 @@ travel or from having fewer diagram boxes.
 | R5: honest improvement argument | Cost/benefit notes include travel and the new handover, distinguish measurements from assumptions and use comparable AS-IS/TO-BE scenarios. |
 | A4 fit | Export each overview to a single A4 landscape page, inspect at 100%/print size, and verify readable labels, no clipping/overlaps and traceable arrows. This is a required check, not yet a result. |
 
-**Current evidence:** plan drafted against the uploaded models and the assignment.
-No diagram edits, new exports, Camunda import or A4 acceptance have been performed
-for this plan. The prior model checks do not validate the planned revisions.
+**Current evidence (9 November 2026):** the top-level models now implement this
+plan. AS-IS has 12 overview nodes and four subprocess detail diagrams; TO-BE has
+13 overview nodes and three detail diagrams. Assessment/phone choice, scheduling,
+travel and on-site work remain in editable detail. TO-BE retains registration,
+context retrieval, AI assessment and deterministic DMN routing inside triage.
+The visit returns to technician review without repeating case creation.
+
+Both files pass the official BPMN 2.0 XSD, unique-ID/reference checks,
+sequence-flow scope and incoming/outgoing consistency checks. Every flow node is
+reachable from a start and has a path to an end within its process/subprocess.
+These structural checks do not establish routing-policy correctness.
+
+[AS-IS](../../models/exports/p1_asis.svg) and
+[TO-BE](../../models/exports/p1_tobe.svg) overview previews use A4 landscape
+dimensions (297 × 210 mm), 9.5-point activity labels and 9-point secondary text.
+Both rendered PNGs were visually inspected for clipping, shape overlaps and arrow
+routes; automated text-fit checks reported no warnings. The previews are derived
+from the XML overview layout. Camunda UI import, subprocess navigation and physical
+print legibility remain unverified. Quantified cost/benefit evidence and group
+acceptance of the proposed process remain outstanding. No application code changed.
