@@ -54,10 +54,12 @@ User opens report entry to record an observation for a field.
 
 - Text-only reports are valid. A field with no earlier reports shows an empty history;
   missing history does not mean there was no disease.
-- History contains only reports for the selected field that precede the current report;
-  it excludes the current report and reports for other fields. The time basis for
-  “earlier” must be explicit in DESIGN; receipt order alone may misorder backdated
-  observations.
+- History is computed at retrieval: include same-field reports whose key
+  `(observation date, receipt timestamp, report ID)` sorts before the current
+  report’s key, newest first by that key. Dates use calendar-day precision; receipt
+  timestamps are UTC instants and IDs break exact timestamp ties lexicographically.
+  Exclude the current report and other fields. A later-submitted backdated report
+  can therefore appear in history on a subsequent retrieval.
 - Repeated submissions remain distinct; deduplication and aggregation are deferred.
 - Dataset images may illustrate synthetic reports. Reuse is identified in scenario
   provenance and does not establish independent observations or real field incidence.
@@ -72,27 +74,38 @@ User opens report entry to record an observation for a field.
 ## Acceptance criteria
 
 Sources: [main paper and concept](../reference/README.md) for field-linked reports
-and history; agreed intake and synthetic-history scope in the current request. Image
-limits are proposed defaults pending agreement, not established policy.
+and history; the owner’s current request authorizes the bounded intake and synthetic
+history scope. The concrete defaults below are implementation recommendations, not
+owner or group approvals. The [source map](../reference/README.md) identifies the
+paper as business-scope authority and the assignment as deliverables authority.
 
-1. Given fictional farms and fields, the user can select a farm and a field belonging
-   to it. Given valid date and description, submitting with or without an image saves
-   a distinct report with matching evidence, unique ID and receipt timestamp.
-2. Given a saved ID, detail retrieves the report and any saved image after restart;
-   it shows only earlier reports for that same field, or an explicit empty history.
-3. Given history with submitted observations and an earlier confirmed finding, the
-   view distinguishes them and marks the scenario synthetic. It does not describe an
-   observation or AI inference as a confirmed finding.
-4. Given a dataset-backed scenario, source attribution and synthetic context are
-   available. Current-sample disease/severity answers and label-bearing filenames
-   are absent from the observation, displayed attachment name and future diagnosis
-   inputs; earlier confirmed findings may be visible as history. See the
-   [open-data plan](../reference/OPEN-DATA.md) for leakage controls.
-5. Given an invalid farm/field pairing, input or attachment, the user sees an
-   actionable error and no partial report. Given storage failure, no success is
-   reported; an unknown ID gives a not-found result.
-6. Subject to approval of the proposed attachment defaults, a valid JPEG/PNG is
-   displayed on detail; corrupt, unsupported or over 10 MiB files are rejected.
+1. Offer at least two fictional farms with two fields each; each field belongs to one
+   farm. Seed at least three earlier reports, including a fictional confirmed finding,
+   and leave at least one field empty. Label scenario records synthetic.
+2. Accept a selected farm and its field, a nonblank description, a valid observation
+   date in ISO calendar format (not later than the application’s local current date),
+   and zero or one image. Accept actual JPEG/PNG content up to and including 10 MiB;
+   reject corrupt, unsupported or larger files. Save each valid submission as a
+   distinct report with its original text, date, optional image, unique ID and UTC
+   receipt timestamp; confirm receipt only after the complete save succeeds.
+3. Retrieve by ID after restart, showing the saved evidence and image if present.
+   Show history using the ordering and membership in Alternate / edge flows, including
+   same-day ties and later-submitted backdated reports. An empty history is explicit
+   and does not imply absence of disease.
+4. Distinguish prior fictional confirmed findings from submitted observations; never
+   present an observation or inference as a confirmation. Intake creates no finding.
+5. For dataset-backed scenarios, make source attribution and synthetic context
+   available. Keep current-image disease/severity scoring labels and label-bearing
+   source names out of displayed attachment names, observations and diagnosis inputs.
+   Identify reused images in provenance. Normal intake history may show prior
+   confirmed findings even when an image repeats. For a future diagnosis evaluation,
+   exclude history entries that reveal the current image’s answer, including findings
+   tied to the same image or related images such as crops of one parent; record each
+   exclusion. Keep scoring labels and source identifiers in separate restricted
+   provenance/evaluation metadata, per the [open-data plan](../reference/OPEN-DATA.md).
+6. Invalid required input, farm/field pairing or attachment yields an actionable error
+   and leaves no partial report or image; a storage failure does not claim success and
+   leaves no retrievable partial report. An unknown ID yields a not-found result.
 
 ## Security / trust-boundary notes
 
@@ -104,29 +117,33 @@ publicly. Keep provenance and evaluation metadata out of diagnosis inputs.
 ## Validation plan
 
 ### Tests
-- Unit: farm/field pairing, required inputs, report creation and history boundaries
-  (criteria 1, 2, 5).
-- Integration: save/retrieve and restart, field isolation and empty history, labelled
-  evidence types, dataset provenance and current-answer/filename leakage, valid and
-  invalid attachments, unknown ID and storage failure (criteria 1–6).
-- E2E: demonstrate selection, text-only and image submissions, retrieval, earlier
-  confirmed history, empty history and errors; inspect synthetic labels and attribution
-  (criteria 1–6). Attachment-limit checks depend on agreement on defaults.
+- Unit: pairing, date and description validation, attachment boundaries and history
+  ordering, including same-day ties and backdated submissions (criteria 2, 3, 6).
+- Integration: seed coverage, atomic save/retrieve after restart, field isolation,
+  evidence types, image validation, unknown ID and storage failure (criteria 1–6).
+  For dataset-backed fixtures, check attribution, neutral names and repeat/related
+  image leakage boundaries; future diagnosis-input exclusions are deferred to the
+  evaluation slice (criterion 5).
+- E2E: demonstrate selection, text-only and image submission, retrieval, confirmed
+  history, empty history and errors; inspect synthetic labels and attribution
+  where images are sourced (criteria 1–6).
 
 ### Evidence
 Record executed application checks during VALIDATE. No application checks have run.
 
 ## Open questions / assumptions
 
-- Recommend one required description, one optional JPEG/PNG image and a 10 MiB
-  maximum: simple for the first demo and bounded for local storage. These defaults
-  require agreement; implementation of their exact limits awaits that decision.
-- Recommend a small seed with two farms, two fields each and a few earlier reports,
-  including one confirmed finding and one empty field; exact counts are not approved
-  requirements. See the [open-data plan](../reference/OPEN-DATA.md).
-- Local persistence and upload handling belong to DESIGN. Recommend observation
-  date for history chronology, retaining receipt time separately; define ties and
-  backdated entries before implementation. No images are downloaded.
+- Working defaults recommended for implementation, not owner/group approvals: one
+  nonblank description, a nonfuture local calendar date, and at most one JPEG/PNG
+  up to 10 MiB. These keep entry simple and storage bounded. The local date is the
+  application host’s date; timezone and clock changes affect future-date validation.
+- The minimum seed and chronology above provide isolation, confirmed-history and
+  empty-history examples with little setup. Observation date best represents when an
+  event occurred; receipt time and ID give deterministic same-day order. Same-day
+  ordering does not claim the events actually occurred in that order.
+- No material intake policy question remains for DESIGN under these working defaults;
+  human review remains outstanding. Local persistence and upload handling belong to
+  DESIGN. No images have been downloaded or scenarios imported.
 - Offline capture is a paper assumption deferred beyond this slice; disclose the gap.
 
 ## Notes for implementation

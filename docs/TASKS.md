@@ -15,10 +15,10 @@ docs/specs/UC-001-REPORT-INTAKE.md
 
 ## Current slice
 
-The agreed journey and synthetic-history boundaries are drafted for human review.
-Attachment defaults and exact seed counts are recommendations, not approved decisions.
-SPECIFY remains in progress pending review and agreement on attachment limits; choose
-whether to adopt the seed recommendation before preparing fixtures.
+The bounded intake and synthetic-history journey has implementable working defaults
+for attachments, seed coverage and chronology. They are recommendations, not owner
+or group approvals. SPECIFY remains in progress for the required human review; no
+routing, AI or case behavior is included.
 
 ## Evidence
 
@@ -26,15 +26,16 @@ Bootstrap checks passed on 9 November: setup check, lifecycle scenarios, 46 tool
 tests and 3 pytest tests. Bootstrap committed as `ac10147`. No application has been
 built or application acceptance checks run for this draft.
 
-For this specification revision: `bash scripts/check-lifecycle.sh` and
-`bash scripts/test-lifecycle.sh` passed; local links in the three edited documents
-and `git diff --check` passed. Human review is outstanding.
+For this revision, `bash scripts/check-lifecycle.sh`, `bash scripts/test-lifecycle.sh`,
+local links in both edited documents and `git diff --check` passed. Human review is
+outstanding; no application acceptance checks have run.
 
 ## Next smallest step
 
-Review the UC and attachment defaults. The agreed selection, persistence and history
-journey can inform DESIGN; finalize attachment limits before implementing them.
-After agreeing seed contents, prepare scenarios under the [open-data plan](reference/OPEN-DATA.md).
+Human review of [UC-001](specs/UC-001-REPORT-INTAKE.md), then select DESIGN for the
+agreed intake: define storage/atomicity, retrieval and image validation while preserving
+history order and evaluation isolation. Scenario preparation follows the
+[open-data plan](reference/OPEN-DATA.md); no dataset has been downloaded.
 
 ## Selected routing step
 
