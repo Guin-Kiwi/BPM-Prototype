@@ -117,3 +117,41 @@ def test_storage_failure_does_not_confirm_or_persist(client):
     assert 'confirmed' not in response.text.lower()
     with sqlite3.connect(client.app.state.db_path) as conn:
         assert conn.execute('select count(*) from reports').fetchone()[0] == 3
+
+
+def test_same_day_history_uses_utc_receipt_then_id(client):
+    with sqlite3.connect(client.app.state.db_path) as db:
+        rows = [
+            ('a', '2025-03-01T10:00:00.000000+00:00', 'Earlier instant'),
+            ('b', '2025-03-01T11:00:00.000000+00:00', 'Tie lower ID'),
+            ('c', '2025-03-01T11:00:00.000000+00:00', 'Current tie'),
+            ('d', '2025-03-01T11:00:00.000000+00:00', 'Tie higher ID'),
+            ('e', '2025-03-01T12:00:00.000000+00:00', 'Later instant'),
+        ]
+        db.executemany('INSERT INTO reports VALUES (?, ?, ?, ?, ?, ?, NULL, NULL, NULL)',
+                       [(key, 'farm-1', 'field-2', '2025-03-01', description, timestamp)
+                        for key, timestamp, description in rows])
+    text = client.get('/reports/c').text
+    assert text.index('Tie lower ID') < text.index('Earlier instant')
+    assert 'Tie higher ID' not in text and 'Later instant' not in text
+
+
+@pytest.mark.parametrize(('content_type', 'body'), [
+    ('multipart/form-data', b'bad'),
+    ('multipart/form-data; boundary=demo', b'garbage that is not a multipart body'),
+])
+def test_bad_multipart_is_an_actionable_client_error(client, content_type, body):
+    response = client.request('POST', '/reports', headers={'Content-Type': content_type}, content=body)
+    assert response.status_code == 400
+    assert 'form' in response.text.lower()
+    with sqlite3.connect(client.app.state.db_path) as db:
+        assert db.execute('select count(*) from reports').fetchone()[0] == 3
+
+
+def test_repository_closes_connections(tmp_path):
+    from app.infrastructure.sqlite import SQLiteRepository
+    repo = SQLiteRepository(tmp_path / 'connections.sqlite3')
+    with repo.connect() as db:
+        db.execute('select 1')
+    with pytest.raises(sqlite3.ProgrammingError, match='closed'):
+        db.execute('select 1')
