@@ -231,9 +231,11 @@ acceptance or visual journey are claimed.
 
 ## Open questions / assumptions
 
-- Owner to confirm the fixed demo identity/farm, mapping existing seed history, and
-  whether one or multiple demo farms are needed. Real authentication, authorization
-  and account/farm relationships require separate design and review.
+- The owner selected one primary farmer view and one technician view focused on the
+  primary farm, with neighbouring farm, field, report and case context. Exact synthetic
+  counts and generation remain undecided. Choose the specific simulated identity and
+  mapping of existing seed history; the older two-farm seed remains unchanged. Real
+  authentication, authorization and account/farm relationships need separate design.
 - DESIGN must define usable GPS accuracy and actual boundary availability, how farm
   ownership and field boundaries are verified and retained, and behavior if neither
   location source is available. Retry without submission is a working recommendation,

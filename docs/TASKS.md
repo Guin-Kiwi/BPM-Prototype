@@ -53,7 +53,7 @@ Neither constitutes human or visual acceptance.
 
 ## Next smallest step
 
-Resolve the proposed demo identity and seed mapping, how to convey estimate scope
+Resolve the specific simulated identity and legacy seed mapping, how to convey estimate scope
 without requiring extra narrative, usable-GPS criteria, actual field-boundary availability,
 and farm/nearby history and grouping rules. If neither usable GPS nor a selectable known
 field is available, retry without submission is a working recommendation for DESIGN,
@@ -69,8 +69,12 @@ Separately, BRACOT remains the next data inspection priority under the
 
 [Farm history and technical case model](design/DATA-MODEL.md) is drafted for review,
 with source/decision trace, relationships, spatial framework and legacy-data limits.
-It does not approve case cardinalities or change the active SPECIFY phase. Review
-those choices before implementation or dataset generation; no generation is authorised.
+The owner selected one primary farmer view and one technician view focused on the
+primary farm, with neighbouring contextual data; exact synthetic counts are open.
+The proposed single typed history-event table is not implemented. The existing
+two-farm demo seed remains unchanged; no migration or dataset generation is authorised.
+Review case cardinalities and group alignment before implementation. This draft does
+not change the active SPECIFY phase.
 
 ## Selected routing step
 
