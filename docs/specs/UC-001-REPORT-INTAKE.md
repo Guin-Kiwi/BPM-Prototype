@@ -152,3 +152,59 @@ Use existing domain/application/interface/infrastructure layers. Design selectio
 report persistence and history retrieval; decide persistence in DESIGN and record
 consequential decisions per the working agreement. Intake does not require a model
 provider, routing policy or new review workflow.
+
+## Design
+
+This is a proposed design, pending human review; the acceptance criteria and their
+unapproved working defaults remain authoritative for this slice. The existing layer
+structure is sufficient with the following small additions:
+
+- **Domain:** fictional farms and their fields; reports retain submitted observations
+  and optional original image evidence. A prior fictional confirmed finding is a
+  distinct kind of history evidence, never created by intake.
+- **Application:** an intake service validates the farm/field relationship and the
+  specified inputs, then requests one complete save; a retrieval service gets a
+  report and computes its same-field history under the specified ordering. These
+  services own the use-case rules and depend on a modest repository boundary, not
+  on HTTP or a database. The repository provides farm/field lookup, atomic report
+  save, report lookup and field history; storage-specific representations stay behind it.
+- **Interface:** a local form offers farm and dependent field selection, date,
+  description and optional image. Validation errors identify the relevant input; after
+  successful save it leads to synthetic-labelled report detail. Detail is addressable
+  by report ID and shows the original evidence, distinct prior findings and ordered
+  history or its explicit empty state; unknown IDs show not found. Render text safely
+  and use neutral attachment names. FastAPI is the existing development profile;
+  server-rendered HTML is a proposed simple journey, without choosing a template engine.
+- **Infrastructure:** a local SQLite adapter owns durable fictional scenario and report
+  records and stores an optional bounded original image with its report in one
+  transaction, as proposed in [ADR-001](../adr/ADR-001-local-report-persistence.md).
+  Image content must be decoded/verified as actual JPEG or PNG, not accepted solely
+  from a filename or MIME type. Invalid input creates nothing; a failed transaction
+  leaves no retrievable partial report or image and produces no confirmation.
+
+Synthetic seed records use stable scenario-owned identities so initialization is
+idempotent across restarts and does not overwrite user submissions or duplicate seed
+history. Seed identities are not dataset identifiers. No raw dataset images are
+currently present; add source-backed images only after selection and provenance work
+in the [open-data plan](../reference/OPEN-DATA.md). Keep attribution and synthetic
+context available separately from restricted original identifiers, paths and scoring
+labels; neither label-bearing names nor current answers enter displayed observations,
+attachment names or future diagnosis inputs. Track image reuse and relatedness in
+provenance; future evaluation must record exclusions described in criterion 5.
+
+SQLite keeps report and image atomic with few moving parts, at the cost of database
+growth and a local writable file; it is a local demo choice, not a distributed store
+or backup strategy. The 10 MiB limit bounds each image, not total storage. The local
+host clock and deterministic same-day tie breaks retain the limitations stated above.
+Proposed minimal additions for DEVELOP are a multipart form parser and an image
+verification library if needed (for example python-multipart and Pillow); neither
+is installed or approved, and no template engine, ORM or migration tool is selected.
+
+Acceptance mapping: seed and idempotence cover **1**; form, validation and atomic
+save cover **2 and 6**; durable lookup and history cover **3**; typed evidence
+covers **4**; separated provenance and deferred evaluation exclusions cover **5**.
+After human review and explicit selection of DEVELOP, implement the smallest journey
+using the existing TDD workflow. Exercise the spec's unit, integration and E2E plan,
+especially image content/size boundaries, transaction failure, restart, seed reruns,
+history ties/backdating and separation of findings and source labels. No application
+behavior or acceptance checks are claimed in DESIGN.

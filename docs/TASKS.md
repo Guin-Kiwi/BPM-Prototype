@@ -1,6 +1,6 @@
 # Current work
 
-PHASE: 1
+PHASE: 2
 STATUS: in-progress
 
 ## Active objective
@@ -15,10 +15,10 @@ docs/specs/UC-001-REPORT-INTAKE.md
 
 ## Current slice
 
-The bounded intake and synthetic-history journey has implementable working defaults
-for attachments, seed coverage and chronology. They are recommendations, not owner
-or group approvals. SPECIFY remains in progress for the required human review; no
-routing, AI or case behavior is included.
+The owner selected DESIGN for bounded intake and synthetic history. The spec's
+working defaults and the proposed design and storage decision remain unapproved.
+Human review of the spec and design is outstanding; no routing, AI or case behavior
+is included.
 
 ## Evidence
 
@@ -26,16 +26,22 @@ Bootstrap checks passed on 9 November: setup check, lifecycle scenarios, 46 tool
 tests and 3 pytest tests. Bootstrap committed as `ac10147`. No application has been
 built or application acceptance checks run for this draft.
 
-For this revision, `bash scripts/check-lifecycle.sh`, `bash scripts/test-lifecycle.sh`,
-local links in both edited documents and `git diff --check` passed. Human review is
-outstanding; no application acceptance checks have run.
+Previous SPECIFY revision: `bash scripts/check-lifecycle.sh`,
+`bash scripts/test-lifecycle.sh`, local links in both edited documents and
+`git diff --check` passed. Human review is outstanding; no application acceptance
+checks have run.
+
+DESIGN revision: lifecycle check and lifecycle scenario tests passed; local Markdown
+link targets in the spec, task record and ADR exist, and `git diff --check` passed.
+These are document/process checks, not application acceptance evidence.
 
 ## Next smallest step
 
-Human review of [UC-001](specs/UC-001-REPORT-INTAKE.md), then select DESIGN for the
-agreed intake: define storage/atomicity, retrieval and image validation while preserving
-history order and evaluation isolation. Scenario preparation follows the
-[open-data plan](reference/OPEN-DATA.md); no dataset has been downloaded.
+Human review of [UC-001](specs/UC-001-REPORT-INTAKE.md) and the proposed
+[storage ADR](adr/ADR-001-local-report-persistence.md); align shared PROJECT wording
+separately, then explicitly select DEVELOP for the bounded journey. Scenario
+preparation follows the [open-data plan](reference/OPEN-DATA.md); no dataset has
+been downloaded.
 
 ## Selected routing step
 
