@@ -1,53 +1,45 @@
 # Current work
 
-PHASE: 0
+PHASE: 1
 STATUS: in-progress
 
 ## Active objective
 
-Bootstrap the Cooxupé P1 prototype from the AI-SDLC template without implementing
-unagreed business policy. No active use case yet; bootstrap is tooling/context work.
+[UC-001: report intake](specs/UC-001-REPORT-INTAKE.md): select a fictional farm and
+field, save and retrieve a report, and show earlier reports for that field. Routing
+and model integration are deferred.
+
+## Current Use Case
+
+docs/specs/UC-001-REPORT-INTAKE.md
 
 ## Current slice
 
-Project identity, source map, Python/FastAPI environment and inherited checks.
-
-## Acceptance / validation cues
-
-- Project documents distinguish implemented scaffold from proposed capabilities.
-- References resolve locally and identify authority and open policy questions.
-- Template identity is removed, attribution retained and project code licensed MIT.
-- Setup and full handoff checks pass; record evidence below.
-
-## Decisions and remaining work
-
-Ayla approved MIT and template cleanup. Python/FastAPI follows the discussed profile.
-First-slice decisions: provider access and image timing; routing/review criteria and
-rule artifact/execution; whether a narrow MCP integration is needed. These do not
-block environment setup, but behavior must be agreed before implementation.
+The agreed journey and synthetic-history boundaries are drafted for human review.
+Attachment defaults and exact seed counts are recommendations, not approved decisions.
+SPECIFY remains in progress pending review and agreement on attachment limits; choose
+whether to adopt the seed recommendation before preparing fixtures.
 
 ## Evidence
 
-Verified 9 November 2026:
-- `bash scripts/check-setup.sh`: passed; Codex skill link and local Python environment resolve.
-- `bash scripts/test.sh`: passed; lifecycle scenarios, 46 tooling tests and 3 pytest tests.
-- Project navigation/source link check: passed; references use the surrounding folder.
-- `git diff --check`: passed.
+Bootstrap checks passed on 9 November: setup check, lifecycle scenarios, 46 tooling
+tests and 3 pytest tests. Bootstrap committed as `ac10147`. No application has been
+built or application acceptance checks run for this draft.
 
-Corrected inherited setup path duplication and isolated licence/README regression
-fixtures from project-specific content. Human review of bootstrap changes remains
-outstanding; phase stays in-progress for that review.
+For this specification revision: `bash scripts/check-lifecycle.sh` and
+`bash scripts/test-lifecycle.sh` passed; local links in the three edited documents
+and `git diff --check` passed. Human review is outstanding.
 
 ## Next smallest step
 
-Review bootstrap, then select SPECIFY for UC-001: assess and route one text report,
-with explicit handling of unavailable history, invalid model output and model failure.
+Review the UC and attachment defaults. The agreed selection, persistence and history
+journey can inform DESIGN; finalize attachment limits before implementing them.
+After agreeing seed contents, prepare scenarios under the [open-data plan](reference/OPEN-DATA.md).
 
-## Backlog
+## Deferred decisions / backlog
 
-1. Assess and route one report with real LLM analysis and traceable rule output.
-2. Advisory evidence view, review/corrections and simulated guidance/handover.
-3. Synthetic field scenarios, duplicate handling and experiment export.
+- LLM provider and image assessment, routing policy/execution and review criteria.
+- Advisory guidance and handover, duplicate handling and experiment export.
+- Offline capture remains a disclosed gap against the paper's assumption.
 
-Implementation owner: [working agreement](WORKING-AGREEMENT.md).
-Source scope: [project context](PROJECT.md) and [source map](reference/README.md).
+Implementation ownership: [working agreement](WORKING-AGREEMENT.md).

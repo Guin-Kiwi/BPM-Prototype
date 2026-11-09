@@ -40,3 +40,5 @@ do not provide business action labels. Preserve dataset versions and attribution
 Public data and agronomic source candidates are listed in the linked prototype
 concept. Verify suitability and reuse terms before importing samples. No source
 documents or datasets have been redistributed by this bootstrap.
+
+First dataset preparation: [open-data intake plan](OPEN-DATA.md).
