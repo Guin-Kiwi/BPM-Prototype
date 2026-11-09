@@ -1,139 +1,104 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 1560 1000">
-<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#253746"/></marker><marker id="message" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M1,0 L9,4 L1,8" fill="none" stroke="#526477"/></marker></defs>
-<rect width="1560" height="1000" fill="white"/>
-<text x="25" y="20.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="22" fill="#172b3a">P1 AS-IS — Technical orientation</text>
-<text x="25" y="39.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#172b3a">Working draft and team assumptions: request to guidance and documentation</text>
-<rect x="25" y="45" width="1500" height="70" fill="#f4f6f8" stroke="#596977" stroke-width="1.2" />
-<text x="775.0" y="80.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="18" fill="#172b3a">Farmer (member)</text>
-<rect x="25" y="150" width="1500" height="700" fill="#fff" stroke="#596977" stroke-width="1.2" />
-<rect x="55" y="150" width="1470" height="255" fill="#f7fafd" stroke="#596977" stroke-width="1.2" />
-<line x1="93" y1="150" x2="93" y2="405" stroke="#b6c1ca"/>
-<g transform="translate(75,277.5) rotate(-90)">
-<text x="0" y="0.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a">Advisory coordination</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 1220.0 862.6262626262626">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L7,4 L0,8 Z" fill="#243746"/></marker><marker id="message" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M1,0 L8,4 L1,8" fill="none" stroke="#526477"/></marker></defs>
+<rect width="1220.0" height="862.6262626262626" fill="white"/>
+<text x="610.0" y="24.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="21.338304339693227" fill="#172c3a">P1 AS-IS — Current working baseline</text>
+<g transform="translate(10.0,45.0)">
+<rect x="20.0" y="20.0" width="1160.0" height="50.0" rx="0" fill="#f3f6f9" stroke="#617280" stroke-width="1.2"/>
+<text x="600.0" y="45.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="15.143312757201647" fill="#172c3a">Farmer (member)</text>
+<rect x="20.0" y="110.0" width="1160.0" height="590.0" rx="0" fill="#fff" stroke="#617280" stroke-width="1.2"/>
+<path d="M48.0,110.0 L48.0,700.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<g transform="translate(34.0,405.0) rotate(-90)">
+<text x="0" y="0.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">Cooxupé · P1</text>
 </g>
-<rect x="55" y="405" width="1470" height="445" fill="#fff" stroke="#596977" stroke-width="1.2" />
-<line x1="93" y1="405" x2="93" y2="850" stroke="#b6c1ca"/>
-<g transform="translate(75,627.5) rotate(-90)">
-<text x="0" y="0.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a">Field advisory</text>
+<rect x="50.0" y="110.0" width="1130.0" height="240.0" rx="0" fill="#f9fbfd" stroke="#617280" stroke-width="1.2"/>
+<path d="M85.0,110.0 L85.0,350.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<g transform="translate(67.0,230.0) rotate(-90)">
+<text x="0" y="0.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Advisory coordination</text>
 </g>
-<g transform="translate(40,500.0) rotate(-90)">
-<text x="0" y="0.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#172b3a">Cooxupé · P1</text>
+<rect x="50.0" y="350.0" width="1130.0" height="350.0" rx="0" fill="#f9fbfd" stroke="#617280" stroke-width="1.2"/>
+<path d="M85.0,350.0 L85.0,700.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<g transform="translate(67.0,525.0) rotate(-90)">
+<text x="0" y="0.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Field advisory</text>
 </g>
-<path d="M136,253.0 L165,252.5" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M285,252.5 L320,252.5" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M380.0,292.5 L380.0,452.5" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M530,490.0 L585,487.5" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<text x="535" y="470.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">Phone</text>
-<path d="M505,515 L505,650 L920,650 L920,635" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<text x="600" y="638.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">Visit</text>
-<path d="M705,487.5 L745,490.0" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M770,515 L770,610 L895,610" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<text x="805" y="598.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">Yes</text>
-<path d="M795,490.0 L1165,490.0" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<text x="1080" y="470.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">No</text>
-<path d="M1115,607 L1190,607 L1190,515" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1215,490.0 L1245,487.5" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1305.0,527.5 L1305.0,567.5" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M920,585 L920,420 L890,420 L890,390" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M960,350.0 L1030,350.0" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1048,368 L1048,420 L1055,420 L1055,567.5" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1305,647.5 L1305,657 L1270,657 L1270,665" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1245,690 L1110,690 L1110,735" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<text x="1150" y="680.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">Yes</text>
-<path d="M1270,715 L1270,735 L1250,735 L1250,750" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<text x="1280" y="725.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">No</text>
-<path d="M1170,775.0 L1225,775.0" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1275,775.0 L1300,775.0" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M1420,775.0 L1460,775.0" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M440,492.5 L480,490.0" fill="none" stroke="#253746" stroke-width="1.7" marker-end="url(#arrow)"/>
-<path d="M118.0,115 L118.0,235" fill="none" stroke="#253746" stroke-width="1.7" stroke-dasharray="7 5" marker-end="url(#message)"/>
-<circle cx="118.0" cy="115" r="3.5" fill="white" stroke="#526477"/>
-<text x="128.0" y="172.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#172b3a">Request for support</text>
-<path d="M1365,607.5 L1495,607.5 L1495,115" fill="none" stroke="#253746" stroke-width="1.7" stroke-dasharray="7 5" marker-end="url(#message)"/>
-<circle cx="1365" cy="607.5" r="3.5" fill="white" stroke="#526477"/>
-<text x="1360" y="350.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#172b3a">Agronomic guidance</text>
-<path d="M860,310 L860,115" fill="none" stroke="#253746" stroke-width="1.7" stroke-dasharray="7 5" marker-end="url(#message)"/>
-<circle cx="860" cy="310" r="3.5" fill="white" stroke="#526477"/>
-<text x="690" y="170.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#172b3a">Visit arrangements</text>
-<path d="M920,115 L920,310" fill="none" stroke="#253746" stroke-width="1.7" stroke-dasharray="7 5" marker-end="url(#message)"/>
-<circle cx="920" cy="115" r="3.5" fill="white" stroke="#526477"/>
-<text x="930" y="170.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#172b3a">Slot confirmation</text>
-<circle cx="118.0" cy="253.0" r="18.0" fill="white" stroke="#253746" stroke-width="1.6"/>
-<rect x="108.0" y="246.0" width="20" height="14" fill="white" stroke="#253746"/>
-<path d="M108.0,246.0 L118.0,254.0 L128.0,246.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="180" y="295.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a">Support requested</text>
-<rect x="165" y="212.5" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="225.0" y="247.9" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Receive and</text>
-<text x="225.0" y="264.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">register</text>
-<text x="225.0" y="280.1" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">request</text>
-<rect x="320" y="212.5" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="380.0" y="247.9" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Allocate</text>
-<text x="380.0" y="264.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">available</text>
-<text x="380.0" y="280.1" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">technician</text>
-<path d="M505.0,465 L530,490.0 L505.0,515 L480,490.0 Z" fill="white" stroke="#253746" stroke-width="1.6"/>
-<path d="M498.0,483.0 L512.0,497.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M512.0,483.0 L498.0,497.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="505.0" y="537.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a">Phone or visit?</text>
-<rect x="585" y="447.5" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="645.0" y="490.95" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Diagnose by</text>
-<text x="645.0" y="507.05" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">phone</text>
-<path d="M770.0,465 L795,490.0 L770.0,515 L745,490.0 Z" fill="white" stroke="#253746" stroke-width="1.6"/>
-<path d="M763.0,483.0 L777.0,497.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M777.0,483.0 L763.0,497.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="770.0" y="537.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a">Visit still needed?</text>
-<path d="M920.0,585 L945,610.0 L920.0,635 L895,610.0 Z" fill="white" stroke="#253746" stroke-width="1.6"/>
-<path d="M913.0,603.0 L927.0,617.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M927.0,603.0 L913.0,617.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="920.0" y="657.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a"></text>
-<rect x="995" y="567.5" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="1055.0" y="590.45" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Travel and</text>
-<text x="1055.0" y="606.5500000000001" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">inspect farm</text>
-<rect x="1049.0" y="631.5" width="12" height="12" fill="white" stroke="#253746"/>
-<path d="M1051.0,637.5 L1059.0,637.5" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M1055.0,633.5 L1055.0,641.5" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M1190.0,465 L1215,490.0 L1190.0,515 L1165,490.0 Z" fill="white" stroke="#253746" stroke-width="1.6"/>
-<path d="M1183.0,483.0 L1197.0,497.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M1197.0,483.0 L1183.0,497.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="1190.0" y="537.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a"></text>
-<rect x="1245" y="447.5" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="1305.0" y="490.95" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Formulate</text>
-<text x="1305.0" y="507.05" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">recommendation</text>
-<rect x="1245" y="567.5" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="1305.0" y="610.95" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Give agronomic</text>
-<text x="1305.0" y="627.0500000000001" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">guidance</text>
-<rect x="1300" y="735" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="1360.0" y="770.4" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Document</text>
-<text x="1360.0" y="786.5" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">request and</text>
-<text x="1360.0" y="802.6" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">guidance</text>
-<circle cx="1478.0" cy="775.0" r="18.0" fill="white" stroke="#253746" stroke-width="3.2"/>
-<text x="1478.0" y="814.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a">Guidance recorded</text>
-<rect x="820" y="310" width="140" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="890.0" y="332.95" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Arrange visit</text>
-<text x="890.0" y="349.05" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">with farmer</text>
-<rect x="884.0" y="374" width="12" height="12" fill="white" stroke="#253746"/>
-<path d="M886.0,380 L894.0,380" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M890.0,376 L890.0,384" fill="none" stroke="#253746" stroke-width="1.7" />
-<circle cx="1048.0" cy="350.0" r="18.0" fill="white" stroke="#253746" stroke-width="1.6"/>
-<circle cx="1048.0" cy="350.0" r="14.0" fill="none" stroke="#253746"/>
-<path d="M1048.0,341.0 L1048.0,350.0 L1055.0,354.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="1048.0" y="389.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a">Agreed visit time</text>
-<path d="M1270.0,665 L1295,690.0 L1270.0,715 L1245,690.0 Z" fill="white" stroke="#253746" stroke-width="1.6"/>
-<path d="M1263.0,683.0 L1277.0,697.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M1277.0,683.0 L1263.0,697.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="1420" y="690.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a">Visit occurred?</text>
-<rect x="1050" y="735" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="1110.0" y="778.45" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Return from</text>
-<text x="1110.0" y="794.5500000000001" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">farm</text>
-<path d="M1250.0,750 L1275,775.0 L1250.0,800 L1225,775.0 Z" fill="white" stroke="#253746" stroke-width="1.6"/>
-<path d="M1243.0,768.0 L1257.0,782.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<path d="M1257.0,768.0 L1243.0,782.0" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="1250.0" y="822.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#172b3a"></text>
-<rect x="320" y="452.5" width="120" height="80" fill="#fff" stroke="#596977" stroke-width="1.2" rx="9" ry="9"/>
-<text x="380.0" y="504.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="14" fill="#172b3a">Assess request</text>
-<path d="M110,875 L100,875 L100,945 L110,945" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="112" y="903.1" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">Phone / visit flow: working-draft assumptions, not validated operation. Farmer waits for and hosts a</text>
-<text x="112" y="916.9" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">visit. Timer assumes an agreed visit date.</text>
-<path d="M800,875 L790,875 L790,945 L800,945" fill="none" stroke="#253746" stroke-width="1.7" />
-<text x="802" y="910.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">Process-level status collection and monitoring meetings span requests; they are not per-request steps.</text>
-<text x="25" y="982.0" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#172b3a">Comparison proposal · non-executable · assumptions and alignment notes: NOTES.md</text>
+<path d="M121.0,208.0 L145.0,208.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M290.0,208.0 L315.0,208.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M700.0,325.0 L700.0,437.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M388.0,250.0 L388.0,415.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M500.0,430.0 L500.0,283.0 L612.0,283.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="475.0" y="376.696430976431" width="70" height="14.607138047138047" fill="white"/>
+<text x="510.0" y="384.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Yes</text>
+<path d="M690.0,605.0 L970.0,605.0 L970.0,480.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M895.0,455.0 L945.0,455.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M995.0,455.0 L1015.0,455.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1088.0,497.0 L1088.0,540.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M718.0,455.0 L750.0,455.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M438.0,455.0 L475.0,455.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M500.0,480.0 L500.0,605.0 L540.0,605.0" fill="none" stroke="#243746" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="484.5" y="583.696430976431" width="70" height="14.607138047138047" fill="white"/>
+<text x="519.5" y="591.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">No</text>
+<path d="M103.0,70.0 L103.0,190.0" fill="none" stroke="#243746" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#message)"/>
+<circle cx="103.0" cy="70.0" r="3" fill="white" stroke="#526477"/>
+<path d="M560.0,560.0 L560.0,70.0" fill="none" stroke="#243746" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#message)"/>
+<circle cx="560.0" cy="560.0" r="3" fill="white" stroke="#526477"/>
+<path d="M627.0,240.0 L627.0,70.0" fill="none" stroke="#243746" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#message)"/>
+<circle cx="627.0" cy="240.0" r="3" fill="white" stroke="#526477"/>
+<path d="M737.0,70.0 L737.0,240.0" fill="none" stroke="#243746" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#message)"/>
+<circle cx="737.0" cy="70.0" r="3" fill="white" stroke="#526477"/>
+<path d="M822.0,412.0 L822.0,70.0" fill="none" stroke="#243746" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#message)"/>
+<circle cx="822.0" cy="412.0" r="3" fill="white" stroke="#526477"/>
+<circle cx="103.0" cy="208.0" r="18.0" fill="white" stroke="#243746" stroke-width="1.5"/>
+<rect x="94.0" y="202.0" width="18" height="12" fill="white" stroke="#243746"/>
+<path d="M94.0,202.0 L103.0,209.0 L112.0,202.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<text x="127.5" y="269.696430976431" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Support</text>
+<text x="127.5" y="284.303569023569" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">requested</text>
+<rect x="145.0" y="165.0" width="145.0" height="85.0" rx="8" fill="#fff" stroke="#617280" stroke-width="1.2"/>
+<text x="217.5" y="199.79067714178825" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">Receive and</text>
+<text x="217.5" y="215.20932285821175" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">register request</text>
+<circle cx="1088.0" cy="558.0" r="18.0" fill="white" stroke="#243746" stroke-width="3"/>
+<text x="1093.0" y="579.696430976431" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Guidance</text>
+<text x="1093.0" y="594.303569023569" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">recorded</text>
+<path d="M970.0,430.0 L995.0,455.0 L970.0,480.0 L945.0,455.0 Z" fill="white" stroke="#243746" stroke-width="1.5"/>
+<path d="M964.0,449.0 L976.0,461.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<path d="M976.0,449.0 L964.0,461.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<rect x="1015.0" y="412.0" width="145.0" height="85.0" rx="8" fill="#fff" stroke="#617280" stroke-width="1.2"/>
+<text x="1087.5" y="446.79067714178825" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">Document guidance</text>
+<text x="1087.5" y="462.20932285821175" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">and progress</text>
+<rect x="315.0" y="165.0" width="145.0" height="85.0" rx="8" fill="#fff" stroke="#617280" stroke-width="1.2"/>
+<text x="387.5" y="199.79067714178825" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">Allocate available</text>
+<text x="387.5" y="215.20932285821175" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">technician</text>
+<rect x="338.0" y="415.0" width="100.0" height="80.0" rx="8" fill="#fff" stroke="#617280" stroke-width="1.2"/>
+<text x="388.0" y="439.5813542835765" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">Assess</text>
+<text x="388.0" y="455.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">request with</text>
+<text x="388.0" y="470.4186457164235" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">farmer</text>
+<circle cx="700.0" cy="455.0" r="18.0" fill="white" stroke="#243746" stroke-width="1.5"/>
+<circle cx="700.0" cy="455.0" r="14.0" fill="none" stroke="#243746"/>
+<path d="M700.0,446.0 L700.0,455.0 L706.0,459.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<text x="631.0" y="447.696430976431" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Agreed visit</text>
+<text x="631.0" y="462.303569023569" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">time</text>
+<path d="M500.0,430.0 L525.0,455.0 L500.0,480.0 L475.0,455.0 Z" fill="white" stroke="#243746" stroke-width="1.5"/>
+<path d="M494.0,449.0 L506.0,461.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<path d="M506.0,449.0 L494.0,461.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<text x="568.0" y="455.0" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Visit needed?</text>
+<rect x="750.0" y="412.0" width="145.0" height="85.0" rx="8" fill="#fff" stroke="#617280" stroke-width="1.2"/>
+<text x="822.5" y="440.29067714178825" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">Conduct field</text>
+<text x="822.5" y="455.70932285821175" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">visit</text>
+<rect x="816.5" y="482.0" width="12" height="12" fill="white" stroke="#243746"/>
+<path d="M818.5,488.0 L826.5,488.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<path d="M822.5,484.0 L822.5,492.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<rect x="540.0" y="560.0" width="150.0" height="90.0" rx="8" fill="#fff" stroke="#617280" stroke-width="1.2"/>
+<text x="615.0" y="590.7906771417883" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">Provide remote</text>
+<text x="615.0" y="606.2093228582117" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">agronomic guidance</text>
+<rect x="609.0" y="635.0" width="12" height="12" fill="white" stroke="#243746"/>
+<path d="M611.0,641.0 L619.0,641.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<path d="M615.0,637.0 L615.0,645.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<rect x="612.0" y="240.0" width="150.0" height="85.0" rx="8" fill="#fff" stroke="#617280" stroke-width="1.2"/>
+<text x="687.0" y="268.29067714178825" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">Arrange visit with</text>
+<text x="687.0" y="283.70932285821175" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.766647961092405" fill="#172c3a">farmer</text>
+<rect x="681.0" y="310.0" width="12" height="12" fill="white" stroke="#243746"/>
+<path d="M683.0,316.0 L691.0,316.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<path d="M687.0,312.0 L687.0,320.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<path d="M129.0,605.0 L120.0,605.0 L120.0,660.0 L129.0,660.0" fill="none" stroke="#243746" stroke-width="1.4" />
+<text x="130.0" y="632.5" text-anchor="start" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Phone assessment and visit choice: group assumptions.</text>
+</g>
+<text x="610.0" y="841.6262626262626" text-anchor="middle" dominant-baseline="middle" font-family="DejaVu Sans,sans-serif" font-size="13.042087542087542" fill="#172c3a">Working AS-IS assumptions labelled; visits include travel.</text>
 </svg>
