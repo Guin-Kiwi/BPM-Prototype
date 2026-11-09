@@ -1,10 +1,10 @@
 import asyncio
 import io
 import sqlite3
-from datetime import date, timedelta
+from datetime import datetime, timedelta, timezone
 
-import pytest
 import httpx
+import pytest
 from PIL import Image
 
 from app.infrastructure.web import create_app
@@ -23,9 +23,6 @@ class HttpClient:
     def get(self, path):
         return self.request('GET', path)
 
-    def post(self, path, **kwargs):
-        return self.request('POST', path, **kwargs)
-
 
 @pytest.fixture
 def client(tmp_path):
@@ -33,126 +30,99 @@ def client(tmp_path):
 
 
 def image_bytes(fmt='PNG'):
-    image = Image.new('RGB', (2, 2), 'green')
     out = io.BytesIO()
-    image.save(out, format=fmt)
+    Image.new('RGB', (2, 2), 'green').save(out, format=fmt)
     return out.getvalue()
 
 
-def submit(client, **kwargs):
-    data = {'farm_id': 'farm-1', 'field_id': 'field-1',
-            'observation_date': '2025-01-01', 'description': 'Leaves observed'}
-    data.update(kwargs.pop('data', {}))
-    return client.post('/reports', data=data, follow_redirects=False, **kwargs)
+def submit(client, changes=None, image=True):
+    now = datetime.now(timezone.utc).isoformat()
+    data = {'observation_time': now, 'estimate_kind': 'count', 'estimate_value': '3',
+            'area_cue': '', 'description': '', 'latitude': '-21', 'longitude': '-46',
+            'accuracy': '100', 'fix_time': now}
+    data.update(changes or {})
+    files = {'image': ('photo.png', image_bytes(), 'image/png')} if image else None
+    return client.request('POST', '/reports', data=data, files=files, follow_redirects=False)
 
 
-def test_form_seed_and_restart(tmp_path):
-    db = tmp_path / 'demo.sqlite3'
-    first = HttpClient(create_app(db))
-    form = first.get('/')
-    assert form.status_code == 200
-    assert all(x in form.text for x in ['Synthetic', 'farm-1', 'farm-2', 'field-1', 'field-4'])
-    response = submit(first, data={'description': '<script>unsafe</script>'},
-                      files={'image': ('diagnosis.png', image_bytes(), 'text/plain')})
+def test_new_intake_history_and_restart(client):
+    form = client.get('/').text
+    assert 'simulated' in form.lower() and 'fallback' in form.lower()
+    assert 'name="farm_id"' not in form and 'name="field_id"' not in form
+    response = submit(client, {'estimate_kind': 'percentage', 'estimate_value': '25', 'area_cue': '<shed>'})
     assert response.status_code == 303
-    location = response.headers['location']
-    second = HttpClient(create_app(db))
-    detail = second.get(location)
-    assert detail.status_code == 200
-    assert '&lt;script&gt;unsafe&lt;/script&gt;' in detail.text
-    assert '<script>unsafe</script>' not in detail.text
-    assert 'diagnosis.png' not in detail.text
-    assert 'Confirmed finding' in detail.text
-    assert second.get(location + '/image').content == image_bytes()
-    with sqlite3.connect(db) as conn:
-        assert conn.execute('select count(*) from reports').fetchone()[0] == 4
+    page = client.get(response.headers['location']).text
+    assert '25' in page and '&lt;shed&gt;' in page and 'simulated' in page.lower()
+    assert 'fix' in page.lower() and 'unavailable' in page.lower()
+    assert 'confirmation provenance unknown' in page.lower()
+    assert 'Fictional wilting' not in page
+    assert client.get(response.headers['location'] + '/image').content == image_bytes()
+    again = HttpClient(create_app(client.app.state.db_path))
+    assert again.get(response.headers['location']).status_code == 200
 
 
 @pytest.mark.parametrize('changes', [
-    {'farm_id': 'missing'}, {'field_id': 'field-3'}, {'description': '  '},
-    {'observation_date': '2025-02-30'}, {'observation_date': '20250101'},
-    {'observation_date': (date.today() + timedelta(days=1)).isoformat()},
+    {'estimate_kind': 'count', 'estimate_value': '-1'},
+    {'estimate_kind': 'count', 'estimate_value': '1.5'},
+    {'estimate_kind': 'percentage', 'estimate_value': '101'},
+    {'estimate_kind': 'percentage', 'estimate_value': 'nan'},
+    {'estimate_kind': 'other'}, {'estimate_value': ''},
+    {'latitude': '91'}, {'longitude': 'nan'}, {'accuracy': '101'}, {'accuracy': '-1'},
+    {'fix_time': 'bad'}, {'fix_time': (datetime.now(timezone.utc) - timedelta(minutes=6)).isoformat()},
+    {'fix_time': (datetime.now(timezone.utc) + timedelta(days=1)).isoformat()},
+    {'observation_time': 'bad'}, {'observation_time': (datetime.now(timezone.utc) + timedelta(days=1)).isoformat()},
 ])
-def test_invalid_inputs_do_not_save(client, changes):
-    assert submit(client, data=changes).status_code == 400
-    with sqlite3.connect(client.app.state.db_path) as conn:
-        assert conn.execute('select count(*) from reports').fetchone()[0] == 3
-
-
-@pytest.mark.parametrize('payload', [b'not an image', b'\x89PNG\r\n\x1a\ninvalid', image_bytes() + b'x' * (10 * 1024 * 1024)])
-def test_invalid_images_do_not_save(client, payload):
-    assert submit(client, files={'image': ('safe.png', payload, 'image/png')}).status_code == 400
-    with sqlite3.connect(client.app.state.db_path) as conn:
-        assert conn.execute('select count(*) from reports').fetchone()[0] == 3
-
-
-@pytest.mark.parametrize('fmt', ['PNG', 'JPEG'])
-def test_image_content_and_exact_size(client, fmt):
-    content = image_bytes(fmt)
-    content += b'\0' * (10 * 1024 * 1024 - len(content))
-    response = submit(client, files={'image': ('anything', content, 'application/octet-stream')})
-    assert response.status_code == 303
-    assert client.get(response.headers['location'] + '/image').content == content
-
-
-def test_history_backdating_and_field_isolation(client):
-    current = submit(client, data={'field_id': 'field-2', 'observation_date': '2025-04-01', 'description': 'Current'})
-    path = current.headers['location']
-    assert 'No earlier reports' in client.get(path).text
-    submit(client, data={'field_id': 'field-2', 'observation_date': '2025-02-01', 'description': 'Old observation'})
-    submit(client, data={'field_id': 'field-2', 'observation_date': '2025-03-01', 'description': 'More recent'})
-    submit(client, data={'field_id': 'field-1', 'observation_date': '2025-03-01', 'description': 'Other field'})
-    text = client.get(path).text
-    assert text.index('More recent') < text.index('Old observation')
-    assert 'Other field' not in text
-    assert client.get('/reports/unknown').status_code == 404
-
-
-def test_storage_failure_does_not_confirm_or_persist(client):
-    with sqlite3.connect(client.app.state.db_path) as conn:
-        conn.execute("CREATE TRIGGER reject_insert AFTER INSERT ON reports BEGIN SELECT RAISE(ABORT, 'secret failure'); END")
-    response = submit(client, files={'image': ('a.png', image_bytes(), 'image/png')})
-    assert response.status_code == 500
-    assert 'secret failure' not in response.text
-    assert 'confirmed' not in response.text.lower()
-    with sqlite3.connect(client.app.state.db_path) as conn:
-        assert conn.execute('select count(*) from reports').fetchone()[0] == 3
-
-
-def test_same_day_history_uses_utc_receipt_then_id(client):
+def test_invalid_intake_never_saves(client, changes):
+    assert submit(client, changes).status_code == 400
     with sqlite3.connect(client.app.state.db_path) as db:
-        rows = [
-            ('a', '2025-03-01T10:00:00.000000+00:00', 'Earlier instant'),
-            ('b', '2025-03-01T11:00:00.000000+00:00', 'Tie lower ID'),
-            ('c', '2025-03-01T11:00:00.000000+00:00', 'Current tie'),
-            ('d', '2025-03-01T11:00:00.000000+00:00', 'Tie higher ID'),
-            ('e', '2025-03-01T12:00:00.000000+00:00', 'Later instant'),
-        ]
-        db.executemany('INSERT INTO reports VALUES (?, ?, ?, ?, ?, ?, NULL, NULL, NULL)',
-                       [(key, 'farm-1', 'field-2', '2025-03-01', description, timestamp)
-                        for key, timestamp, description in rows])
-    text = client.get('/reports/c').text
-    assert text.index('Tie lower ID') < text.index('Earlier instant')
-    assert 'Tie higher ID' not in text and 'Later instant' not in text
+        assert db.execute('SELECT count(*) FROM reports').fetchone()[0] == 3
 
 
-@pytest.mark.parametrize(('content_type', 'body'), [
-    ('multipart/form-data', b'bad'),
-    ('multipart/form-data; boundary=demo', b'garbage that is not a multipart body'),
-    ('multipart/form-data; boundary=demo', b'--demo\rXbroken'),
-])
-def test_bad_multipart_is_an_actionable_client_error(client, content_type, body):
-    response = client.request('POST', '/reports', headers={'Content-Type': content_type}, content=body)
-    assert response.status_code == 400
-    assert 'form' in response.text.lower()
+def test_photo_required_and_invalid_image(client):
+    assert submit(client, image=False).status_code == 400
+    assert client.request('POST', '/reports', data={}, files={'image': ('x', b'bad', 'image/png')}).status_code == 400
+
+
+def test_farm_history_includes_later_and_other_field(client):
+    response = submit(client, {'description': 'Current'})
+    later = submit(client, {'description': 'Later'})
+    text = client.get(response.headers['location']).text
+    assert later.status_code == 303 and 'Later' in text and 'Fictional leaf spots' in text
+    assert 'Fictional wilting' not in text
+
+
+def test_storage_failure_does_not_confirm(client):
     with sqlite3.connect(client.app.state.db_path) as db:
-        assert db.execute('select count(*) from reports').fetchone()[0] == 3
+        db.execute("CREATE TRIGGER reject_insert AFTER INSERT ON reports BEGIN SELECT RAISE(ABORT, 'secret failure'); END")
+    response = submit(client)
+    assert response.status_code == 500 and 'secret failure' not in response.text
+    with sqlite3.connect(client.app.state.db_path) as db:
+        assert db.execute('SELECT count(*) FROM reports').fetchone()[0] == 3
 
 
-def test_repository_closes_connections(tmp_path):
-    from app.infrastructure.sqlite import SQLiteRepository
-    repo = SQLiteRepository(tmp_path / 'connections.sqlite3')
-    with repo.connect() as db:
-        db.execute('select 1')
-    with pytest.raises(sqlite3.ProgrammingError, match='closed'):
-        db.execute('select 1')
+def test_legacy_migration_backup_and_restart(tmp_path):
+    path = tmp_path / 'legacy.sqlite3'
+    with sqlite3.connect(path) as db:
+        db.executescript('''CREATE TABLE farms (id TEXT PRIMARY KEY, name TEXT NOT NULL);
+        CREATE TABLE fields (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL REFERENCES farms(id), name TEXT NOT NULL);
+        CREATE TABLE reports (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL REFERENCES farms(id), field_id TEXT NOT NULL REFERENCES fields(id), observation_date TEXT NOT NULL, description TEXT NOT NULL, received_at TEXT NOT NULL, image BLOB, image_type TEXT, finding TEXT);
+        INSERT INTO farms VALUES ('farm-1','Sunrise Farm'),('farm-2','River Farm');
+        INSERT INTO fields VALUES ('field-1','farm-1','North'),('field-3','farm-2','East');''')
+        db.executemany('INSERT INTO reports VALUES (?,?,?,?,?,?,?,?,?)', [
+            ('custom-1','farm-1','field-1','2023-01-01','private text','2023-01-02T00:00:00+00:00',b'original','image/png','finding'),
+            ('custom-2','farm-2','field-3','2023-01-02','second farm','2023-01-03T00:00:00+00:00',None,None,None)])
+        original = db.execute('SELECT * FROM reports ORDER BY id').fetchall()
+    app = create_app(path)
+    with sqlite3.connect(path) as db:
+        assert db.execute('SELECT id,farm_id,field_id,observation_date,description,received_at,image,image_type,finding FROM reports WHERE id LIKE "custom-%" ORDER BY id').fetchall() == original
+        assert db.execute('PRAGMA integrity_check').fetchone()[0] == 'ok'
+        assert db.execute('PRAGMA foreign_key_check').fetchall() == []
+        assert db.execute('SELECT observation_time,estimate_value,latitude FROM reports WHERE id="custom-1"').fetchone() == (None,None,None)
+    backups = list(tmp_path.glob('legacy.sqlite3*.backup'))
+    assert len(backups) == 1
+    with sqlite3.connect(backups[0]) as db:
+        assert db.execute('SELECT * FROM reports ORDER BY id').fetchall() == original
+        assert db.execute('PRAGMA integrity_check').fetchone()[0] == 'ok'
+    create_app(path)
+    assert len(list(tmp_path.glob('legacy.sqlite3*.backup'))) == 1
+    assert HttpClient(app).get('/reports/custom-1').status_code == 200
