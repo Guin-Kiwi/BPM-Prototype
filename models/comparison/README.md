@@ -1,0 +1,23 @@
+# Selected P1 AS-IS / TO-BE comparison
+
+Ayla selected these edited models as the prototype comparison pair. They describe the
+intended process, beyond implemented intake, and do not replace the group paper as
+solution authority or establish group approval. See the [source map](../../docs/reference/README.md)
+and [comparison trace](NOTES.md).
+
+| Model | Editable selected BPMN | PNG preview | SVG preview |
+| --- | --- | --- | --- |
+| P1 AS-IS | [p1_asis (2).bpmn](<p1_asis (2).bpmn>) | [PNG](p1_asis.png) | [SVG](p1_asis.svg) |
+| P1 TO-BE | [p1_tobe (2).bpmn](<p1_tobe (2).bpmn>) | [PNG](p1_tobe.png) | [SVG](p1_tobe.svg) |
+
+The stable PNG and SVG filenames are derived from the selected
+`(2).bpmn` files. [Export previews](../exports/README.md) use the same selected
+sources. The earlier unnumbered BPMN, generation definitions and other artifacts
+remain available for reference; they are not the selected editable pair. Do not run
+`build_diagrams.py` over the selected files or use its older definitions as their source.
+
+The reconstructed AS-IS contains group assumptions, not verified Cooxupé practice.
+The TO-BE shows routine human communication, technician judgment and a visit loop;
+its shared end records handling without asserting case closure. Routing policy,
+modeler/print review and group alignment remain open. Prior generation checks apply
+to earlier models only; they do not establish validation of the edited pair.

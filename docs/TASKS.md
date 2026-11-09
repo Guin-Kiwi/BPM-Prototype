@@ -1,53 +1,85 @@
 # Current work
 
-PHASE: 0
+PHASE: 1
 STATUS: in-progress
 
 ## Active objective
 
-Bootstrap the Cooxupé P1 prototype from the AI-SDLC template without implementing
-unagreed business policy. No active use case yet; bootstrap is tooling/context work.
+Specify [UC-002: assessment and handoff](specs/UC-002-ASSESSMENT-HANDOFF.md), the
+barebones journey from saved report to real image assessment, deterministic route
+and recorded human handoff. Provider choice and demo routing/guidance definitions
+remain open; resolve them before DESIGN/implementation. UC-001 intake completion
+and its existing evidence below are unchanged.
 
-## Current slice
+## Current Use Case
 
-Project identity, source map, Python/FastAPI environment and inherited checks.
+docs/specs/UC-002-ASSESSMENT-HANDOFF.md
+
+## Existing implemented slice
+
+Simulated farmer on farm-1; required uploaded photo, approximate affected-plant
+estimate and usable browser GPS; optional text and area cue; simulated observation
+time, separate receipt and fix time; farm-wide report history; legacy-preserving
+SQLite migration with verified backup. Map fallback remains unavailable because no
+field boundaries or map presentation are supplied. Routing, events, cases, AI,
+authentication and dataset generation remain outside this slice.
+
+## Evidence links
+
+[Integration tests](../tests/integration/test_intake.py) and
+[UC-001 DEVELOP evidence](specs/UC-001-REPORT-INTAKE.md#design--revised-prototype).
 
 ## Acceptance / validation cues
 
-- Project documents distinguish implemented scaffold from proposed capabilities.
-- References resolve locally and identify authority and open policy questions.
-- Template identity is removed, attribution retained and project code licensed MIT.
-- Setup and full handoff checks pass; record evidence below.
-
-## Decisions and remaining work
-
-Ayla approved MIT and template cleanup. Python/FastAPI follows the discussed profile.
-First-slice decisions: provider access and image timing; routing/review criteria and
-rule artifact/execution; whether a narrow MCP integration is needed. These do not
-block environment setup, but behavior must be agreed before implementation.
-
-## Evidence
-
-Verified 9 November 2026:
-- `bash scripts/check-setup.sh`: passed; Codex skill link and local Python environment resolve.
-- `bash scripts/test.sh`: passed; lifecycle scenarios, 46 tooling tests and 3 pytest tests.
-- Project navigation/source link check: passed; references use the surrounding folder.
-- `git diff --check`: passed.
-
-Corrected inherited setup path duplication and isolated licence/README regression
-fixtures from project-specific content. Human review of bootstrap changes remains
-outstanding; phase stays in-progress for that review.
+Targeted red: `.venv/bin/python -m pytest tests/integration/test_intake.py -q`
+failed against the old implementation (5 failed, 15 passed). After implementation,
+`.venv/bin/python -m pytest tests/integration/test_intake.py tests/unit/test_architecture.py -q`
+passed (32 tests), including backup/restore and rollback on temporary databases.
+Full handoff: `bash scripts/test.sh` passed lifecycle checks, 46 process tests and
+32 pytest tests. A loopback Uvicorn startup against a temporary database shut down
+cleanly under a three-second timeout (expected exit 124). No visual/manual browser
+test has been performed.
+Group paper/model alignment and human acceptance of the revised journey remain open.
 
 ## Next smallest step
 
-Review bootstrap, then select SPECIFY for UC-001: assess and route one text report,
-with explicit handling of unavailable history, invalid model output and model failure.
+Resolve the provider and bounded demo rules in the UC-002 draft, using the
+[worksheet](reference/DMN-RULE-WORKSHEET.md#open-definitions-and-minimal-next-specify-task).
+The selected work is SPECIFY; no application implementation is claimed.
+The [local-model security review](reference/LOCAL-MODEL-SECURITY.md) records metadata
+findings and containment conditions; no model installation or execution has begun.
+[Experiment preparation](../experiments/local-classifier/README.md) supplies the manifest
+and sandbox configuration. Next: dependency/loader review, isolated runtime build and
+verified artifact acquisition in the next experiment session, as requested by Ayla.
+Preparation is complete: manifest, artifact verifier and sandbox configuration are
+committed. `bash scripts/test.sh` passed 46 process tests and 40 pytest tests, including
+eight artifact-verifier checks; Compose configuration and manifest checks passed.
+Effective container isolation and model loading remain unverified. No model packages,
+weights or runtime image have been installed.
 
-## Backlog
+## Selected routing step
 
-1. Assess and route one report with real LLM analysis and traceable rule output.
-2. Advisory evidence view, review/corrections and simulated guidance/handover.
-3. Synthetic field scenarios, duplicate handling and experiment export.
+Ayla selected report-to-case routing as the next business specification step:
+[consolidated routing worksheet](reference/DMN-RULE-WORKSHEET.md). This is the
+prototype direction; the selected comparison pair is identified in the
+[source map](reference/README.md), and group paper alignment remains pending.
+The worksheet owns the terminology, routing proposal, open definitions and bounded
+agent handoff. UC-001 remains intake/history only; no routing implementation yet.
 
-Implementation owner: [working agreement](WORKING-AGREEMENT.md).
-Source scope: [project context](PROJECT.md) and [source map](reference/README.md).
+## Deferred decisions / backlog
+
+- Define routing inputs, uncertainty and reasons, guidance applicability, repeat handling,
+  case linkage, severe approval, access and cross-farm context with the group. Preserve
+  the [standalone assessment boundary](reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary):
+  photo to image model; candidate scores, note and optional event weather to a proposed
+  second model; extent and connected history to code/DMN. The [weather plan](reference/EVENT-WEATHER.md)
+  records selected variables, sources, assumptions and open acquisition/window choices.
+- Later code: AI/provider boundary, deterministic DMN, human guidance and case/visit
+  workflows, technician view and traceable events/export. Map fallback needs known
+  boundaries, provenance and usable presentation; manually verify the intake journey.
+- Later data: inspect and attribute suitable image and illustrative guidance sources;
+  design synthetic context and permissions without generating a dataset now.
+- Later experiments: agree scenarios, reference truth, leakage controls and measured
+  workload/outcomes; record actual runs. Offline capture remains a paper gap.
+
+Implementation ownership: [working agreement](WORKING-AGREEMENT.md).
