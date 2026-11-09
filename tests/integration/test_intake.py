@@ -115,9 +115,11 @@ def test_legacy_migration_backup_and_restart(tmp_path):
     app = create_app(path)
     with sqlite3.connect(path) as db:
         assert db.execute('SELECT id,farm_id,field_id,observation_date,description,received_at,image,image_type,finding FROM reports WHERE id LIKE "custom-%" ORDER BY id').fetchall() == original
+        assert db.execute('SELECT count(*) FROM reports').fetchone()[0] == 2
+        assert db.execute('SELECT id FROM farms ORDER BY id').fetchall() == [('farm-1',), ('farm-2',)]
         assert db.execute('PRAGMA integrity_check').fetchone()[0] == 'ok'
         assert db.execute('PRAGMA foreign_key_check').fetchall() == []
-        assert db.execute('SELECT observation_time,estimate_value,latitude FROM reports WHERE id="custom-1"').fetchone() == (None,None,None)
+        assert db.execute('SELECT observation_time,estimate_value,latitude,farmer_id FROM reports WHERE id="custom-1"').fetchone() == (None,None,None,None)
     backups = list(tmp_path.glob('legacy.sqlite3*.backup'))
     assert len(backups) == 1
     with sqlite3.connect(backups[0]) as db:
@@ -126,3 +128,96 @@ def test_legacy_migration_backup_and_restart(tmp_path):
     create_app(path)
     assert len(list(tmp_path.glob('legacy.sqlite3*.backup'))) == 1
     assert HttpClient(app).get('/reports/custom-1').status_code == 200
+
+
+def test_migration_failure_rolls_back_and_backup_restores(tmp_path):
+    path = tmp_path / 'legacy.sqlite3'
+    with sqlite3.connect(path) as db:
+        db.executescript('''CREATE TABLE farms (id TEXT PRIMARY KEY, name TEXT NOT NULL);
+        CREATE TABLE fields (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL REFERENCES farms(id), name TEXT NOT NULL);
+        CREATE TABLE reports (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL REFERENCES farms(id), field_id TEXT NOT NULL REFERENCES fields(id), observation_date TEXT NOT NULL, description TEXT NOT NULL, received_at TEXT NOT NULL, image BLOB, image_type TEXT, finding TEXT);
+        INSERT INTO farms VALUES ('farm-1','Sunrise');
+        INSERT INTO fields VALUES ('field-1','farm-1','North');
+        INSERT INTO reports VALUES ('saved','farm-1','field-1','2023-01-01','text','2023-01-01',X'0102','image/png',NULL);
+        CREATE TRIGGER retain_trigger AFTER INSERT ON reports BEGIN SELECT 1; END;''')
+    with pytest.raises(RuntimeError, match='rolled back.*backup retained'):
+        create_app(path)
+    backup = next(tmp_path.glob('*.backup'))
+    for candidate in (path, backup):
+        with sqlite3.connect(candidate) as db:
+            assert db.execute('PRAGMA user_version').fetchone()[0] == 0
+            assert db.execute('SELECT id,image FROM reports').fetchall() == [('saved', b'\x01\x02')]
+            assert db.execute("SELECT count(*) FROM sqlite_master WHERE name='retain_trigger'").fetchone()[0] == 1
+            assert db.execute('PRAGMA integrity_check').fetchone()[0] == 'ok'
+    restored = tmp_path / 'restored.sqlite3'
+    with sqlite3.connect(backup) as source, sqlite3.connect(restored) as target:
+        source.backup(target)
+    with sqlite3.connect(restored) as db:
+        assert db.execute('SELECT description FROM reports').fetchone() == ('text',)
+
+
+def test_backup_failure_does_not_change_original(tmp_path, monkeypatch):
+    from app.infrastructure import sqlite as adapter
+    path = tmp_path / 'legacy.sqlite3'
+    with sqlite3.connect(path) as db:
+        db.execute('CREATE TABLE reports (id TEXT PRIMARY KEY)')
+        db.execute("INSERT INTO reports VALUES ('saved')")
+    original_connect = adapter.sqlite3.connect
+    def fail_backup(filename, *args, **kwargs):
+        if str(filename).endswith('.backup'):
+            raise sqlite3.OperationalError('unwritable')
+        return original_connect(filename, *args, **kwargs)
+    monkeypatch.setattr(adapter.sqlite3, 'connect', fail_backup)
+    with pytest.raises(RuntimeError, match='not migrated'):
+        create_app(path)
+    with original_connect(path) as db:
+        assert db.execute('SELECT * FROM reports').fetchall() == [('saved',)]
+        assert db.execute('PRAGMA user_version').fetchone()[0] == 0
+
+
+@pytest.mark.parametrize(('kind', 'value'), [('count', '0'), ('percentage', '0'), ('percentage', '100')])
+def test_estimate_boundaries(client, kind, value):
+    assert submit(client, {'estimate_kind': kind, 'estimate_value': value}).status_code == 303
+
+
+def test_history_orders_timestamp_before_date_only_and_farm_isolation(client):
+    with sqlite3.connect(client.app.state.db_path) as db:
+        db.execute("UPDATE reports SET observation_date='2025-01-01', received_at='2025-01-01T23:00:00+00:00', description='Date only' WHERE id='seed-1'")
+        db.execute("UPDATE reports SET observation_date='2025-01-01', observation_time='2025-01-01T01:00:00+00:00', description='Timed' WHERE id='seed-2'")
+    text = client.get('/reports/seed-1').text.split('<h2>Farm report history</h2>')[1]
+    assert text.index('Timed') < text.index('Date only')
+    assert 'Fictional wilting' not in text
+
+
+def test_failure_after_table_rebuild_rolls_back(tmp_path, monkeypatch):
+    from app.infrastructure import sqlite as adapter
+    path = tmp_path / 'legacy.sqlite3'
+    with sqlite3.connect(path) as db:
+        db.executescript('''CREATE TABLE farms (id TEXT PRIMARY KEY, name TEXT NOT NULL);
+        CREATE TABLE fields (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL REFERENCES farms(id), name TEXT NOT NULL);
+        CREATE TABLE reports (id TEXT PRIMARY KEY, farm_id TEXT NOT NULL REFERENCES farms(id), field_id TEXT NOT NULL REFERENCES fields(id), observation_date TEXT NOT NULL, description TEXT NOT NULL, received_at TEXT NOT NULL, image BLOB, image_type TEXT, finding TEXT);
+        INSERT INTO farms VALUES ('farm-1','Sunrise');
+        INSERT INTO fields VALUES ('field-1','farm-1','North');
+        INSERT INTO reports VALUES ('saved','farm-1','field-1','2023-01-01','text','2023-01-01',NULL,NULL,NULL);''')
+    monkeypatch.setattr(adapter, 'SCHEMA', 'CREATE TABLE reports (broken SQL')
+    with pytest.raises(RuntimeError, match='rolled back'):
+        create_app(path)
+    for candidate in (path, next(tmp_path.glob('*.backup'))):
+        with sqlite3.connect(candidate) as db:
+            assert db.execute('SELECT id,description FROM reports').fetchall() == [('saved', 'text')]
+            assert db.execute("SELECT name FROM sqlite_master WHERE name='reports_legacy'").fetchone() is None
+            assert db.execute('PRAGMA user_version').fetchone()[0] == 0
+
+
+@pytest.mark.parametrize('fmt', ['PNG', 'JPEG'])
+def test_image_formats_and_size_limit(client, fmt):
+    now = datetime.now(timezone.utc).isoformat()
+    data = {'observation_time': now, 'estimate_kind': 'count', 'estimate_value': '1',
+            'latitude': '0', 'longitude': '0', 'accuracy': '0', 'fix_time': now}
+    content = image_bytes(fmt)
+    padded = content + b'\0' * (10 * 1024 * 1024 - len(content))
+    response = client.request('POST', '/reports', data=data, files={'image': ('a', padded, 'application/octet-stream')})
+    assert response.status_code == 303
+    assert client.get(response.headers['location'] + '/image').content == padded
+    response = client.request('POST', '/reports', data=data, files={'image': ('a', padded + b'x', 'image/png')})
+    assert response.status_code == 400

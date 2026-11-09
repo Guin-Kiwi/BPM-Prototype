@@ -52,20 +52,37 @@ def verify_image(data):
 
 
 def form(repo, error='', status=200):
-    farms = ''.join(f'<option value="{escape(f["id"], quote=True)}">{escape(f["name"])}</option>' for f in repo.farms())
-    fields = ''.join(f'<option value="{escape(f["id"], quote=True)}" data-farm="{escape(f["farm_id"], quote=True)}">{escape(f["name"])}</option>' for f in repo.fields())
     error_html = f'<p class="error" role="alert">{escape(error)}</p>' if error else ''
-    return page('Record an observation', f'''{error_html}<p>All farms and seeded history are fictional.</p>
+    return page('Record an observation', f'''{error_html}
+<p>Simulated farmer · Sunrise Farm (farm-1). This is not a login.</p>
+<p>Upload represents a new photo. Its selection time is simulated, not verified capture time.</p>
 <form action="/reports" method="post" enctype="multipart/form-data">
-<label>Farm <select id="farm" name="farm_id" required><option value="">Choose a farm</option>{farms}</select></label>
-<label>Field <select id="field" name="field_id" required><option value="">Choose a field</option>{fields}</select></label>
-<label>Observation date <input type="date" name="observation_date" required></label>
-<label>Description <textarea name="description" required></textarea></label>
-<label>Optional JPEG or PNG (up to 10 MiB) <input type="file" name="image" accept="image/jpeg,image/png"></label>
-<button type="submit">Save report</button></form>
-<script>const farm=document.getElementById('farm'), field=document.getElementById('field');
-function filterFields() {{ for (const o of field.options) if(o.value) {{o.hidden=o.dataset.farm!==farm.value; o.disabled=o.hidden;}} if(field.selectedOptions[0]?.disabled) field.value=''; }}
-farm.addEventListener('change',filterFields); filterFields();</script>''', status)
+<label>New JPEG or PNG photo (up to 10 MiB) <input id="photo" type="file" name="image" accept="image/jpeg,image/png" capture="environment" required></label>
+<input type="hidden" name="observation_time" id="observation_time">
+<label>About how many plants are affected in the area observed? <input name="estimate_value" type="number" min="0" step="any" required></label>
+<label>Estimate type <select name="estimate_kind"><option value="count">Approximate plant count</option><option value="percentage">Percentage of plants</option></select></label>
+<label>Optional area cue <input name="area_cue"></label>
+<label>Optional description <textarea name="description"></textarea></label>
+<input type="hidden" name="latitude" id="latitude"><input type="hidden" name="longitude" id="longitude">
+<input type="hidden" name="accuracy" id="accuracy"><input type="hidden" name="fix_time" id="fix_time">
+<p id="gps_status" role="status">Location required. Obtain a browser GPS fix.</p>
+<p>Map fallback is unavailable: no field boundaries are supplied. If GPS fails, retry; no draft is saved.</p>
+<button type="button" id="gps">Get or retry GPS</button> <button type="submit">Save report</button></form>
+<script>
+const photo = document.getElementById('photo');
+photo.addEventListener('change', () => {{ document.getElementById('observation_time').value = photo.files.length ? new Date().toISOString() : ''; }});
+document.getElementById('gps').addEventListener('click', () => {{
+  for (const key of ['latitude','longitude','accuracy','fix_time']) document.getElementById(key).value = '';
+  const status = document.getElementById('gps_status');
+  if (!navigator.geolocation) {{ status.textContent = 'GPS unavailable. Retry on a supported device; map fallback is unavailable.'; return; }}
+  status.textContent = 'Obtaining GPS fix…';
+  navigator.geolocation.getCurrentPosition(pos => {{
+    for (const key of ['latitude','longitude','accuracy']) document.getElementById(key).value = pos.coords[key];
+    document.getElementById('fix_time').value = new Date(pos.timestamp).toISOString();
+    status.textContent = `GPS fix obtained: accuracy ${{pos.coords.accuracy}} m. A fix at most 100 m and at most five minutes old is required.`;
+  }}, () => {{ status.textContent = 'GPS denied or unavailable. Retry GPS; map fallback is unavailable.'; }}, {{enableHighAccuracy:true, maximumAge:0, timeout:15000}});
+}});
+</script>''', status)
 
 
 def create_app(db_path=None):
@@ -92,29 +109,25 @@ def create_app(db_path=None):
             if request.headers.get('content-type', '').lower().startswith('multipart/form-data'):
                 async def chunks():
                     yield bytes(body)
-                parsed = await BoundedMultipartParser(request.headers, chunks(), max_files=1, max_fields=8, max_part_size=128 * 1024).parse()
+                parsed = await BoundedMultipartParser(request.headers, chunks(), max_files=1, max_fields=10, max_part_size=128 * 1024).parse()
             else:
-                parsed = await FormRequest(request.scope, receive).form(max_files=1, max_fields=8, max_part_size=128 * 1024)
+                parsed = await FormRequest(request.scope, receive).form(max_files=1, max_fields=10, max_part_size=128 * 1024)
             try:
-                if any(len(parsed.getlist(key)) != 1 for key in ('farm_id', 'field_id', 'observation_date', 'description')) or len(parsed.getlist('image')) > 1:
-                    raise InvalidInput('Provide one value for each field and at most one image.')
-                values = [parsed.get(k) for k in ('farm_id', 'field_id', 'observation_date', 'description')]
-                if not all(isinstance(value, str) for value in values):
-                    raise InvalidInput('Complete all required fields.')
+                keys = ('observation_time', 'estimate_kind', 'estimate_value', 'area_cue', 'description', 'latitude', 'longitude', 'accuracy', 'fix_time')
+                if any(len(parsed.getlist(key)) > 1 for key in (*keys, 'image')):
+                    raise InvalidInput('Provide one value for each field and one photo.')
+                values = {key: parsed.get(key, '') for key in keys}
+                if not all(isinstance(value, str) for value in values.values()):
+                    raise InvalidInput('Complete the form with valid values.')
                 upload = parsed.get('image')
-                data = None
-                kind = None
+                data, kind = None, None
                 if isinstance(upload, UploadFile):
                     data = await upload.read(MAX_IMAGE + 1)
                     if data:
                         kind = verify_image(data)
-                    elif upload.filename:
-                        raise InvalidInput('Choose a valid, undamaged JPEG or PNG image.')
-                    else:
-                        data = None
                 elif upload not in (None, ''):
-                    raise InvalidInput('Choose a JPEG or PNG image.')
-                report = service.submit(*values, data, kind)
+                    raise InvalidInput('Choose a JPEG or PNG photo.')
+                report = service.submit(values, data, kind)
             finally:
                 await parsed.close()
             return RedirectResponse('/reports/' + report.id, status_code=303)
@@ -132,18 +145,18 @@ def create_app(db_path=None):
             if not result:
                 return page('Report not found', '<p>No report exists with this ID.</p>', 404)
             report, history = result
-            fields = {f['id']: f for f in repo.fields()}
-            farms = {f['id']: f for f in repo.farms()}
             def evidence(item):
-                finding = f'<p><strong>Confirmed finding (fictional):</strong> {escape(item.finding)}</p>' if item.finding else ''
-                return f'<p><strong>Observation:</strong> {escape(item.description)}</p>{finding}'
-            image = f'<p><a href="/reports/{escape(report.id, quote=True)}/image">Open attachment</a></p><img src="/reports/{escape(report.id, quote=True)}/image" alt="Submitted attachment">' if report.image else ''
-            entries = ''.join(f'<li><a href="/reports/{escape(item.id, quote=True)}">{escape(item.observation_date)}</a> · received {escape(item.received_at)}{evidence(item)}</li>' for item in history)
-            history_html = f'<ul>{entries}</ul>' if entries else '<p>No earlier reports. This does not mean there was no disease.</p>'
-            return page('Report saved', f'''<p>Report received. ID: {escape(report.id)}</p>
-<p>Farm: {escape(farms[report.farm_id]['name'])} · Field: {escape(fields[report.field_id]['name'])}</p>
-<p>Observation date: {escape(report.observation_date)} · Received (UTC): {escape(report.received_at)}</p>
-{evidence(report)}{image}<h2>Earlier reports for this field</h2>{history_html}''')
+                finding = f'<p>Legacy finding (confirmation provenance unknown): {escape(item.finding)}</p>' if item.finding else ''
+                estimate = f'{item.estimate_value:g} {escape(item.estimate_unit)} ({escape(item.estimate_source)})' if item.estimate_value is not None else 'unavailable'
+                observed = f'{escape(item.observation_time)} (simulated photo-selection time)' if item.observation_time else f'{escape(item.observation_date)} (date only; time unavailable)'
+                location = f'browser GPS: {item.latitude}, {item.longitude}; accuracy {item.accuracy} m; fix time {escape(item.fix_time)}' if item.location_source else 'unavailable (legacy field association is not a location)'
+                cue = escape(item.area_cue) if item.area_cue else 'unavailable'
+                return f'<p>Observation: {escape(item.description) or "unavailable"} · Time: {observed} · Received (UTC): {escape(item.received_at)}</p><p>Estimate: {estimate} · Area cue: {cue} · Location: {location}</p>{finding}'
+            image = f'<p>Photo source: {escape(report.photo_source) if report.photo_source else "unavailable"}.</p><p><a href="/reports/{escape(report.id, quote=True)}/image">Open photo</a></p><img src="/reports/{escape(report.id, quote=True)}/image" alt="Submitted photo">' if report.image else '<p>Photo unavailable.</p>'
+            entries = ''.join(f'<li><a href="/reports/{escape(item.id, quote=True)}">{escape(item.id)}</a>{evidence(item)}</li>' for item in history)
+            return page('Report detail', f'''<p>Report ID: {escape(report.id)} · Farm: {escape(report.farm_id)} · Farmer: {escape(report.farmer_id) if report.farmer_id else 'unavailable'}</p>
+{evidence(report)}{image}<p>Nearby context and field grouping are unavailable.</p>
+<h2>Farm report history</h2><ul>{entries}</ul>''')
         except Exception:
             return page('Report unavailable', '<p>Unable to retrieve the report. Please try again.</p>', 500)
 

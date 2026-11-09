@@ -366,3 +366,11 @@ revised UC remains incomplete until map fallback and remaining target/evaluation
 criteria are implemented and validated. Group reconciliation of the changed business
 journey with the paper/models remains pending; it is distinct from these technical
 prototype defaults and does not constitute approval.
+
+
+**DEVELOP evidence.** The bounded GPS intake and report-only farm history are
+implemented with temporary-database migration tests, including verified backup,
+restore and injected rollback. The original runtime database was not migrated during
+development. Browser permission and device behavior have not been manually tested.
+Mapped-field fallback remains unavailable, so the full revised UC remains incomplete;
+group alignment and human acceptance remain pending.
