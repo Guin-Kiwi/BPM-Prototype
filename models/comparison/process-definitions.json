@@ -1,0 +1,1087 @@
+{
+  "models": [
+    {
+      "id": "P1_ASIS",
+      "title": "P1 AS-IS — Technical orientation",
+      "subtitle": "Working draft and team assumptions: request to guidance and documentation",
+      "farmer": {
+        "id": "Farmer",
+        "name": "Farmer (member)",
+        "x": 25,
+        "y": 45,
+        "w": 1500,
+        "h": 70
+      },
+      "lanes": [
+        {
+          "id": "A_Coord",
+          "name": "Advisory coordination",
+          "x": 55,
+          "y": 150,
+          "w": 1470,
+          "h": 255
+        },
+        {
+          "id": "A_Field",
+          "name": "Field advisory",
+          "x": 55,
+          "y": 405,
+          "w": 1470,
+          "h": 445
+        }
+      ],
+      "nodes": [
+        {
+          "id": "A_Start",
+          "type": "startMessage",
+          "name": "Support requested",
+          "lane": "A_Coord",
+          "x": 100,
+          "y": 235,
+          "w": 36,
+          "h": 36,
+          "labelPosition": [
+            180,
+            295
+          ]
+        },
+        {
+          "id": "A_Register",
+          "type": "task",
+          "name": "Receive and register request",
+          "lane": "A_Coord",
+          "x": 165,
+          "y": 212.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "A_Allocate",
+          "type": "task",
+          "name": "Allocate available technician",
+          "lane": "A_Coord",
+          "x": 320,
+          "y": 212.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "A_Channel",
+          "type": "gateway",
+          "name": "Phone or visit?",
+          "lane": "A_Field",
+          "x": 480,
+          "y": 465,
+          "w": 50,
+          "h": 50
+        },
+        {
+          "id": "A_Phone",
+          "type": "task",
+          "name": "Diagnose by phone",
+          "lane": "A_Field",
+          "x": 585,
+          "y": 447.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "A_NeedVisit",
+          "type": "gateway",
+          "name": "Visit still needed?",
+          "lane": "A_Field",
+          "x": 745,
+          "y": 465,
+          "w": 50,
+          "h": 50
+        },
+        {
+          "id": "A_VisitMerge",
+          "type": "gateway",
+          "name": "",
+          "lane": "A_Field",
+          "x": 895,
+          "y": 585,
+          "w": 50,
+          "h": 50
+        },
+        {
+          "id": "A_Visit",
+          "type": "subProcess",
+          "name": "Travel and inspect farm",
+          "lane": "A_Field",
+          "x": 995,
+          "y": 567.5,
+          "w": 120,
+          "h": 80,
+          "subprocessSteps": [
+            "Travel to farm",
+            "Inspect crops and diagnose on site"
+          ]
+        },
+        {
+          "id": "A_GuidanceMerge",
+          "type": "gateway",
+          "name": "",
+          "lane": "A_Field",
+          "x": 1165,
+          "y": 465,
+          "w": 50,
+          "h": 50
+        },
+        {
+          "id": "A_Formulate",
+          "type": "task",
+          "name": "Formulate recommendation",
+          "lane": "A_Field",
+          "x": 1245,
+          "y": 447.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "A_Give",
+          "type": "task",
+          "name": "Give agronomic guidance",
+          "lane": "A_Field",
+          "x": 1245,
+          "y": 567.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "A_Document",
+          "type": "task",
+          "name": "Document request and guidance",
+          "lane": "A_Field",
+          "x": 1300,
+          "y": 735,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "A_End",
+          "type": "end",
+          "name": "Guidance recorded",
+          "lane": "A_Field",
+          "x": 1460,
+          "y": 757,
+          "w": 36,
+          "h": 36
+        },
+        {
+          "id": "A_Schedule",
+          "type": "subProcess",
+          "name": "Arrange visit with farmer",
+          "lane": "A_Coord",
+          "x": 820,
+          "y": 310,
+          "w": 140,
+          "h": 80,
+          "subprocessSteps": [
+            "Agree visit time with farmer",
+            "Confirm visit arrangements"
+          ],
+          "internal": {
+            "nodes": [
+              {
+                "id": "A_Schedule_Start",
+                "type": "startEvent"
+              },
+              {
+                "id": "A_Schedule_Agree",
+                "type": "task",
+                "name": "Agree visit slot with farmer"
+              },
+              {
+                "id": "A_Schedule_Slot",
+                "type": "exclusiveGateway",
+                "name": "Slot confirmed?"
+              },
+              {
+                "id": "A_Schedule_Rearrange",
+                "type": "task",
+                "name": "Find another visit slot"
+              },
+              {
+                "id": "A_Schedule_End",
+                "type": "endEvent"
+              }
+            ],
+            "flows": [
+              {
+                "id": "A_Schedule_i1",
+                "source": "A_Schedule_Start",
+                "target": "A_Schedule_Agree"
+              },
+              {
+                "id": "A_Schedule_i2",
+                "source": "A_Schedule_Agree",
+                "target": "A_Schedule_Slot"
+              },
+              {
+                "id": "A_Schedule_i3",
+                "source": "A_Schedule_Slot",
+                "target": "A_Schedule_End",
+                "condition": "slotConfirmed",
+                "name": "Yes"
+              },
+              {
+                "id": "A_Schedule_i4",
+                "source": "A_Schedule_Slot",
+                "target": "A_Schedule_Rearrange",
+                "condition": "not(slotConfirmed)",
+                "name": "No"
+              },
+              {
+                "id": "A_Schedule_i5",
+                "source": "A_Schedule_Rearrange",
+                "target": "A_Schedule_Agree"
+              }
+            ]
+          }
+        },
+        {
+          "id": "A_Wait",
+          "type": "timerCatch",
+          "name": "Agreed visit time",
+          "lane": "A_Coord",
+          "x": 1030,
+          "y": 332,
+          "w": 36,
+          "h": 36,
+          "timeDate": "scheduledVisitAt"
+        },
+        {
+          "id": "A_ReturnDecision",
+          "type": "gateway",
+          "name": "Visit occurred?",
+          "lane": "A_Field",
+          "x": 1245,
+          "y": 665,
+          "w": 50,
+          "h": 50,
+          "labelPosition": [
+            1420,
+            690
+          ]
+        },
+        {
+          "id": "A_Return",
+          "type": "task",
+          "name": "Return from farm",
+          "lane": "A_Field",
+          "x": 1050,
+          "y": 735,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "A_RecordMerge",
+          "type": "gateway",
+          "name": "",
+          "lane": "A_Field",
+          "x": 1225,
+          "y": 750,
+          "w": 50,
+          "h": 50
+        },
+        {
+          "id": "A_AssessRequest",
+          "type": "task",
+          "name": "Assess request",
+          "lane": "A_Field",
+          "x": 320,
+          "y": 452.5,
+          "w": 120,
+          "h": 80
+        }
+      ],
+      "flows": [
+        {
+          "id": "A_f01",
+          "source": "A_Start",
+          "target": "A_Register"
+        },
+        {
+          "id": "A_f02",
+          "source": "A_Register",
+          "target": "A_Allocate"
+        },
+        {
+          "id": "A_f03",
+          "source": "A_Allocate",
+          "target": "A_AssessRequest"
+        },
+        {
+          "id": "A_f04",
+          "source": "A_Channel",
+          "target": "A_Phone",
+          "name": "Phone",
+          "condition": "phone",
+          "labelPosition": [
+            535,
+            470
+          ]
+        },
+        {
+          "id": "A_f05",
+          "source": "A_Channel",
+          "target": "A_VisitMerge",
+          "name": "Visit",
+          "condition": "visit",
+          "waypoints": [
+            [
+              505,
+              515
+            ],
+            [
+              505,
+              650
+            ],
+            [
+              920,
+              650
+            ],
+            [
+              920,
+              635
+            ]
+          ],
+          "labelPosition": [
+            600,
+            638
+          ]
+        },
+        {
+          "id": "A_f06",
+          "source": "A_Phone",
+          "target": "A_NeedVisit"
+        },
+        {
+          "id": "A_f07",
+          "source": "A_NeedVisit",
+          "target": "A_VisitMerge",
+          "name": "Yes",
+          "condition": "visit needed",
+          "waypoints": [
+            [
+              770,
+              515
+            ],
+            [
+              770,
+              610
+            ],
+            [
+              895,
+              610
+            ]
+          ],
+          "labelPosition": [
+            805,
+            598
+          ]
+        },
+        {
+          "id": "A_f08",
+          "source": "A_NeedVisit",
+          "target": "A_GuidanceMerge",
+          "name": "No",
+          "condition": "no visit needed",
+          "labelPosition": [
+            1080,
+            470
+          ]
+        },
+        {
+          "id": "A_f10",
+          "source": "A_Visit",
+          "target": "A_GuidanceMerge",
+          "waypoints": [
+            [
+              1115,
+              607
+            ],
+            [
+              1190,
+              607
+            ],
+            [
+              1190,
+              515
+            ]
+          ]
+        },
+        {
+          "id": "A_f11",
+          "source": "A_GuidanceMerge",
+          "target": "A_Formulate"
+        },
+        {
+          "id": "A_f12",
+          "source": "A_Formulate",
+          "target": "A_Give"
+        },
+        {
+          "id": "A_f09",
+          "source": "A_VisitMerge",
+          "target": "A_Schedule",
+          "waypoints": [
+            [
+              920,
+              585
+            ],
+            [
+              920,
+              420
+            ],
+            [
+              890,
+              420
+            ],
+            [
+              890,
+              390
+            ]
+          ]
+        },
+        {
+          "id": "A_sched1",
+          "source": "A_Schedule",
+          "target": "A_Wait"
+        },
+        {
+          "id": "A_sched2",
+          "source": "A_Wait",
+          "target": "A_Visit",
+          "waypoints": [
+            [
+              1048,
+              368
+            ],
+            [
+              1048,
+              420
+            ],
+            [
+              1055,
+              420
+            ],
+            [
+              1055,
+              567.5
+            ]
+          ]
+        },
+        {
+          "id": "A_f13",
+          "source": "A_Give",
+          "target": "A_ReturnDecision",
+          "waypoints": [
+            [
+              1305,
+              647.5
+            ],
+            [
+              1305,
+              657
+            ],
+            [
+              1270,
+              657
+            ],
+            [
+              1270,
+              665
+            ]
+          ]
+        },
+        {
+          "id": "A_returnYes",
+          "source": "A_ReturnDecision",
+          "target": "A_Return",
+          "name": "Yes",
+          "condition": "visit occurred",
+          "waypoints": [
+            [
+              1245,
+              690
+            ],
+            [
+              1110,
+              690
+            ],
+            [
+              1110,
+              735
+            ]
+          ],
+          "labelPosition": [
+            1150,
+            680
+          ]
+        },
+        {
+          "id": "A_returnNo",
+          "source": "A_ReturnDecision",
+          "target": "A_RecordMerge",
+          "name": "No",
+          "condition": "no visit",
+          "waypoints": [
+            [
+              1270,
+              715
+            ],
+            [
+              1270,
+              735
+            ],
+            [
+              1250,
+              735
+            ],
+            [
+              1250,
+              750
+            ]
+          ],
+          "labelPosition": [
+            1280,
+            725
+          ]
+        },
+        {
+          "id": "A_returnJoin",
+          "source": "A_Return",
+          "target": "A_RecordMerge"
+        },
+        {
+          "id": "A_docJoin",
+          "source": "A_RecordMerge",
+          "target": "A_Document"
+        },
+        {
+          "id": "A_f14",
+          "source": "A_Document",
+          "target": "A_End"
+        },
+        {
+          "id": "A_AssessChannel",
+          "source": "A_AssessRequest",
+          "target": "A_Channel"
+        }
+      ],
+      "messages": [
+        {
+          "id": "A_m1",
+          "source": "Farmer",
+          "target": "A_Start",
+          "name": "Request for support",
+          "waypoints": [
+            [
+              118.0,
+              115
+            ],
+            [
+              118.0,
+              235
+            ]
+          ],
+          "labelPosition": [
+            128.0,
+            172
+          ]
+        },
+        {
+          "id": "A_m2",
+          "source": "A_Give",
+          "target": "Farmer",
+          "name": "Agronomic guidance",
+          "waypoints": [
+            [
+              1365,
+              607.5
+            ],
+            [
+              1495,
+              607.5
+            ],
+            [
+              1495,
+              115
+            ]
+          ],
+          "labelPosition": [
+            1360,
+            350
+          ]
+        },
+        {
+          "id": "A_m3",
+          "source": "A_Schedule",
+          "target": "Farmer",
+          "name": "Visit arrangements",
+          "waypoints": [
+            [
+              860,
+              310
+            ],
+            [
+              860,
+              115
+            ]
+          ],
+          "labelPosition": [
+            690,
+            170
+          ]
+        },
+        {
+          "id": "A_m4",
+          "source": "Farmer",
+          "target": "A_Schedule",
+          "name": "Slot confirmation",
+          "waypoints": [
+            [
+              920,
+              115
+            ],
+            [
+              920,
+              310
+            ]
+          ],
+          "labelPosition": [
+            930,
+            170
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "id": "A_note1",
+          "text": "Phone / visit flow: working-draft assumptions, not validated operation. Farmer waits for and hosts a visit. Timer assumes an agreed visit date.",
+          "x": 100,
+          "y": 875,
+          "w": 640,
+          "h": 70
+        },
+        {
+          "id": "A_note2",
+          "text": "Process-level status collection and monitoring meetings span requests; they are not per-request steps.",
+          "x": 790,
+          "y": 875,
+          "w": 650,
+          "h": 70
+        }
+      ]
+    },
+    {
+      "id": "P1_TOBE",
+      "title": "P1 TO-BE — Assisted technical orientation",
+      "subtitle": "Proposed responsibility routing: request to guidance and recorded outcome",
+      "farmer": {
+        "id": "Farmer",
+        "name": "Farmer (member)",
+        "x": 25,
+        "y": 45,
+        "w": 1500,
+        "h": 70
+      },
+      "lanes": [
+        {
+          "id": "T_App",
+          "name": "Application",
+          "x": 55,
+          "y": 150,
+          "w": 1470,
+          "h": 240
+        },
+        {
+          "id": "T_Coord",
+          "name": "Advisory coordination / communications role",
+          "x": 55,
+          "y": 390,
+          "w": 1470,
+          "h": 210
+        },
+        {
+          "id": "T_Field",
+          "name": "Field advisory",
+          "x": 55,
+          "y": 600,
+          "w": 1470,
+          "h": 250
+        }
+      ],
+      "nodes": [
+        {
+          "id": "T_Start",
+          "type": "startMessage",
+          "name": "Report received",
+          "lane": "T_App",
+          "x": 95,
+          "y": 235,
+          "w": 36,
+          "h": 36,
+          "labelPosition": [
+            180,
+            295
+          ]
+        },
+        {
+          "id": "T_Register",
+          "type": "serviceTask",
+          "name": "Register report",
+          "lane": "T_App",
+          "x": 155,
+          "y": 212.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "T_Context",
+          "type": "serviceTask",
+          "name": "Retrieve farm and nearby history",
+          "lane": "T_App",
+          "x": 305,
+          "y": 212.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "T_Assess",
+          "type": "serviceTask",
+          "name": "AI assessment and uncertainty",
+          "lane": "T_App",
+          "x": 455,
+          "y": 212.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "T_Route",
+          "type": "businessRuleTask",
+          "name": "DMN: route responsibility",
+          "lane": "T_App",
+          "x": 605,
+          "y": 212.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "T_Which",
+          "type": "gateway",
+          "name": "Which responsibility?",
+          "lane": "T_App",
+          "x": 770,
+          "y": 227,
+          "w": 50,
+          "h": 50
+        },
+        {
+          "id": "T_Routine",
+          "type": "userTask",
+          "name": "Relay established guidance",
+          "lane": "T_Coord",
+          "x": 885,
+          "y": 422.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "T_Case",
+          "type": "userTask",
+          "name": "Create or link technical case",
+          "lane": "T_Field",
+          "x": 885,
+          "y": 642.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "T_Review",
+          "type": "subProcess",
+          "name": "Review context and advise farmer",
+          "lane": "T_Field",
+          "x": 1050,
+          "y": 642.5,
+          "w": 120,
+          "h": 80,
+          "subprocessSteps": [
+            "Review full available context and uncertainty",
+            "Judge report and case relevance",
+            "Contact farmer by phone or arrange visit as needed",
+            "Prepare and give guidance",
+            "Record known findings and outcome"
+          ]
+        },
+        {
+          "id": "T_Merge",
+          "type": "gateway",
+          "name": "",
+          "lane": "T_Coord",
+          "x": 1215,
+          "y": 437,
+          "w": 50,
+          "h": 50
+        },
+        {
+          "id": "T_Record",
+          "type": "serviceTask",
+          "name": "Record delivery / known outcome",
+          "lane": "T_App",
+          "x": 1300,
+          "y": 212.5,
+          "w": 120,
+          "h": 80
+        },
+        {
+          "id": "T_End",
+          "type": "end",
+          "name": "Advice recorded",
+          "lane": "T_App",
+          "x": 1460,
+          "y": 235,
+          "w": 36,
+          "h": 36
+        }
+      ],
+      "flows": [
+        {
+          "id": "T_f01",
+          "source": "T_Start",
+          "target": "T_Register"
+        },
+        {
+          "id": "T_f02",
+          "source": "T_Register",
+          "target": "T_Context"
+        },
+        {
+          "id": "T_f03",
+          "source": "T_Context",
+          "target": "T_Assess"
+        },
+        {
+          "id": "T_f04",
+          "source": "T_Assess",
+          "target": "T_Route"
+        },
+        {
+          "id": "T_f05",
+          "source": "T_Route",
+          "target": "T_Which"
+        },
+        {
+          "id": "T_f06",
+          "source": "T_Which",
+          "target": "T_Routine",
+          "name": "Routine",
+          "condition": "routine guidance",
+          "waypoints": [
+            [
+              795,
+              277
+            ],
+            [
+              795,
+              462
+            ],
+            [
+              885,
+              462
+            ]
+          ],
+          "labelPosition": [
+            805,
+            410
+          ]
+        },
+        {
+          "id": "T_f07",
+          "source": "T_Which",
+          "target": "T_Case",
+          "name": "Technician",
+          "condition": "technician involvement",
+          "waypoints": [
+            [
+              795,
+              277
+            ],
+            [
+              835,
+              277
+            ],
+            [
+              835,
+              682
+            ],
+            [
+              885,
+              682
+            ]
+          ],
+          "labelPosition": [
+            845,
+            615
+          ]
+        },
+        {
+          "id": "T_f08",
+          "source": "T_Case",
+          "target": "T_Review"
+        },
+        {
+          "id": "T_f09",
+          "source": "T_Routine",
+          "target": "T_Merge"
+        },
+        {
+          "id": "T_f10",
+          "source": "T_Review",
+          "target": "T_Merge",
+          "waypoints": [
+            [
+              1170,
+              682
+            ],
+            [
+              1240,
+              682
+            ],
+            [
+              1240,
+              487
+            ]
+          ]
+        },
+        {
+          "id": "T_f11",
+          "source": "T_Merge",
+          "target": "T_Record",
+          "waypoints": [
+            [
+              1265,
+              462
+            ],
+            [
+              1360,
+              462
+            ],
+            [
+              1360,
+              292.5
+            ]
+          ]
+        },
+        {
+          "id": "T_f12",
+          "source": "T_Record",
+          "target": "T_End"
+        }
+      ],
+      "messages": [
+        {
+          "id": "T_m1",
+          "source": "Farmer",
+          "target": "T_Start",
+          "name": "Report",
+          "waypoints": [
+            [
+              113.0,
+              115
+            ],
+            [
+              113.0,
+              235
+            ]
+          ],
+          "labelPosition": [
+            123.0,
+            172
+          ]
+        },
+        {
+          "id": "T_m2",
+          "source": "T_Routine",
+          "target": "Farmer",
+          "name": "Personalised guidance",
+          "waypoints": [
+            [
+              945,
+              422.5
+            ],
+            [
+              945,
+              115
+            ]
+          ],
+          "labelPosition": [
+            955,
+            180
+          ]
+        },
+        {
+          "id": "T_m3",
+          "source": "T_Review",
+          "target": "Farmer",
+          "name": "Technician guidance",
+          "waypoints": [
+            [
+              1110,
+              722.5
+            ],
+            [
+              1505,
+              722.5
+            ],
+            [
+              1505,
+              115
+            ]
+          ],
+          "labelPosition": [
+            1360,
+            180
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "id": "T_input",
+          "text": "Report input: photo, estimate, usable device GPS or selected field fallback. No-location handling remains open.",
+          "x": 100,
+          "y": 300,
+          "w": 500,
+          "h": 65
+        },
+        {
+          "id": "T_human",
+          "text": "Full available context remains accessible. Technician judges relevance and case links; nearby is not proof. Farm assignments supply continuity; access rules need definition.",
+          "x": 595,
+          "y": 745,
+          "w": 590,
+          "h": 75
+        },
+        {
+          "id": "T_severe",
+          "text": "Severe-action bundle and P2/P3 handovers lie outside core P1: subject to human approval and group alignment; diagnosis never automatically skips pickup.",
+          "x": 835,
+          "y": 865,
+          "w": 640,
+          "h": 85
+        },
+        {
+          "id": "T_routine_note",
+          "text": "Human relays established advice; product recommendation is optional. Delivery does not establish resolution.",
+          "x": 95,
+          "y": 500,
+          "w": 550,
+          "h": 65
+        }
+      ]
+    }
+  ]
+}

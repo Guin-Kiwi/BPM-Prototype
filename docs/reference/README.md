@@ -69,3 +69,6 @@ Selected prototype routing direction and next specification step:
 
 [Farm history and technical case data-model draft](../design/DATA-MODEL.md) traces
 source-backed context, owner-selected direction and unresolved design proposals.
+
+[New P1 AS-IS / TO-BE comparison proposals](../../models/comparison/README.md)
+include editable BPMN and previews; source assumptions and group alignment are explicit.

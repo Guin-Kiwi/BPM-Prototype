@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="P1_TOBE_Definitions" targetNamespace="https://example.org/cooxupe/comparison">
+  <bpmn:message id="T_m1_Message" name="Report"/>
+  <bpmn:message id="T_m2_Message" name="Personalised guidance"/>
+  <bpmn:message id="T_m3_Message" name="Technician guidance"/>
+  <bpmn:process id="P1_TOBE_Process" name="P1 TO-BE — Assisted technical orientation" isExecutable="false">
+    <bpmn:documentation>Proposed responsibility routing: request to guidance and recorded outcome Comparison proposal; assumptions and source limits are in NOTES.md.</bpmn:documentation>
+    <bpmn:laneSet id="P1_TOBE_LaneSet">
+      <bpmn:lane id="T_App" name="Application">
+        <bpmn:flowNodeRef>T_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Register</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Context</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Assess</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Route</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Which</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Record</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="T_Coord" name="Advisory coordination / communications role">
+        <bpmn:flowNodeRef>T_Routine</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Merge</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="T_Field" name="Field advisory">
+        <bpmn:flowNodeRef>T_Case</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Review</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="T_Start" name="Report received">
+      <bpmn:outgoing>T_f01</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="T_Start_Definition" messageRef="T_m1_Message"/>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="T_Register" name="Register report">
+      <bpmn:incoming>T_f01</bpmn:incoming>
+      <bpmn:outgoing>T_f02</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="T_Context" name="Retrieve farm and nearby history">
+      <bpmn:incoming>T_f02</bpmn:incoming>
+      <bpmn:outgoing>T_f03</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="T_Assess" name="AI assessment and uncertainty">
+      <bpmn:incoming>T_f03</bpmn:incoming>
+      <bpmn:outgoing>T_f04</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="T_Route" name="DMN: route responsibility">
+      <bpmn:incoming>T_f04</bpmn:incoming>
+      <bpmn:outgoing>T_f05</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="T_Which" name="Which responsibility?" gatewayDirection="Diverging">
+      <bpmn:incoming>T_f05</bpmn:incoming>
+      <bpmn:outgoing>T_f06</bpmn:outgoing>
+      <bpmn:outgoing>T_f07</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_Routine" name="Relay established guidance">
+      <bpmn:incoming>T_f06</bpmn:incoming>
+      <bpmn:outgoing>T_f09</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Case" name="Create or link technical case">
+      <bpmn:incoming>T_f07</bpmn:incoming>
+      <bpmn:outgoing>T_f08</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:subProcess id="T_Review" name="Review context and advise farmer">
+      <bpmn:incoming>T_f08</bpmn:incoming>
+      <bpmn:outgoing>T_f10</bpmn:outgoing>
+      <bpmn:startEvent id="T_Review_Start">
+        <bpmn:outgoing>T_Review_Internal1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:task id="T_Review_Step1" name="Review full available context and uncertainty">
+        <bpmn:incoming>T_Review_Internal1</bpmn:incoming>
+        <bpmn:outgoing>T_Review_Internal2</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="T_Review_Step2" name="Judge report and case relevance">
+        <bpmn:incoming>T_Review_Internal2</bpmn:incoming>
+        <bpmn:outgoing>T_Review_Internal3</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="T_Review_Step3" name="Contact farmer by phone or arrange visit as needed">
+        <bpmn:incoming>T_Review_Internal3</bpmn:incoming>
+        <bpmn:outgoing>T_Review_Internal4</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="T_Review_Step4" name="Prepare and give guidance">
+        <bpmn:incoming>T_Review_Internal4</bpmn:incoming>
+        <bpmn:outgoing>T_Review_Internal5</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="T_Review_Step5" name="Record known findings and outcome">
+        <bpmn:incoming>T_Review_Internal5</bpmn:incoming>
+        <bpmn:outgoing>T_Review_Internal6</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:endEvent id="T_Review_End">
+        <bpmn:incoming>T_Review_Internal6</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="T_Review_Internal1" sourceRef="T_Review_Start" targetRef="T_Review_Step1"/>
+      <bpmn:sequenceFlow id="T_Review_Internal2" sourceRef="T_Review_Step1" targetRef="T_Review_Step2"/>
+      <bpmn:sequenceFlow id="T_Review_Internal3" sourceRef="T_Review_Step2" targetRef="T_Review_Step3"/>
+      <bpmn:sequenceFlow id="T_Review_Internal4" sourceRef="T_Review_Step3" targetRef="T_Review_Step4"/>
+      <bpmn:sequenceFlow id="T_Review_Internal5" sourceRef="T_Review_Step4" targetRef="T_Review_Step5"/>
+      <bpmn:sequenceFlow id="T_Review_Internal6" sourceRef="T_Review_Step5" targetRef="T_Review_End"/>
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="T_Merge" name="" gatewayDirection="Converging">
+      <bpmn:incoming>T_f09</bpmn:incoming>
+      <bpmn:incoming>T_f10</bpmn:incoming>
+      <bpmn:outgoing>T_f11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_Record" name="Record delivery / known outcome">
+      <bpmn:incoming>T_f11</bpmn:incoming>
+      <bpmn:outgoing>T_f12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="T_End" name="Advice recorded">
+      <bpmn:incoming>T_f12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="T_f01" sourceRef="T_Start" targetRef="T_Register" name=""/>
+    <bpmn:sequenceFlow id="T_f02" sourceRef="T_Register" targetRef="T_Context" name=""/>
+    <bpmn:sequenceFlow id="T_f03" sourceRef="T_Context" targetRef="T_Assess" name=""/>
+    <bpmn:sequenceFlow id="T_f04" sourceRef="T_Assess" targetRef="T_Route" name=""/>
+    <bpmn:sequenceFlow id="T_f05" sourceRef="T_Route" targetRef="T_Which" name=""/>
+    <bpmn:sequenceFlow id="T_f06" sourceRef="T_Which" targetRef="T_Routine" name="Routine">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">routine guidance</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="T_f07" sourceRef="T_Which" targetRef="T_Case" name="Technician">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">technician involvement</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="T_f08" sourceRef="T_Case" targetRef="T_Review" name=""/>
+    <bpmn:sequenceFlow id="T_f09" sourceRef="T_Routine" targetRef="T_Merge" name=""/>
+    <bpmn:sequenceFlow id="T_f10" sourceRef="T_Review" targetRef="T_Merge" name=""/>
+    <bpmn:sequenceFlow id="T_f11" sourceRef="T_Merge" targetRef="T_Record" name=""/>
+    <bpmn:sequenceFlow id="T_f12" sourceRef="T_Record" targetRef="T_End" name=""/>
+    <bpmn:textAnnotation id="T_input">
+      <bpmn:text>Report input: photo, estimate, usable device GPS or selected field fallback. No-location handling remains open.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="T_human">
+      <bpmn:text>Full available context remains accessible. Technician judges relevance and case links; nearby is not proof. Farm assignments supply continuity; access rules need definition.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="T_severe">
+      <bpmn:text>Severe-action bundle and P2/P3 handovers lie outside core P1: subject to human approval and group alignment; diagnosis never automatically skips pickup.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="T_routine_note">
+      <bpmn:text>Human relays established advice; product recommendation is optional. Delivery does not establish resolution.</bpmn:text>
+    </bpmn:textAnnotation>
+  </bpmn:process>
+  <bpmn:collaboration id="P1_TOBE_Collaboration">
+    <bpmn:participant id="Farmer" name="Farmer (member)"/>
+    <bpmn:participant id="P1_TOBE_Cooxupe" name="Cooxupé · P1 Agricultural technical orientation" processRef="P1_TOBE_Process"/>
+    <bpmn:messageFlow id="T_m1" name="Report" sourceRef="Farmer" targetRef="T_Start" messageRef="T_m1_Message"/>
+    <bpmn:messageFlow id="T_m2" name="Personalised guidance" sourceRef="T_Routine" targetRef="Farmer" messageRef="T_m2_Message"/>
+    <bpmn:messageFlow id="T_m3" name="Technician guidance" sourceRef="T_Review" targetRef="Farmer" messageRef="T_m3_Message"/>
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="P1_TOBE_Diagram">
+    <bpmndi:BPMNPlane id="P1_TOBE_Plane" bpmnElement="P1_TOBE_Collaboration">
+      <bpmndi:BPMNShape id="Farmer_DI" bpmnElement="Farmer" isHorizontal="true">
+        <dc:Bounds x="25" y="45" width="1500" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="P1_TOBE_Cooxupe_DI" bpmnElement="P1_TOBE_Cooxupe" isHorizontal="true">
+        <dc:Bounds x="25" y="150" width="1500" height="700"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_App_DI" bpmnElement="T_App" isHorizontal="true">
+        <dc:Bounds x="55" y="150" width="1470" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Coord_DI" bpmnElement="T_Coord" isHorizontal="true">
+        <dc:Bounds x="55" y="390" width="1470" height="210"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Field_DI" bpmnElement="T_Field" isHorizontal="true">
+        <dc:Bounds x="55" y="600" width="1470" height="250"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Start_DI" bpmnElement="T_Start">
+        <dc:Bounds x="95" y="235" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="113" y="277" width="134" height="46"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Register_DI" bpmnElement="T_Register">
+        <dc:Bounds x="155" y="212.5" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Context_DI" bpmnElement="T_Context">
+        <dc:Bounds x="305" y="212.5" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Assess_DI" bpmnElement="T_Assess">
+        <dc:Bounds x="455" y="212.5" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Route_DI" bpmnElement="T_Route">
+        <dc:Bounds x="605" y="212.5" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Which_DI" bpmnElement="T_Which">
+        <dc:Bounds x="770" y="227" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="728.0" y="281" width="134" height="46"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Routine_DI" bpmnElement="T_Routine">
+        <dc:Bounds x="885" y="422.5" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Case_DI" bpmnElement="T_Case">
+        <dc:Bounds x="885" y="642.5" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Review_DI" bpmnElement="T_Review" isExpanded="false">
+        <dc:Bounds x="1050" y="642.5" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Merge_DI" bpmnElement="T_Merge">
+        <dc:Bounds x="1215" y="437" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1173.0" y="491" width="134" height="46"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Record_DI" bpmnElement="T_Record">
+        <dc:Bounds x="1300" y="212.5" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_End_DI" bpmnElement="T_End">
+        <dc:Bounds x="1460" y="235" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1411.0" y="275" width="134" height="46"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_input_DI" bpmnElement="T_input">
+        <dc:Bounds x="100" y="300" width="500" height="65"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_human_DI" bpmnElement="T_human">
+        <dc:Bounds x="595" y="745" width="590" height="75"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_severe_DI" bpmnElement="T_severe">
+        <dc:Bounds x="835" y="865" width="640" height="85"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_routine_note_DI" bpmnElement="T_routine_note">
+        <dc:Bounds x="95" y="500" width="550" height="65"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="T_f01_DI" bpmnElement="T_f01">
+        <di:waypoint x="131" y="253.0"/>
+        <di:waypoint x="155" y="252.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f02_DI" bpmnElement="T_f02">
+        <di:waypoint x="275" y="252.5"/>
+        <di:waypoint x="305" y="252.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f03_DI" bpmnElement="T_f03">
+        <di:waypoint x="425" y="252.5"/>
+        <di:waypoint x="455" y="252.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f04_DI" bpmnElement="T_f04">
+        <di:waypoint x="575" y="252.5"/>
+        <di:waypoint x="605" y="252.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f05_DI" bpmnElement="T_f05">
+        <di:waypoint x="725" y="252.5"/>
+        <di:waypoint x="770" y="252.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f06_DI" bpmnElement="T_f06">
+        <di:waypoint x="795" y="277"/>
+        <di:waypoint x="795" y="462"/>
+        <di:waypoint x="885" y="462"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="805" y="400" width="140" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f07_DI" bpmnElement="T_f07">
+        <di:waypoint x="795" y="277"/>
+        <di:waypoint x="835" y="277"/>
+        <di:waypoint x="835" y="682"/>
+        <di:waypoint x="885" y="682"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="845" y="605" width="140" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f08_DI" bpmnElement="T_f08">
+        <di:waypoint x="1005" y="682.5"/>
+        <di:waypoint x="1050" y="682.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f09_DI" bpmnElement="T_f09">
+        <di:waypoint x="1005" y="462.5"/>
+        <di:waypoint x="1215" y="462.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f10_DI" bpmnElement="T_f10">
+        <di:waypoint x="1170" y="682"/>
+        <di:waypoint x="1240" y="682"/>
+        <di:waypoint x="1240" y="487"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f11_DI" bpmnElement="T_f11">
+        <di:waypoint x="1265" y="462"/>
+        <di:waypoint x="1360" y="462"/>
+        <di:waypoint x="1360" y="292.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_f12_DI" bpmnElement="T_f12">
+        <di:waypoint x="1420" y="252.5"/>
+        <di:waypoint x="1460" y="253.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_m1_DI" bpmnElement="T_m1">
+        <di:waypoint x="113.0" y="115"/>
+        <di:waypoint x="113.0" y="235"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="123.0" y="162" width="140" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_m2_DI" bpmnElement="T_m2">
+        <di:waypoint x="945" y="422.5"/>
+        <di:waypoint x="945" y="115"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="955" y="170" width="140" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_m3_DI" bpmnElement="T_m3">
+        <di:waypoint x="1110" y="722.5"/>
+        <di:waypoint x="1505" y="722.5"/>
+        <di:waypoint x="1505" y="115"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1360" y="170" width="140" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
