@@ -42,8 +42,11 @@ Keep observations, prior confirmed findings, model inferences and hidden current
 scoring labels distinct. Prior confirmed findings may appear as legitimate history,
 including in normal intake when an image repeats. Under the selected
 [assessment boundary](DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary), no history
-is sent to the LLM; it receives only the current image and farmer note. Evaluate image
-assessment separately from history-aware routing. Record reuse and relationships; do not
+enters either model. The image classifier receives the photo; a proposed second
+model receives its scores, farmer note and optional [event weather](EVENT-WEATHER.md).
+Weather attached to dataset photos is synthetic scenario context unless actual
+capture place/time are known. Evaluate image assessment separately from weather
+interpretation and history-aware routing. Record reuse and relationships; do not
 count crops and their parent as independent samples. Keep current answers and
 label-bearing IDs or filenames out of displayed observations, attachment names,
 intake payloads, prompts and other diagnosis inputs. Keep provenance and scoring
@@ -127,6 +130,6 @@ and do not claim selection or import complete.
 
 **Diagnosis-evaluation readiness:** Separate from inspection and sample completion.
 Require suitable disease truth and known coverage, source-specific label meanings,
-hidden scoring metadata, verified image-and-note-only model inputs, and recorded
+hidden scoring metadata, verified inputs under the assessment boundary, and recorded
 exclusions for duplicate/related images. Without suitable truth, retain only supported upload/context use and
 obtain another truth source or expert work before scoring diagnosis.

@@ -20,11 +20,12 @@ remains pending. Model assessments are inferences, not diagnoses.
    ultimately turn out that there is no problem. Link it to its farm and available
    location and history; a field association is not always available. Receipt confirms
    submission, not advice or resolution.
-2. The LLM assesses each report independently using only its current image and the
-   farmer's optional note. It returns suspected issue, visible signs and uncertainty;
-   its inference is not a confirmed finding. Farm/nearby history, earlier assessments,
-   treatments and case records are not supplied to the LLM. Code derives history facts
-   separately. Deterministic DMN combines those facts with the assessment and farmer's
+2. Assess each report independently. The image model receives the photo only;
+   a proposed second model combines its candidate scores with the farmer note and
+   optional bounded [event weather](EVENT-WEATHER.md). Its structured assessment is
+   inference, not a confirmed finding. Farm/nearby history, earlier assessments,
+   treatments and cases are excluded from both models. Code derives history facts
+   separately; deterministic DMN combines them with the assessment and farmer's
    extent estimate to route responsibility, with a reason.
 3. Only technician involvement creates a **case**; routine reports remain reports.
    If a report escalates later, link it to an appropriate existing case or create a
@@ -46,6 +47,11 @@ remains pending. Model assessments are inferences, not diagnoses.
    farmer was unavailable. Handling recorded does not mean the case is closed.
 
 ## Assessment and routing boundary
+
+Event weather is the only selected context extension beyond the current photo and
+farmer note; its variables, provenance, assumptions and source limits are owned by
+[the weather plan](EVENT-WEATHER.md). Do not infer a data connection from BPMN task
+order. Weather enrichment is not connected report history.
 
 Keep the original report and its standalone AI assessment linked to the farm. Later
 reports or history changes can affect routing and technician review without changing
@@ -111,8 +117,10 @@ be agreed; they are illustrative, not agronomic protocols.
 Next agent: prepare a minimal routing UC in SPECIFY, separate from
 [UC-001 intake/history](../specs/UC-001-REPORT-INTAKE.md). Trace the owner direction,
 proposed rule and unresolved choices to acceptance criteria. Include an input-boundary
-check: farm/nearby history and prior findings never enter the assessment request;
-changing history can change routing while leaving the standalone assessment unchanged.
+check: image model receives only the photo; any second model receives candidate
+scores, farmer note and optional versioned weather snapshot. Farm/nearby history and
+prior findings enter neither. Changing connected history can change routing while
+leaving the standalone assessment unchanged.
 Identify the authoritative
 rule version and how consistency with the eventual DMN will be checked. Do not edit the
 group models or implement routing. Agreed intake can progress independently; routing

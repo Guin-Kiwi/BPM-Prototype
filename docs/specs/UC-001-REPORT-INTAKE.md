@@ -166,8 +166,9 @@ working demo and its evidence are described in [TASKS](../TASKS.md).
    disease/severity scoring labels and label-bearing source names out of displayed
    attachment names, observations and diagnosis inputs. Separate restricted provenance
    and evaluation metadata as in the [open-data plan](../reference/OPEN-DATA.md).
-   Record reuse and relatedness. Future AI assessment receives only the current image
-   and farmer note; history feeds deterministic routing and human review separately,
+   Record reuse and relatedness. Future image assessment receives only the photo;
+   a proposed second model may combine its scores with the note and optional
+   [event weather](../reference/EVENT-WEATHER.md). Connected history feeds routing and human review separately,
    under the [assessment boundary](../reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary).
    Record exclusions for duplicate/related evaluation images. Ordinary history may show
    prior findings for repeated images without presenting them as new confirmation.

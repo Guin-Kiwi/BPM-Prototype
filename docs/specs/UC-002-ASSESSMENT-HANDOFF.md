@@ -14,7 +14,9 @@ attention, with an inspectable assessment and reason for each route.
 
 ### In scope
 - Reuse [UC-001](UC-001-REPORT-INTAKE.md) intake and stored report evidence.
-- Real image-capable model call, structured saved assessment and explicit failure state.
+- Real image assessment, structured saved output and explicit failure state.
+- Optional [event weather](../reference/EVENT-WEATHER.md); proposed second-model
+  interpretation of image scores, farmer note and that snapshot.
 - Deterministic route with recorded rule version, input facts and reason.
 - Minimal staff view of the report, image, assessment, route and available farm history.
 - Recorded human handoff: routine guidance delivery or technician involvement.
@@ -28,12 +30,12 @@ attention, with an inspectable assessment and reason for each route.
 ## Actors
 
 Primary: simulated staff member opening a submitted report.
-Secondary: farmer via existing intake; external image-assessment provider.
+Secondary: farmer via existing intake; selected model backend and optional weather source.
 
 ## Preconditions
 
-A report with an image exists. Real provider access, model and configuration must be
-selected before a live assessment can run. Routine guidance and routing definitions
+A report with an image exists. Real model backend and configuration must be
+selected before an assessment can run; a local classifier is a candidate, not yet tested. Routine guidance and routing definitions
 must be specified before the routine branch can be implemented.
 
 ## Trigger
@@ -42,10 +44,13 @@ Staff requests assessment of a saved report.
 
 ## Main flow
 
-1. Load the current image and farmer note only, under the
+1. Load the photo for image classification under the
    [assessment boundary](../reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary).
-2. Call the real provider; validate and save suspected issue, visible signs and
-   uncertainty with model/prompt identification. Preserve original report evidence.
+2. Run the selected image model and save its candidate scores and model identity.
+   Proposed second stage: interpret those scores with the farmer note and optional
+   saved weather snapshot. Keep image results distinct from interpreted suspected
+   issue and uncertainty; do not invent visible signs from class scores. Preserve
+   original report evidence and identify every model/prompt and snapshot used.
 3. Code prepares defined history facts. Apply the versioned responsibility rules to
    those facts, assessment and extent estimate; save route and reason separately.
 4. Staff sees the original evidence, assessment, route and available history.
@@ -60,6 +65,8 @@ Staff requests assessment of a saved report.
 - Unsupported guidance, missing evidence or uncertain assessment follows explicit
   technician-routing rules; exact input definitions remain open below.
 - Unknown prior history remains unknown, rather than evidence of no earlier issue.
+- Missing weather permits an assessment without weather, explicitly marked unavailable.
+  Model selection and interpretation-stage behavior remain open before implementation.
 
 ## Errors / failure cases
 
@@ -73,14 +80,18 @@ Sources: selected [comparison pair](../../models/comparison/README.md),
 [routing worksheet](../reference/DMN-RULE-WORKSHEET.md) and owner selection of a real
 model for the first slice.
 
-1. The actual model request contains only the image and farmer note as report evidence;
-   history, identities, earlier findings and source-label metadata are excluded.
+1. Image classification receives only the photo. Any second model receives candidate
+   scores, farmer note and optional saved weather snapshot. Connected history,
+   identities, earlier findings and source-label metadata enter neither model.
 2. Valid live output is saved as inference with provenance, not a confirmed finding.
 3. Routing is reproducible from recorded inputs and versioned rules, with a reason.
    History changes can affect routing without changing the standalone assessment.
 4. Staff can inspect evidence/history and record the appropriate handoff. Routine
    reports create no technical case; technician involvement follows the agreed linking rule.
 5. Results survive restart; errors never appear as completed assessment or delivery.
+6. Weather provenance, units, time window and missing data remain inspectable. Later
+   weather is excluded from the observation snapshot; simulated capture context is
+   labelled. Weather never confirms damage or adds unsupported classifier classes.
 
 ## Security / trust-boundary notes
 
@@ -91,8 +102,8 @@ automated tests must not require paid calls. Simulated identity is not access co
 ## Validation plan
 
 ### Tests
-Unit: output validation, rule precedence and input-boundary checks.
-Integration: persistence, provider failures, routing facts and handoff consistency.
+Unit: output validation, rule precedence, model-input boundaries and weather time/unit checks.
+Integration: persistence, backend/weather failures, immutable snapshot links, routing facts and handoff consistency.
 E2E: existing intake through a staff-recorded handoff and reload.
 
 ### Evidence
@@ -103,7 +114,10 @@ model experiments have run for this slice.
 
 ## Open questions / assumptions
 
-- Provider/model, credential setup, billing access and supported output format.
+- Local classifier feasibility and selection; second-model choice and structured output.
+  API credentials/billing are needed only if a hosted backend is selected.
+- Weather endpoint/terms/coverage, alert archive and snapshot window; see the weather
+  plan's source-backed limits. These remain unresolved; no weather integration exists.
 - Explicit demo routing definitions, including extent, uncertainty and history triggers.
 - Applicable published guidance entries and their deterministic mapping.
 - Minimum technician assignment/case-linking behavior for this first journey.

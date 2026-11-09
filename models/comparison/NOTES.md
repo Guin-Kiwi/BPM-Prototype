@@ -14,8 +14,9 @@ provides guidance remotely or on site, and records guidance and progress. The vi
 subprocess includes travel, inspection, on-site guidance and return.
 
 TO-BE registers the report and retrieves farm and nearby history for routing and human
-review. AI independently assesses only the current image and farmer note; DMN combines
-that output with the extent estimate and code-derived history facts to route responsibility.
+review. The image model receives the photo only; a proposed second model combines
+its scores, farmer note and optional [event weather](../../docs/reference/EVENT-WEATHER.md).
+DMN combines the assessment, extent estimate and code-derived history facts to route responsibility.
 The subprocess sequence does not imply that retrieved history is passed to the LLM;
 see the [assessment boundary](../../docs/reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary). Communications personally relays
 established guidance for routine reports; technician involvement creates or links a

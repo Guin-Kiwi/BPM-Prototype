@@ -75,3 +75,6 @@ include editable BPMN and previews; source assumptions and group alignment are e
 
 [P1 comparison edit plan](../design/BPMN-EDIT-PLAN.md) records the intended detail and
 review checks; evidence for earlier diagrams must not be attributed to the selected pair.
+
+[Event weather context](EVENT-WEATHER.md) owns selected environmental variables,
+source evidence, snapshot assumptions and the distinction from connected history.

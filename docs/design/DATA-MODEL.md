@@ -49,7 +49,7 @@ The single typed event table is a proposal, not an implemented schema.
 | Photo evidence | `evidence_id`, report, original content/reference, media type and provenance. One report has one photo in the current target; retained legacy reports may have none. Dataset reuse links to source asset identity without changing the original evidence. |
 | Estimate | Report-owned value, kind (count or percentage), unit, farmer-reported provenance and any area cue. New reports have one; legacy reports may have none. Count is plants; percentage is affected plants among all plants in the observed area, not land area or measured incidence. |
 | Location context | Report-owned device point with accuracy, source and capture time, **or** farmer-selected field and retained boundary with field-level precision and source. Each new report has one usable context; a point may yield zero or one derived field under a rule still to be agreed. No point is implied by a boundary. |
-| Assessment | `assessment_id`, report, inference, uncertainty, evidence references, model/prompt version and time. Based only on the current image and farmer note, under the [assessment boundary](../reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary). A report can have zero or more assessments; none is itself a confirmed finding. |
+| Assessment | `assessment_id`, report, inference, uncertainty, evidence references, model/prompt version and time. Based on the current report evidence and optional versioned [event weather](../reference/EVENT-WEATHER.md), with model inputs separated under the [assessment boundary](../reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary). A report can have zero or more assessments; none is itself a confirmed finding. |
 | Routing decision | `decision_id`, report, route, reason, rule/version, inputs and time. A report can have zero or more decisions over time; the route assigns responsibility, not relevance or a diagnosis. |
 | Technical case | `case_id`, farm, optional field scope, status, technician involvement and dates. Recommended: one primary farm, optionally one field, with zero or more cases per farm/field. A case starts with technician involvement and at least one report; case scope and cardinality require agreement. |
 | Case membership | `membership_id`, case, report, technician, time and reason. Recommended: a case has one or more reports; a report has zero or more memberships over time. Membership is a deliberate technician judgment, not a routing or proximity result. Whether simultaneous membership in multiple cases is allowed is open. |
@@ -116,7 +116,8 @@ in the diagram. Farmer/account and staff identity relationships await access des
 - Preserve data source and synthetic scenario context separately from operational
   records. A reused photo or related crop is not independent evidence. Keep current
   scoring labels and label-bearing identifiers out of inference inputs. The current
-  photo and farmer note are the only AI evidence inputs; history is reserved for
+  photo goes to the image model; its scores, farmer note and optional versioned
+  event weather may feed a second model. Connected history is reserved for
   deterministic routing and human review. Record duplicate/related-image exclusions
   in evaluation; ordinary prior findings remain visible in history. See the
   [open-data plan](../reference/OPEN-DATA.md).
