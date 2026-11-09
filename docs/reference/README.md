@@ -42,3 +42,6 @@ concept. Verify suitability and reuse terms before importing samples. No source
 documents or datasets have been redistributed by this bootstrap.
 
 First dataset preparation: [open-data intake plan](OPEN-DATA.md).
+
+Selected prototype routing direction and next specification step:
+[report-to-case routing worksheet](DMN-RULE-WORKSHEET.md). Group model alignment remains pending.

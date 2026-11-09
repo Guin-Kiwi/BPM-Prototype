@@ -36,6 +36,14 @@ Review the UC and attachment defaults. The agreed selection, persistence and his
 journey can inform DESIGN; finalize attachment limits before implementing them.
 After agreeing seed contents, prepare scenarios under the [open-data plan](reference/OPEN-DATA.md).
 
+## Selected routing step
+
+Ayla selected report-to-case routing as the next business specification step:
+[consolidated routing worksheet](reference/DMN-RULE-WORKSHEET.md). This is the
+prototype direction; alignment with the group paper and models is still pending.
+The worksheet owns the terminology, routing proposal, open definitions and bounded
+agent handoff. UC-001 remains intake/history only; no routing implementation yet.
+
 ## Deferred decisions / backlog
 
 - LLM provider and image assessment, routing policy/execution and review criteria.
