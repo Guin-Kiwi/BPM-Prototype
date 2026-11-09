@@ -25,8 +25,13 @@ selective; do not impose universal review or invent routing thresholds.
 
 Python 3.12 and FastAPI development profile. Business rules remain independent of the
 web framework, model provider and persistence. Application services orchestrate domain
-objects through interfaces; infrastructure supplies adapters. Provider, persistence,
+objects through interfaces; infrastructure supplies adapters. Provider,
 rule execution and optional MCP integration remain design decisions.
+
+For UC-001, [ADR-001](adr/ADR-001-local-report-persistence.md) selects local SQLite,
+with each optional image stored transactionally with its report. Application services
+use an application-owned repository boundary; domain and application do not depend
+on SQLite. This accepted design is not yet implemented.
 
 | Location | Responsibility |
 | --- | --- |
