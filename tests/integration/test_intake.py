@@ -1,17 +1,35 @@
+import asyncio
 import io
 import sqlite3
 from datetime import date, timedelta
 
 import pytest
-from fastapi.testclient import TestClient
+import httpx
 from PIL import Image
 
 from app.infrastructure.web import create_app
 
 
+class HttpClient:
+    def __init__(self, app):
+        self.app = app
+
+    def request(self, method, path, **kwargs):
+        async def run():
+            async with httpx.AsyncClient(transport=httpx.ASGITransport(app=self.app), base_url='http://test') as client:
+                return await client.request(method, path, **kwargs)
+        return asyncio.run(run())
+
+    def get(self, path):
+        return self.request('GET', path)
+
+    def post(self, path, **kwargs):
+        return self.request('POST', path, **kwargs)
+
+
 @pytest.fixture
 def client(tmp_path):
-    return TestClient(create_app(tmp_path / 'demo.sqlite3'))
+    return HttpClient(create_app(tmp_path / 'demo.sqlite3'))
 
 
 def image_bytes(fmt='PNG'):
@@ -30,7 +48,7 @@ def submit(client, **kwargs):
 
 def test_form_seed_and_restart(tmp_path):
     db = tmp_path / 'demo.sqlite3'
-    first = TestClient(create_app(db))
+    first = HttpClient(create_app(db))
     form = first.get('/')
     assert form.status_code == 200
     assert all(x in form.text for x in ['Synthetic', 'farm-1', 'farm-2', 'field-1', 'field-4'])
@@ -38,7 +56,7 @@ def test_form_seed_and_restart(tmp_path):
                       files={'image': ('diagnosis.png', image_bytes(), 'text/plain')})
     assert response.status_code == 303
     location = response.headers['location']
-    second = TestClient(create_app(db))
+    second = HttpClient(create_app(db))
     detail = second.get(location)
     assert detail.status_code == 200
     assert '&lt;script&gt;unsafe&lt;/script&gt;' in detail.text
@@ -81,11 +99,11 @@ def test_history_backdating_and_field_isolation(client):
     current = submit(client, data={'field_id': 'field-2', 'observation_date': '2025-04-01', 'description': 'Current'})
     path = current.headers['location']
     assert 'No earlier reports' in client.get(path).text
-    submit(client, data={'field_id': 'field-2', 'observation_date': '2025-02-01', 'description': 'Earlier'})
+    submit(client, data={'field_id': 'field-2', 'observation_date': '2025-02-01', 'description': 'Old observation'})
     submit(client, data={'field_id': 'field-2', 'observation_date': '2025-03-01', 'description': 'More recent'})
     submit(client, data={'field_id': 'field-1', 'observation_date': '2025-03-01', 'description': 'Other field'})
     text = client.get(path).text
-    assert text.index('More recent') < text.index('Earlier')
+    assert text.index('More recent') < text.index('Old observation')
     assert 'Other field' not in text
     assert client.get('/reports/unknown').status_code == 404
 
