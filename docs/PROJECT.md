@@ -3,25 +3,28 @@
 ## Purpose
 
 Build a local demonstrator of agricultural technical orientation (P1) for the BPM
-coursework. Farmers submit an issue; an LLM proposes an assessment; explicit rules
-select an action; advisory staff inspect evidence and handle cases requiring review.
+coursework. Farmers submit an issue; AI assesses the evidence with uncertainty; deterministic
+rules route responsibility to communications or a technician.
 Ayla leads implementation. This is a prototype, not a deployed agricultural service.
 
 ## Scope and current capability
 
-Planned: text-first report entry, farm/field history, real LLM assessment, deterministic
-routing, an advisory view, simulated communications and traceable experiment export.
-Import a small licensed image sample separately; image assessment needs a suitable provider. Field aggregation
-and sampling scenarios follow the first working path. Sales/time benefits are hypotheses.
+Selected concept: camera-first reporting with a required farmer estimate, automatic
+identity/time and usable GPS or known-field fallback; one farmer view and one technician
+view with neighbouring farms in scope. The [routing worksheet](reference/DMN-RULE-WORKSHEET.md)
+sets out the selected responsibilities, proposed rule and open decisions. The selected
+[comparison models](../models/comparison/README.md) do not replace the group paper.
 
-Implemented: local browser intake with farm/field selection, text and optional image,
-SQLite save/retrieve, fictional seed history and same-field chronology. Images are
-stored with reports in one transaction. No model integration or routing exists yet;
-no open-data images have been imported. See [UC-001](specs/UC-001-REPORT-INTAKE.md).
+Implemented: a local simulated farmer uploads a required image and estimate, obtains a
+browser GPS fix, and saves/retrieves reports and farm-wide history in SQLite. Observation
+time is simulated at photo selection; identity is fixed, not authenticated. Map fallback,
+nearby history and the technician view are unavailable. See [UC-001](specs/UC-001-REPORT-INTAKE.md)
+and [README](../README.md#run-the-local-demo) for details and limitations.
 
-External messages, purchases and logistics handovers are simulated. Product recommendations
-do not create orders. Model output is an inference, not a confirmed diagnosis. Review is
-selective; do not impose universal review or invent routing thresholds.
+AI assessment, deterministic routing, technical cases, guidance, communications,
+visit handling and experiment export are not implemented. No automatic farmer messaging
+or product orders are planned. Model output is an inference, not a confirmed diagnosis;
+review is selective and routing thresholds remain undecided.
 
 ## Architecture
 
@@ -31,16 +34,16 @@ objects through interfaces; infrastructure supplies adapters. Provider,
 rule execution and optional MCP integration remain design decisions.
 
 For UC-001, [ADR-001](adr/ADR-001-local-report-persistence.md) selects local SQLite,
-with each optional image stored transactionally with its report. Application services
+with images stored transactionally with their reports; new intake requires an image. Application services
 use an application-owned repository boundary; domain and application do not depend
 on SQLite. UC-001 implements this design.
 
 | Location | Responsibility |
 | --- | --- |
-| `src/app/domain/` | Observations, rule inputs/results and sampling calculations |
-| `src/app/application/` | Assessment/review workflows and adapter contracts |
-| `src/app/interfaces/` | Planned HTTP/UI and experiment entrypoints |
-| `src/app/infrastructure/` | Planned provider, storage and wiring adapters |
+| `src/app/domain/` | Report representation; future business rules belong here |
+| `src/app/application/` | Intake and repository boundary; assessment/review are future work |
+| `src/app/interfaces/` | Reserved for future interfaces |
+| `src/app/infrastructure/` | Local web and SQLite adapters; provider adapters are future work |
 | `tests/unit/`, `tests/integration/`, `tests/e2e/` | Deterministic automated checks |
 | `tests/fixtures/` | Small attributable fixtures when introduced |
 
