@@ -14,7 +14,7 @@ bootstrap_skill=$(python3 - <<'PY'
 import json
 with open("docs/INDEX.json", encoding="utf-8") as fh:
     index = json.load(fh)
-print(next(phase["skill"] for phase in index["phases"] if phase["phase"] == 0))
+print(next(phase["skill"] for phase in index["phases"] if phase["phase"] == 0).removeprefix("skills/"))
 PY
 )
 

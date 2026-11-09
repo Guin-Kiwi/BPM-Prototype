@@ -268,6 +268,7 @@ rm "$d/LICENSE"
 expect_fail "missing LICENSE (CC BY 4.0 attribution)" "$d" "docs/INDEX.json references missing path LICENSE"
 
 d=$(make_fixture license-unchosen-after-bootstrap 1 in-progress "$UC_OK" "$ACCEPT_OK" "$EVIDENCE_OK")
+printf '%s\n' '[CHOOSE AT BOOTSTRAP]' > "$d/LICENSE"
 expect_warn "project licence not chosen after BOOTSTRAP" "$d" "LICENSE: the project licence is not chosen yet"
 
 d=$(make_fixture license-chosen 1 in-progress "$UC_OK" "$ACCEPT_OK" "$EVIDENCE_OK")

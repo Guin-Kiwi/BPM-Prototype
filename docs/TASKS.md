@@ -1,56 +1,53 @@
-# TASKS.md
+# Current work
 
 PHASE: 0
-STATUS: ready
-
-See `docs/INDEX.json` for the phase list.
+STATUS: in-progress
 
 ## Active objective
 
-This repository starts as the AI-SDLC template. First objective: define the
-project — complete `docs/PROJECT.md` (purpose, architecture, commands) for
-this specific project. Once it reflects a real project, strip the
-template-only commentary per `skills/ai-sdlc-0-bootstrap` step 5, then replace
-this paragraph with the actual current objective.
-
-## Current Use Case
-
-docs/specs/UC-[NNN]-[NAME].md
+Bootstrap the Cooxupé P1 prototype from the AI-SDLC template without implementing
+unagreed business policy. No active use case yet; bootstrap is tooling/context work.
 
 ## Current slice
 
-Describe the smallest vertical step being worked right now.
+Project identity, source map, Python/FastAPI environment and inherited checks.
 
 ## Acceptance / validation cues
 
-- What should be true when this slice is done?
-- What evidence will show that it is done?
-- Which artefact, test, review note, or document should hold that evidence?
+- Project documents distinguish implemented scaffold from proposed capabilities.
+- References resolve locally and identify authority and open policy questions.
+- Template identity is removed, attribution retained and project code licensed MIT.
+- Setup and full handoff checks pass; record evidence below.
 
-## Blockers / assumptions / decisions
+## Decisions and remaining work
 
-- Blockers that stop progress.
-- Assumptions currently being made.
-- Decisions that changed direction, scope, or sequencing.
+Ayla approved MIT and template cleanup. Python/FastAPI follows the discussed profile.
+First-slice decisions: provider access and image timing; routing/review criteria and
+rule artifact/execution; whether a narrow MCP integration is needed. These do not
+block environment setup, but behavior must be agreed before implementation.
 
-## Evidence links
+## Evidence
 
-- Link to the relevant spec, design note, test result, PR note, or review comment.
+Verified 9 November 2026:
+- `bash scripts/check-setup.sh`: passed; Codex skill link and local Python environment resolve.
+- `bash scripts/test.sh`: passed; lifecycle scenarios, 46 tooling tests and 3 pytest tests.
+- Project navigation/source link check: passed; references use the surrounding folder.
+- `git diff --check`: passed.
+
+Corrected inherited setup path duplication and isolated licence/README regression
+fixtures from project-specific content. Human review of bootstrap changes remains
+outstanding; phase stays in-progress for that review.
 
 ## Next smallest step
 
-State the next concrete action that should happen if work resumes later.
+Review bootstrap, then select SPECIFY for UC-001: assess and route one text report,
+with explicit handling of unavailable history, invalid model output and model failure.
 
 ## Backlog
 
-- docs/specs/UC-[NNN]-[NAME].md
+1. Assess and route one report with real LLM analysis and traceable rule output.
+2. Advisory evidence view, review/corrections and simulated guidance/handover.
+3. Synthetic field scenarios, duplicate handling and experiment export.
 
-## Working agreement
-
-- Keep one active use case small enough to deliver vertically.
-- Keep one current slice small enough to finish or re-evaluate quickly.
-- Prefer reality-based progress over placeholder completeness.
-- Update this file when the lifecycle phase, active objective, or current use case changes.
-- Record blockers, assumptions, and decisions when they affect delivery.
-- Link validation evidence from the relevant project artefact instead of duplicating it here.
-- End each work session with the next smallest step clearly stated.
+Implementation owner: [working agreement](WORKING-AGREEMENT.md).
+Source scope: [project context](PROJECT.md) and [source map](reference/README.md).

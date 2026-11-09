@@ -5,10 +5,10 @@ Team conventions; humans and agents both follow this file; change it by team agr
 ## Workflow
 | Topic | Agreement |
 | --- | --- |
-| Solo or team | TBD |
-| Branches | One use case per branch and per PR, named `uc-NNN-<short-name>` (lowercase, same NNN as the UC file). |
-| Review and merge | As the repository's imported ruleset requires; the rulesets the template ships are described under Repository setup in CONTRIBUTING.md. |
-| Shared files | Shared files (`AGENTS.md`, `docs/PROJECT.md`, `docs/INDEX.json`, `.github/`) change in their own small PR, not mixed into feature work. |
+| Solo or team | Ayla owns prototype implementation; this supports a group coursework submission. Sarah and Ayla review business alignment and evaluation conclusions. |
+| Branches | Solo bootstrap work is committed directly to `main`, as authorized by Ayla. Other tooling branches use `chore/<short-name>`. One use case per branch and per PR, named `uc-NNN-<short-name>` (lowercase, same NNN as the UC file). |
+| Review and merge | Ayla reviews and authorizes prototype merges. Do not assume a second code reviewer is available. GitHub ruleset enforcement has not been verified; imported requirements still apply if enabled. |
+| Shared files | Shared files (`AGENTS.md`, `docs/PROJECT.md`, `docs/INDEX.json`, `.github/`) stay separate from feature work; solo bootstrap may include them directly on `main`. Otherwise use their own small PR. |
 
 ## Conventions
 | Topic | Agreement |
@@ -31,3 +31,14 @@ approver or approval date before review occurs.
 If the reviewer selects another option, align the Decision and Consequences
 before merge. Approval covers the reviewed decision. This resulting-state
 convention does not turn unrun or failed checks into successful validation.
+
+## Coursework delivery
+
+Ayla builds and fixes the prototype. Peter and Toby prepare scenarios, run experiments
+and produce evaluation/cost-benefit evidence. Sarah integrates the report. Sarah and
+Ayla review their conclusions. This division does not authorize changing group policy:
+unresolved routing and review criteria require group agreement against the paper/models.
+
+Use synthetic farm histories and licensed sample data with source manifests. Keep
+credentials and unselected raw experiment outputs out of git. Live model experiments
+are deliberate runs with model/prompt/rule versions and actual results recorded.

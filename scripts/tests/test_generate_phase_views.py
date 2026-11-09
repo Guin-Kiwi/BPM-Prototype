@@ -283,7 +283,11 @@ class GeneratePhaseViewsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = pathlib.Path(tmp)
             make_project(root)
-            (root / "README.md").write_text((ROOT / "README.md").read_text())
+            (root / "README.md").write_text(
+                "| Project | Process |\n| --- | --- |\n"
+                "| <!-- BEGIN GENERATED PROJECT PATHS -->stale<!-- END GENERATED PROJECT PATHS --> "
+                "| <!-- BEGIN GENERATED PROCESS PATHS -->stale<!-- END GENERATED PROCESS PATHS --> |\n"
+            )
             result = self.run_generator(root)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             readme = (root / "README.md").read_text()
