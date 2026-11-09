@@ -48,6 +48,10 @@ Resolve the provider and bounded demo rules in the UC-002 draft, using the
 The selected work is SPECIFY; no application implementation is claimed.
 The [local-model security review](reference/LOCAL-MODEL-SECURITY.md) records metadata
 findings and containment conditions; no model installation or execution has begun.
+[Experiment preparation](../experiments/local-classifier/README.md) supplies the manifest
+and sandbox configuration. Next: dependency/loader review, isolated runtime build and
+verified artifact acquisition, deferred to tomorrow at the owner's request. No model
+packages, weights or runtime image were installed today.
 
 ## Selected routing step
 

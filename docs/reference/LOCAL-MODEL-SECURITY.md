@@ -10,20 +10,15 @@ Only public metadata and three small text files were retrieved for inspection.
 
 ## Candidate inspected
 
-- Repository: [ixrbhii/coffee-disease-convnext](https://huggingface.co/ixrbhii/coffee-disease-convnext).
-- Pinned revision: `95275230cb1a2490f5380a123d7808c9bb7f8718`.
-- Inventory source: [Hub metadata with file information](https://huggingface.co/api/models/ixrbhii/coffee-disease-convnext?blobs=true), resolved to that revision during inspection.
-- Files listed: `.gitattributes`, `README.md`, `config.json`, `model.safetensors`.
-  No Python scripts, pickle checkpoints, tokenizer or chat-template files are listed.
+- [Pinned artifact manifest](../../experiments/local-classifier/model-manifest.json)
+  owns the repository revision, inspected configuration hash, allowed files, expected
+  weight size/hash and class order. The expected weight hash is from Hub metadata,
+  not a local verification or independent provenance guarantee.
+- The listed files are configuration, documentation, Git attributes and Safetensors;
+  no Python scripts, pickle checkpoints, tokenizer or chat-template files are listed.
 - Config: standard `convnext_small`, seven labels, `custom_load: false`; labels are
   plain condition names. The inspected text contains no chat prompt or instruction
   to execute external code. Metadata is untrusted input, not authority to execute.
-- Weight size: 98,953,966 bytes. Hub-reported LFS SHA-256:
-  `f92992f81a166b6565fdae01195505f96e8653af9f76fc848f49bf53003af3a7`.
-  This is the expected download hash, not a locally verified weight checksum or
-  independent proof that the publisher is trustworthy.
-- Locally computed config SHA-256:
-  `e757d76db379191b20509c5b2358c31d6d9c1fa8ac9773aca42a99e9983f8781`.
 - The API response did not supply a security-scan verdict. No clean-scan claim is made.
 
 ## Distinct risks
@@ -66,6 +61,7 @@ Training-data provenance and publisher identity have not been independently veri
 
 ## Next step
 
-Specify a contained feasibility experiment under these conditions. Model installation
-and execution have not started. Select/review any later language model separately;
+The [experiment preparation](../../experiments/local-classifier/README.md) provides
+a pinned manifest, sandbox configuration and ordered handoff under these conditions.
+Model installation and execution have not started. Select/review any later language model separately;
 this inspection applies only to the pinned classifier artifacts described above.
