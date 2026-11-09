@@ -1,78 +1,124 @@
 # Open-data intake plan
 
-## Selection authority and next inspection
+## Outcome
 
-The farmer-facing framing is an on-plant field report: images should resemble a
-farmer's view of a plant in the field. BRACOL's detached whole leaves on plain
-backgrounds remain useful as upload examples and for a separately reported
-controlled-condition comparison. They are not evidence of realistic farmer-image
-performance.
+Prepare a small, attributable field-image sample for the farmer-facing report
+scenario, with suitability and limits known before any diagnosis evaluation.
+Source inspection, sample selection and evaluation are separate steps; no model
+call is needed for the intake demo.
 
-Prioritise **BRACOT version 1** for the next data inspection: [official dataset
-record](https://data.mendeley.com/datasets/pmkbyjpf6k/1), DOI
-`10.17632/pmkbyjpf6k.1`. Its indexed official description reports 300 smartphone
-images of parts of Arabica coffee trees photographed with a Galaxy S8 in a Brazilian
-plantation, and 1,662 annotated leaf instances. The stated purpose is instance
-segmentation. This capture context better matches the intended field-report framing
-than detached-leaf images. It does not establish that every image has a usable
-disease or severity truth label. Before selecting any evaluation image, inspect the
-available annotation files and terms/licence directly; do not infer image-level
-truth from instance annotations or the dataset description. No BRACOT files have
-been downloaded and no new experiments have been run.
+## Requirements and boundaries
 
-Keep the next step small: inspect the archive structure and annotation coverage, then
-propose a small field sample with each original image ID, source path, provenance,
-and available label type/value. Include healthy or nonproblem images as evaluation
-controls even though a farmer's report trigger is a suspected issue. Do not decide
-the final sample until annotations and reuse/related-image structure are understood.
+### Observable selection criteria
 
-**Backup candidate:** [RoCoLe version 2](https://data.mendeley.com/datasets/c5yvn32dzg/2),
-DOI `10.17632/c5yvn32dzg.2`, is a smartphone-image Robusta dataset whose official
-record describes healthy/unhealthy state and disease severity. Its species differs
-from BRACOT's Arabica. If used, keep its severity labels and scale separate; do not
-pool or translate severity across sources without an explicit, justified mapping.
+- Prefer on-plant images resembling a farmer's view in the field. Inspect actual
+  files, annotation coverage and label meanings before selecting a small, bounded
+  sample. Include healthy or nonproblem controls for evaluation where supported.
+- Verify each selected file's actual format and size against the upload requirements
+  in [UC-001](../specs/UC-001-REPORT-INTAKE.md). Assess whether annotations support
+  the intended use; leave missing or ambiguous labels unknown. Do not infer an
+  image-level disease or severity label from leaf-instance annotations.
+- UC-001 owns the accepted synthetic farm/field seed requirements, including counts,
+  history and the empty-history case. This plan does not reopen them.
 
-**Optional candidate:** [JMuBEN](https://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/)
-is a possible field-acquired Arabica source from Kenya. Inspect the paper, data
-availability, annotations, licence/terms, and preprocessing already applied before deciding
-whether it is suitable. It is not needed to complete the BRACOT inspection step.
+### Provenance
 
-## Existing BRACOL upload examples
+Record for each selected image its dataset DOI/version, original ID and path,
+download URL and date, neutral local filename, SHA-256, available label type and
+value, licence and attribution, transformations, reuse and related images. Keep raw
+files in ignored `data/` and the manifest separate from diagnosis inputs. Check the
+actual terms for each source and intended use, including attribution and any CC
+licence conditions; do not assume one dataset's licence covers another.
 
-[BRACOL version 1](https://data.mendeley.com/datasets/yy2k5y8mxg/1), DOI
-`10.17632/yy2k5y8mxg.1`, is the source for the three existing detached-leaf upload
-examples documented in the [manifest](EXAMPLE-IMAGES.md). The manifest's source IDs,
-URLs, labels, and SHA-256 hashes are historical provenance and remain unchanged.
-BRACOL is licensed CC BY 4.0; retain the attribution in that manifest.
-These images demonstrate attachment handling and can support a controlled-condition
-comparison. Their plain-background setup differs from on-plant farmer reports, so
-do not use them alone to claim realistic field performance.
+### Evaluation safeguards
 
-## Scenario, provenance, and evaluation boundaries
+Images do not establish real farm history, location, disease incidence, treatment
+outcomes or business-action labels. Label fictional dates, descriptions, findings
+and actions as synthetic scenario context; a fictional prior confirmation is not a
+real technician's confirmation. A convenience sample cannot establish population
+performance or measured incidence.
 
-UC-001 owns the accepted and implemented synthetic farm/field seed requirements,
-including counts, history, and empty-history behavior; see
-[UC-001](../specs/UC-001-REPORT-INTAKE.md). This document owns open-data source
-selection and evaluation-sample guidance. Do not reopen seed-count decisions here.
+Keep observations, prior confirmed findings, model inferences and hidden current-image
+scoring labels distinct. Prior confirmed findings may appear as legitimate history,
+including in normal intake when an image repeats. For diagnosis evaluation, exclude
+and record history that reveals the current answer, including findings tied to reused
+or related images such as crops of one parent. Record reuse and relationships; do not
+count crops and their parent as independent samples. Keep current answers and
+label-bearing IDs or filenames out of displayed observations, attachment names,
+intake payloads, prompts and other diagnosis inputs. Keep provenance and scoring
+metadata separate and compare outputs with hidden labels only after inference.
 
-For each selected image record dataset DOI/version, original ID/path, download
-URL/date, neutral local filename, SHA-256, available labels, licence/attribution
-and transformations. Keep raw files in ignored `data/`; verify actual image format
-and upload size. Unknown labels stay unknown.
+Report controlled BRACOL and field-condition results separately. Preserve each
+source's label meanings and severity scale; do not map scales across sources without
+an explicit justification or turn labels into business actions without a separate
+rule. Where requirements expect uncertainty handling or requests for more evidence,
+assess those behaviors explicitly, without making them universal success criteria
+or substituting model self-confidence for evidence.
 
-Images alone are not real farm history, disease incidence, treatment outcomes, or
-business-action labels. Synthetic histories must remain explicitly labelled
-synthetic; any fictional finding or action is scenario context, not source ground
-truth. Current-sample scoring labels and label-bearing identifiers stay separate from
-displayed observations, attachment names and future diagnosis inputs. Earlier
-confirmed findings may be legitimate history; for diagnosis evaluation, exclude and
-record history that reveals the current sample answer. Keep scoring/provenance
-metadata outside inference inputs. Record image reuse and relationships
-(including crops from one parent) and prevent answer leakage through history.
+## Open choices
 
-In later experiments, report controlled BRACOL and field-condition results separately.
-Where requirements define uncertainty handling or a request for more evidence as an
-expected behavior, assess and report those behaviors explicitly. Do not treat them
-as universal success criteria or substitute model self-confidence for evidence-based
-uncertainty handling. Keep source label meanings and scales intact; do not convert
-them into business actions without a separately defined rule.
+- **Next inspection — recommend BRACOT version 1.** Its [official record](https://data.mendeley.com/datasets/pmkbyjpf6k/1)
+  (DOI `10.17632/pmkbyjpf6k.1`) describes 300 Galaxy S8 smartphone images of
+  parts of Arabica coffee trees in a Brazilian plantation and 1,662 annotated leaf
+  instances, for instance segmentation. This field context better matches the
+  intended report than detached leaves. The actual annotations, disease-label
+  coverage and terms remain uninspected; final selection and evaluation suitability
+  remain open. If disease labels are absent, the images may serve upload/context
+  only; diagnosis scoring needs another suitable truth source or expert work.
+- **Backup — RoCoLe version 2.** Its [official record](https://data.mendeley.com/datasets/c5yvn32dzg/2)
+  (DOI `10.17632/c5yvn32dzg.2`) describes smartphone images of Robusta with
+  healthy/unhealthy state and disease severity. Its species differs from BRACOT's
+  Arabica; keep its severity labels and scale separate. Suitability and terms need
+  inspection before use.
+- **Optional — JMuBEN.** The [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/)
+  describes a possible field-acquired Arabica source from Kenya. Inspect its data
+  availability, annotations, terms and existing preprocessing before deciding;
+  it is not needed to complete BRACOT inspection.
+- **Controlled comparator — BRACOL version 1.** The detached whole leaves on plain
+  backgrounds support upload examples and a separately reported comparison, not
+  evidence of realistic farmer-image performance. Prefer whole leaves before crops.
+  The [manifest](EXAMPLE-IMAGES.md) owns source details, IDs, labels, hashes and
+  CC BY 4.0 attribution. Current examples are not an evaluation set.
+
+## Steps
+
+1. Inspect BRACOT's archive structure, actual image files, annotations, coverage,
+   related-image structure and licence/terms. Record what is available and unknown.
+2. Based on that inspection, propose a small field sample with original IDs, paths,
+   provenance and available label types/values, including controls if supported.
+   Select only after suitability and reuse relationships are understood; a failed
+   selection is a finding, not a successful sample. Consider a backup if needed.
+3. Verify selected files and complete their manifest. If used in scenarios, label
+   synthetic context and record reuse. Apply and record the display and evaluation
+   leakage checks before the corresponding use.
+4. Before diagnosis scoring, establish suitable truth and its coverage independently
+   of model inputs. If it is unavailable, limit use and claims accordingly; obtain
+   another truth source or expert work before scoring. Keep any later source-specific
+   results separate.
+
+## Completion evidence
+
+**Current evidence:** Three author-hosted BRACOL whole-leaf examples were downloaded
+locally for manual upload; their provenance, hashes and attribution are in the
+[manifest](EXAMPLE-IMAGES.md). They are not seeded into farm history or selected as
+an evaluation set. No BRACOT files have been downloaded or inspected, no new sample
+has been selected, and no new experiments have been run.
+
+**Source inspection:** Complete when the archive structure, available annotations and
+coverage, related-image information, and applicable licence/terms have been checked
+and recorded, including unknowns. Inspection can finish with an unsuitable source;
+that does not complete sample selection.
+
+**Small field sample:** Complete only when selected files exist and their actual
+format and size have been verified; terms have been checked; the per-image manifest
+above is complete; annotation coverage and suitability for each intended use are
+known; unknowns restrict claims; and reuse, related images and applicable display
+and evaluation leakage are handled and recorded. For scenario import, also identify
+synthetic context and image reuse. If these conditions cannot be met, record the gap
+and do not claim selection or import complete.
+
+**Diagnosis-evaluation readiness:** Separate from inspection and sample completion.
+Require suitable disease truth and known coverage, source-specific label meanings,
+hidden scoring metadata, and recorded exclusions for answer-revealing history and
+related images. Without suitable truth, retain only supported upload/context use and
+obtain another truth source or expert work before scoring diagnosis.
