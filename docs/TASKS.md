@@ -1,6 +1,6 @@
 # Current work
 
-PHASE: 1
+PHASE: 2
 STATUS: in-progress
 
 ## Active objective
@@ -16,19 +16,20 @@ docs/specs/UC-001-REPORT-INTAKE.md
 
 ## Current slice
 
-SPECIFY is in progress. The owner requires a camera-first target, approximate
-plant estimate and location context: usable GPS is preferred, with selection of a known
-field on a map for the account's farm when GPS is unavailable or insufficiently
-accurate. GPS permission is not a login or workflow gate. The revised target is not
-implemented. The intended prototype uses an upload to represent a new photo and labelled
-synthetic or manual capture-context stand-ins; synthetic boundaries must be labelled.
-The working demo selects a fictional farm and field, requires text and date, accepts an
-optional image, and shows same-field history. It does not collect the structured estimate
-and has no login, automatic GPS, mapped-boundary fallback, offline capture or
-transcription. Earlier acceptance of the SQLite demo design does not approve the revised
-target.
+DESIGN: the [revised UC-001 design](specs/UC-001-REPORT-INTAKE.md#design--revised-prototype)
+sets working defaults for the next GPS-based prototype slice, farm history and a
+non-destructive migration. The revised target is not implemented. The runtime has
+saved non-seed reports and no field-boundary geometry; mapped fallback remains blocked
+until known real or explicitly synthetic boundaries and map presentation are supplied.
+The current demo and prior evidence below concern the older intake only. Group
+paper/model alignment for the changed business journey remains pending; no revised
+human acceptance is claimed.
 
 ## Evidence
+
+For the revised DESIGN edits, `bash scripts/check-lifecycle.sh` and `git diff
+--check` passed; local Markdown links and anchors in the two edited documents passed
+a targeted link check. No revised implementation or human review is claimed.
 
 UC-001 implementation and automated coverage are in place. The first targeted
 integration run failed on the missing application entry point; after implementation,
@@ -53,28 +54,20 @@ Neither constitutes human or visual acceptance.
 
 ## Next smallest step
 
-Resolve the specific simulated identity and legacy seed mapping, how to convey estimate scope
-without requiring extra narrative, usable-GPS criteria, actual field-boundary availability,
-and farm/nearby history and grouping rules. If neither usable GPS nor a selectable known
-field is available, retry without submission is a working recommendation for DESIGN,
-not an approved exception or a claim of offline draft persistence. Resolve behavior-
-affecting choices and group alignment before marking SPECIFY done. DESIGN can inspect
-affected components and alternatives, but implementation-ready DESIGN and a phase
-transition await those decisions and explicit selection of DESIGN. The earlier visual/
-manual demo acceptance remains outstanding; existing checks cover the old demo.
-Separately, BRACOT remains the next data inspection priority under the
-[open-data plan](reference/OPEN-DATA.md). Offline capture remains a disclosed gap.
+Review the bounded UC design and its working assumptions. The next DEVELOP slice is
+specified in its acceptance mapping: simulated primary farm, upload/manual time,
+usable device GPS, required estimate, farm-wide report history, preservation migration
+and focused tests. It must expose the boundary interface and report fallback as
+unavailable; it cannot complete map fallback without supplied boundary geometry and
+a map presentation. No dataset or business-record generation is authorized. The
+full revised UC and group alignment remain open. DESIGN remains in progress pending
+review and document checks; no phase transition or human approval is asserted.
 
-## Data-model draft
-
-[Farm history and technical case model](design/DATA-MODEL.md) is drafted for review,
-with source/decision trace, relationships, spatial framework and legacy-data limits.
-The owner selected one primary farmer view and one technician view focused on the
-primary farm, with neighbouring contextual data; exact synthetic counts are open.
-The proposed single typed history-event table is not implemented. The existing
-two-farm demo seed remains unchanged; no migration or dataset generation is authorised.
-Review case cardinalities and group alignment before implementation. This draft does
-not change the active SPECIFY phase.
+The [data-model draft](design/DATA-MODEL.md) remains the wider direction: one primary
+farmer and technician view with neighbouring context, and typed history events in a
+later event-producing slice. Cases, spatial analysis and routing are not part of the
+next intake implementation. BRACOT remains a separate data inspection priority under
+the [open-data plan](reference/OPEN-DATA.md).
 
 ## Selected routing step
 

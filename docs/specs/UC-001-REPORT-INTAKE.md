@@ -261,3 +261,108 @@ remains the accepted local persistence decision; do not assume it resolves accou
 location or migration design. Identify any consequential cross-use-case decision for
 review under the [working agreement](../WORKING-AGREEMENT.md). No code or UI design
 is authorized by this specification task.
+
+## Design — revised prototype
+
+This is a technical working design, not group approval of the changed journey. The
+[data model](../design/DATA-MODEL.md) describes the intended wider history; ADR-001
+continues to govern SQLite. No new ADR is needed for these reversible intake choices.
+
+**Working defaults.** Bind the simulated farmer to the existing `farm-1` (Sunrise
+Farm); label the identity simulated. Preserve both farms and every report's original
+farm and field IDs, including farm-2 history; do not remap or relabel existing user
+reports as seed data. The farm view shows farm-1 reports only. A field ID without
+geometry is historical association, not location. The observed-area prompt itself
+provides the estimate scope; an optional area cue is stored separately from narrative.
+
+A device fix is usable when latitude and longitude are finite and in range, accuracy
+is finite and between 0 and 100 metres inclusive, and the fix timestamp is no more
+than five minutes old and not in the future when submitted. These are prototype
+thresholds, not agronomic precision claims. Preserve the device fix time and accuracy;
+never relabel manually entered coordinates as device GPS. With the upload shortcut,
+record a clearly labelled simulated observation time when the farmer selects the
+photo, without requiring date entry. It represents the new-photo scenario, not verified
+photo capture metadata. Record receipt independently in UTC.
+Reject invalid or future observation times. A device fix obtained for an upload is
+location at fix time, not proof of the photo's capture location.
+
+**Components and representation.** Extend the report domain and intake service with
+validation independent of HTTP and SQLite. The form obtains browser geolocation,
+asks for photo, estimate and optional area cue/narrative, records the simulated
+observation time automatically,
+and shows fix status and the simulated identity. The service binds the configured
+farm server-side, validates the inputs, and saves atomically through the existing
+repository boundary. Extend retrieval and farm-history queries; SQLite remains the
+adapter. Keep original JPEG/PNG bytes and accepted size limits under ADR-001.
+
+Store one report-owned estimate: kind `count` or `percentage`, numeric value, unit
+`plants` or `percent`, source `farmer_reported`, and optional area cue. Count is a
+nonnegative integer; percentage is 0–100 inclusive. Store observation timestamp with
+source and precision, and separate UTC receipt timestamp. Record photo source as
+`uploaded` and preserve any actually known provenance without inventing it. New
+reports require these values; missing legacy estimate, capture time and provenance
+remain explicitly unavailable, with the original date retained at date precision.
+
+Store location as a discriminated report-owned record: `device` has WGS84 latitude,
+longitude, accuracy in metres and fix timestamp; `selected_field` has the farm-owned
+field ID and a snapshot of its polygon or multipolygon boundary, coordinate reference,
+version/source and synthetic flag, with farmer-selected source and field precision.
+A legacy field association is neither kind. Retain no fabricated point for a boundary.
+A boundary-provider interface returns only known, validated, versioned geometries
+for the configured farm; selection must be checked server-side and the selected
+geometry snapshotted with the report. A GPS point need not resolve to a field. No
+spatial grouping is inferred without geometry and an agreed rule.
+
+**Journey and split.** For the next slice, a usable device fix permits submission;
+missing, denied, stale or inaccurate GPS shows an actionable explanation and retry.
+The map fallback is explicitly unavailable until real or explicitly synthetic known
+field boundaries, provenance and a usable map presentation are supplied. The current
+runtime fields contain only ID, farm and name: no boundaries are available. Do not
+create boundary data as part of this work. Once that dependency is provided, implement
+map selection through the same interface and validate ownership and retained geometry.
+If neither location path works, keep the user on the form, explain and allow retry;
+do not submit or claim a durable draft. Invalid photo, estimate, time or location and
+storage failure must likewise leave no partial report or success confirmation.
+
+**History and migration.** Show all reports belonging to the primary farm, including
+ungrouped and legacy reports, newest observation day first; within a day sort known
+observation timestamps newest first, then date-only records, with receipt time and ID
+as descending deterministic ties. Show date-only precision and unavailable values
+explicitly. Display legacy `finding` as a legacy finding with confirmation provenance
+unknown, never as a newly confirmed finding. Indicate nearby context/grouping is
+unavailable when no supported geometry/rules exist; do not imply no nearby reports.
+A report-only history is the smallest useful first slice. The owner-chosen typed event
+model is the direction for a later event-producing slice: no new event table is needed
+now, and cases or copied report events must not be invented to populate it.
+
+Before migration, make a consistent SQLite backup using the SQLite backup API, verify
+that it opens and passes integrity checks, and stop with an actionable error if backup
+fails. Use a versioned, transactional migration, rebuilding the reports table if needed
+to relax old required columns while preserving originals; use explicit column lists and
+idempotent seed initialization. On failure roll back and retain the verified backup;
+never delete or reset the database. Test on a copy containing saved non-seed reports:
+compare IDs, farm/field associations, original dates, text, image bytes and media types,
+receipt times and findings before/after; check row counts, foreign keys, integrity,
+restart, repeated initialization and backup restoration. Legacy missing estimates,
+location and provenance stay unavailable; never fabricate historical coordinates,
+estimates, timestamps or confirmation. New validation must not prevent legacy retrieval.
+
+**Acceptance mapping / next DEVELOP slice.** Criteria 1, 2, 6–8: simulated farm,
+upload and simulated observation time, device GPS, required estimate, validation and atomic save;
+map fallback remains blocked by the boundary dependency. Criteria 3–4: restart-safe
+retrieval and farm-wide report history, explicit unavailable context, no finding or case
+creation. Criterion 5: label the simulation and preserve known provenance; dataset
+import and evaluation safeguards requiring dataset assets belong to later work. Tests
+must cover both estimate kinds and invalid inputs, GPS thresholds and failure/retry,
+optional text, image bounds, source/time distinctions, farm isolation, history ordering,
+legacy preservation and migration rollback/restore. Manual browser verification covers
+permission and device availability; lack of a suitable device is recorded as a gap.
+
+In: report/domain and repository changes, browser GPS path, simulated identity,
+upload form, farm history, migration and focused tests. Out: map UI until the stated
+boundary dependency is met, generated records/data, authentication, technician UI,
+cases/events, nearby analysis, AI, routing, voice, offline and weather. The full
+revised UC remains incomplete until map fallback and remaining target/evaluation
+criteria are implemented and validated. Group reconciliation of the changed business
+journey with the paper/models remains pending; it is distinct from these technical
+prototype defaults and does not constitute approval.
