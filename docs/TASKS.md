@@ -21,23 +21,25 @@ Routing, AI, cases and real dataset import remain separate work.
 
 ## Evidence
 
-Bootstrap checks passed on 9 November: setup check, lifecycle scenarios, 46 tooling
-tests and 3 pytest tests. Bootstrap committed as `ac10147`. No application has been
-built or application acceptance checks run for this draft.
+UC-001 implementation and automated coverage are in place. The first targeted
+integration run failed on the missing application entry point; after implementation,
+`.venv/bin/python -m pytest tests/integration/test_intake.py -q` passed. A later
+connection-lifecycle test failed before the SQLite connection closure fix; the
+expanded integration and architecture selection passed (22 tests).
 
-Previous SPECIFY revision: `bash scripts/check-lifecycle.sh`,
-`bash scripts/test-lifecycle.sh`, local links in both edited documents and
-`git diff --check` passed. Human review is outstanding; no application acceptance
-checks have run.
-
-DESIGN revision: lifecycle check and lifecycle scenario tests passed; local Markdown
-link targets in the spec, task record and ADR exist, and `git diff --check` passed.
-These are document/process checks, not application acceptance evidence.
+At handoff, `bash scripts/test.sh` passed: lifecycle checks and scenarios, 46
+process-tooling tests and 22 pytest tests. The Uvicorn factory command documented
+in the README started on loopback and shut down cleanly under a 3-second timeout
+(exit 124 is the expected timeout). HTTP integration exercises form submission,
+retrieval and history; a visual/manual browser journey has not been performed because
+no browser is connected. No human implementation review or approval is claimed.
 
 ## Next smallest step
 
-Implement UC-001 using the accepted design and targeted TDD. Run required handoff
-checks; preserve actual check evidence and disclose unfinished acceptance work.
+Parent reviews the implementation and aligns shared project commands. Perform the
+manual browser journey when a browser is available, then complete the appropriate
+review and acceptance work before considering this phase done. Offline capture and
+future dataset provenance/evaluation remain outside UC-001 implementation.
 
 ## Selected routing step
 
