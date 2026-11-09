@@ -15,6 +15,12 @@ When useful, structure a response as: goal, inputs consulted, plan, changes,
 validation, assumptions/open questions, next smallest step. Keep enough detail
 for review; this is an optional format.
 
+## Write and revise project documents
+
+Use the [writing guide](WRITING-GUIDE.md) and, for supporting work, the
+[task-plan template](templates/TASK-PLAN.md). Preserve conditions, exceptions,
+precedence and completion evidence when shortening; keep existing UC/ADR formats.
+
 ## Choose a reviewable slice
 
 Split work when it contains independently valuable changes, requirements remain
