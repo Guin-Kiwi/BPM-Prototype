@@ -1,18 +1,21 @@
 # Current work
 
-PHASE: 3
-STATUS: done
+PHASE: 1
+STATUS: in-progress
 
 ## Active objective
 
-[UC-001: report intake](specs/UC-001-REPORT-INTAKE.md): implement the bounded
-[revised prototype design](specs/UC-001-REPORT-INTAKE.md#design--revised-prototype).
+Specify [UC-002: assessment and handoff](specs/UC-002-ASSESSMENT-HANDOFF.md), the
+barebones journey from saved report to real image assessment, deterministic route
+and recorded human handoff. Provider choice and demo routing/guidance definitions
+remain open; resolve them before DESIGN/implementation. UC-001 intake completion
+and its existing evidence below are unchanged.
 
 ## Current Use Case
 
-docs/specs/UC-001-REPORT-INTAKE.md
+docs/specs/UC-002-ASSESSMENT-HANDOFF.md
 
-## Current slice
+## Existing implemented slice
 
 Simulated farmer on farm-1; required uploaded photo, approximate affected-plant
 estimate and usable browser GPS; optional text and area cue; simulated observation
@@ -40,9 +43,9 @@ Group paper/model alignment and human acceptance of the revised journey remain o
 
 ## Next smallest step
 
-Prepare a minimal routing and guidance use case in SPECIFY, separate from UC-001,
-using the [worksheet](reference/DMN-RULE-WORKSHEET.md#open-definitions-and-minimal-next-specify-task).
-This is selected next work, not a phase transition or an implementation authorization.
+Resolve the provider and bounded demo rules in the UC-002 draft, using the
+[worksheet](reference/DMN-RULE-WORKSHEET.md#open-definitions-and-minimal-next-specify-task).
+The selected work is SPECIFY; no application implementation is claimed.
 
 ## Selected routing step
 
