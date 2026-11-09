@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="P1_ASIS_Definitions" targetNamespace="https://example.org/cooxupe/comparison" exporter="Camunda Modeler" exporterVersion="5.51.1">
-  <bpmn:message id="A_m1_Message" name="Request for support" />
-  <bpmn:message id="A_m2_Message" name="Agronomic guidance" />
-  <bpmn:message id="A_m3_Message" name="Visit arrangements" />
-  <bpmn:message id="A_m4_Message" name="Slot confirmation" />
+  <bpmn:message id="A_m1_Message" name="Request for support"/>
+  <bpmn:message id="A_m2_Message" name="Agronomic guidance"/>
+  <bpmn:message id="A_m3_Message" name="Visit arrangements"/>
+  <bpmn:message id="A_m4_Message" name="Slot confirmation"/>
   <bpmn:process id="P1_ASIS_Process" name="P1 AS-IS — Technical orientation" isExecutable="false">
     <bpmn:documentation>Working draft and team assumptions: request to guidance and documentation Comparison proposal; assumptions and source limits are in NOTES.md.</bpmn:documentation>
     <bpmn:laneSet id="P1_ASIS_LaneSet">
@@ -32,84 +32,45 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:task id="A_AssessRequest" name="Assess request">
-      <bpmn:incoming>A_f03</bpmn:incoming>
-      <bpmn:outgoing>A_AssessChannel</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:incoming>A_f03</bpmn:incoming><bpmn:outgoing>A_AssessChannel</bpmn:outgoing></bpmn:task>
     <bpmn:exclusiveGateway id="A_Channel" name="Phone or visit?" gatewayDirection="Diverging">
-      <bpmn:incoming>A_AssessChannel</bpmn:incoming>
-      <bpmn:outgoing>A_f04</bpmn:outgoing>
-      <bpmn:outgoing>A_f05</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+      <bpmn:incoming>A_AssessChannel</bpmn:incoming><bpmn:outgoing>A_f04</bpmn:outgoing><bpmn:outgoing>A_f05</bpmn:outgoing></bpmn:exclusiveGateway>
     <bpmn:task id="A_Phone" name="Diagnose by phone">
-      <bpmn:incoming>A_f04</bpmn:incoming>
-      <bpmn:outgoing>A_f06</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:incoming>A_f04</bpmn:incoming><bpmn:outgoing>A_f06</bpmn:outgoing></bpmn:task>
     <bpmn:exclusiveGateway id="A_GuidanceMerge" name="" gatewayDirection="Converging">
-      <bpmn:incoming>A_f08</bpmn:incoming>
-      <bpmn:incoming>A_f10</bpmn:incoming>
-      <bpmn:outgoing>A_f11</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+      <bpmn:incoming>A_f08</bpmn:incoming><bpmn:incoming>A_f10</bpmn:incoming><bpmn:outgoing>A_f11</bpmn:outgoing></bpmn:exclusiveGateway>
     <bpmn:task id="A_Formulate" name="Formulate recommendation">
-      <bpmn:incoming>A_f11</bpmn:incoming>
-      <bpmn:outgoing>A_f12</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:incoming>A_f11</bpmn:incoming><bpmn:outgoing>A_f12</bpmn:outgoing></bpmn:task>
     <bpmn:task id="A_Give" name="Give agronomic guidance">
-      <bpmn:incoming>A_f12</bpmn:incoming>
-      <bpmn:outgoing>A_f13</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:incoming>A_f12</bpmn:incoming><bpmn:outgoing>A_f13</bpmn:outgoing></bpmn:task>
     <bpmn:exclusiveGateway id="A_ReturnDecision" name="Visit occurred?" gatewayDirection="Diverging">
-      <bpmn:incoming>A_f13</bpmn:incoming>
-      <bpmn:outgoing>A_returnYes</bpmn:outgoing>
-      <bpmn:outgoing>A_returnNo</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+      <bpmn:incoming>A_f13</bpmn:incoming><bpmn:outgoing>A_returnYes</bpmn:outgoing><bpmn:outgoing>A_returnNo</bpmn:outgoing></bpmn:exclusiveGateway>
     <bpmn:task id="A_Return" name="Return from farm">
-      <bpmn:incoming>A_returnYes</bpmn:incoming>
-      <bpmn:outgoing>A_returnJoin</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:incoming>A_returnYes</bpmn:incoming><bpmn:outgoing>A_returnJoin</bpmn:outgoing></bpmn:task>
     <bpmn:task id="A_Document" name="Document request and guidance">
-      <bpmn:incoming>A_docJoin</bpmn:incoming>
-      <bpmn:outgoing>A_f14</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:incoming>A_docJoin</bpmn:incoming><bpmn:outgoing>A_f14</bpmn:outgoing></bpmn:task>
     <bpmn:exclusiveGateway id="A_RecordMerge" name="" gatewayDirection="Converging">
-      <bpmn:incoming>A_returnJoin</bpmn:incoming>
-      <bpmn:outgoing>A_docJoin</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+      <bpmn:incoming>A_returnNo</bpmn:incoming><bpmn:incoming>A_returnJoin</bpmn:incoming><bpmn:outgoing>A_docJoin</bpmn:outgoing></bpmn:exclusiveGateway>
     <bpmn:endEvent id="A_End" name="Guidance recorded">
-      <bpmn:incoming>A_f14</bpmn:incoming>
-    </bpmn:endEvent>
+      <bpmn:incoming>A_f14</bpmn:incoming></bpmn:endEvent>
     <bpmn:startEvent id="A_Start" name="Support requested">
-      <bpmn:outgoing>A_f01</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="A_Start_Definition" messageRef="A_m1_Message" />
+      <bpmn:outgoing>A_f01</bpmn:outgoing><bpmn:messageEventDefinition id="A_Start_Definition" messageRef="A_m1_Message"/>
     </bpmn:startEvent>
     <bpmn:task id="A_Allocate" name="Allocate available technician">
-      <bpmn:incoming>A_f02</bpmn:incoming>
-      <bpmn:outgoing>A_f03</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:incoming>A_f02</bpmn:incoming><bpmn:outgoing>A_f03</bpmn:outgoing></bpmn:task>
     <bpmn:task id="A_Register" name="Receive and register request">
-      <bpmn:incoming>A_f01</bpmn:incoming>
-      <bpmn:outgoing>A_f02</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:incoming>A_f01</bpmn:incoming><bpmn:outgoing>A_f02</bpmn:outgoing></bpmn:task>
     <bpmn:exclusiveGateway id="A_VisitMerge" name="" gatewayDirection="Converging">
-      <bpmn:incoming>A_f05</bpmn:incoming>
-      <bpmn:incoming>A_f07</bpmn:incoming>
-      <bpmn:outgoing>A_f09</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+      <bpmn:incoming>A_f05</bpmn:incoming><bpmn:incoming>A_f07</bpmn:incoming><bpmn:outgoing>A_f09</bpmn:outgoing></bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="A_NeedVisit" name="Visit still needed?" gatewayDirection="Diverging">
-      <bpmn:incoming>A_f06</bpmn:incoming>
-      <bpmn:outgoing>A_f07</bpmn:outgoing>
-      <bpmn:outgoing>A_f08</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+      <bpmn:incoming>A_f06</bpmn:incoming><bpmn:outgoing>A_f08</bpmn:outgoing><bpmn:outgoing>A_f07</bpmn:outgoing></bpmn:exclusiveGateway>
     <bpmn:intermediateCatchEvent id="A_Wait" name="Agreed visit time">
-      <bpmn:incoming>A_sched1</bpmn:incoming>
-      <bpmn:outgoing>A_sched2</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="A_Wait_Timer">
+      <bpmn:incoming>A_sched1</bpmn:incoming><bpmn:outgoing>A_sched2</bpmn:outgoing><bpmn:timerEventDefinition id="A_Wait_Timer">
         <bpmn:timeDate xsi:type="bpmn:tFormalExpression">scheduledVisitAt</bpmn:timeDate>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:subProcess id="A_Visit" name="Travel and inspect farm">
-      <bpmn:incoming>A_sched2</bpmn:incoming>
-      <bpmn:outgoing>A_f10</bpmn:outgoing>
-      <bpmn:startEvent id="A_Visit_Start">
+      <bpmn:incoming>A_sched2</bpmn:incoming><bpmn:outgoing>A_f10</bpmn:outgoing><bpmn:startEvent id="A_Visit_Start">
         <bpmn:outgoing>A_Visit_Internal1</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:task id="A_Visit_Step1" name="Travel to farm">
@@ -123,15 +84,12 @@
       <bpmn:endEvent id="A_Visit_End">
         <bpmn:incoming>A_Visit_Internal3</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="A_Visit_Internal1" sourceRef="A_Visit_Start" targetRef="A_Visit_Step1" />
-      <bpmn:sequenceFlow id="A_Visit_Internal2" sourceRef="A_Visit_Step1" targetRef="A_Visit_Step2" />
-      <bpmn:sequenceFlow id="A_Visit_Internal3" sourceRef="A_Visit_Step2" targetRef="A_Visit_End" />
+      <bpmn:sequenceFlow id="A_Visit_Internal1" sourceRef="A_Visit_Start" targetRef="A_Visit_Step1"/>
+      <bpmn:sequenceFlow id="A_Visit_Internal2" sourceRef="A_Visit_Step1" targetRef="A_Visit_Step2"/>
+      <bpmn:sequenceFlow id="A_Visit_Internal3" sourceRef="A_Visit_Step2" targetRef="A_Visit_End"/>
     </bpmn:subProcess>
     <bpmn:subProcess id="A_Schedule" name="Arrange visit with farmer">
-      <bpmn:incoming>A_f09</bpmn:incoming>
-      <bpmn:incoming>A_returnNo</bpmn:incoming>
-      <bpmn:outgoing>A_sched1</bpmn:outgoing>
-      <bpmn:startEvent id="A_Schedule_Start">
+      <bpmn:incoming>A_f09</bpmn:incoming><bpmn:outgoing>A_sched1</bpmn:outgoing><bpmn:startEvent id="A_Schedule_Start">
         <bpmn:outgoing>A_Schedule_i1</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:task id="A_Schedule_Agree" name="Agree visit slot with farmer">
@@ -151,57 +109,57 @@
       <bpmn:endEvent id="A_Schedule_End">
         <bpmn:incoming>A_Schedule_i3</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="A_Schedule_i1" name="" sourceRef="A_Schedule_Start" targetRef="A_Schedule_Agree" />
-      <bpmn:sequenceFlow id="A_Schedule_i2" name="" sourceRef="A_Schedule_Agree" targetRef="A_Schedule_Slot" />
+      <bpmn:sequenceFlow id="A_Schedule_i1" name="" sourceRef="A_Schedule_Start" targetRef="A_Schedule_Agree"/>
+      <bpmn:sequenceFlow id="A_Schedule_i2" name="" sourceRef="A_Schedule_Agree" targetRef="A_Schedule_Slot"/>
       <bpmn:sequenceFlow id="A_Schedule_i3" name="Yes" sourceRef="A_Schedule_Slot" targetRef="A_Schedule_End">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">slotConfirmed</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="A_Schedule_i4" name="No" sourceRef="A_Schedule_Slot" targetRef="A_Schedule_Rearrange">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(slotConfirmed)</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:sequenceFlow id="A_Schedule_i5" name="" sourceRef="A_Schedule_Rearrange" targetRef="A_Schedule_Agree" />
+      <bpmn:sequenceFlow id="A_Schedule_i5" name="" sourceRef="A_Schedule_Rearrange" targetRef="A_Schedule_Agree"/>
     </bpmn:subProcess>
-    <bpmn:sequenceFlow id="A_f03" name="" sourceRef="A_Allocate" targetRef="A_AssessRequest" />
-    <bpmn:sequenceFlow id="A_AssessChannel" name="" sourceRef="A_AssessRequest" targetRef="A_Channel" />
+    <bpmn:sequenceFlow id="A_f03" name="" sourceRef="A_Allocate" targetRef="A_AssessRequest"/>
+    <bpmn:sequenceFlow id="A_AssessChannel" name="" sourceRef="A_AssessRequest" targetRef="A_Channel"/>
     <bpmn:sequenceFlow id="A_f04" name="Phone" sourceRef="A_Channel" targetRef="A_Phone">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">phone</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="A_f05" name="Visit" sourceRef="A_Channel" targetRef="A_VisitMerge">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">visit</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="A_f06" name="" sourceRef="A_Phone" targetRef="A_NeedVisit" />
+    <bpmn:sequenceFlow id="A_f06" name="" sourceRef="A_Phone" targetRef="A_NeedVisit"/>
     <bpmn:sequenceFlow id="A_f08" name="No" sourceRef="A_NeedVisit" targetRef="A_GuidanceMerge">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">no visit needed</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="A_f10" name="" sourceRef="A_Visit" targetRef="A_GuidanceMerge" />
-    <bpmn:sequenceFlow id="A_f11" name="" sourceRef="A_GuidanceMerge" targetRef="A_Formulate" />
-    <bpmn:sequenceFlow id="A_f12" name="" sourceRef="A_Formulate" targetRef="A_Give" />
-    <bpmn:sequenceFlow id="A_f13" name="" sourceRef="A_Give" targetRef="A_ReturnDecision" />
+    <bpmn:sequenceFlow id="A_f10" name="" sourceRef="A_Visit" targetRef="A_GuidanceMerge"/>
+    <bpmn:sequenceFlow id="A_f11" name="" sourceRef="A_GuidanceMerge" targetRef="A_Formulate"/>
+    <bpmn:sequenceFlow id="A_f12" name="" sourceRef="A_Formulate" targetRef="A_Give"/>
+    <bpmn:sequenceFlow id="A_f13" name="" sourceRef="A_Give" targetRef="A_ReturnDecision"/>
     <bpmn:sequenceFlow id="A_returnYes" name="Yes" sourceRef="A_ReturnDecision" targetRef="A_Return">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">visit occurred</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="A_returnNo" name="No" sourceRef="A_ReturnDecision" targetRef="A_Schedule">
+    <bpmn:sequenceFlow id="A_returnNo" name="No" sourceRef="A_ReturnDecision" targetRef="A_RecordMerge">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">no visit</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="A_returnJoin" name="" sourceRef="A_Return" targetRef="A_RecordMerge" />
-    <bpmn:sequenceFlow id="A_docJoin" name="" sourceRef="A_RecordMerge" targetRef="A_Document" />
-    <bpmn:sequenceFlow id="A_f14" name="" sourceRef="A_Document" targetRef="A_End" />
-    <bpmn:sequenceFlow id="A_f01" name="" sourceRef="A_Start" targetRef="A_Register" />
-    <bpmn:sequenceFlow id="A_f02" name="" sourceRef="A_Register" targetRef="A_Allocate" />
+    <bpmn:sequenceFlow id="A_returnJoin" name="" sourceRef="A_Return" targetRef="A_RecordMerge"/>
+    <bpmn:sequenceFlow id="A_docJoin" name="" sourceRef="A_RecordMerge" targetRef="A_Document"/>
+    <bpmn:sequenceFlow id="A_f14" name="" sourceRef="A_Document" targetRef="A_End"/>
+    <bpmn:sequenceFlow id="A_f01" name="" sourceRef="A_Start" targetRef="A_Register"/>
+    <bpmn:sequenceFlow id="A_f02" name="" sourceRef="A_Register" targetRef="A_Allocate"/>
     <bpmn:sequenceFlow id="A_f07" name="Yes" sourceRef="A_NeedVisit" targetRef="A_VisitMerge">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">visit needed</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="A_f09" name="" sourceRef="A_VisitMerge" targetRef="A_Schedule" />
-    <bpmn:sequenceFlow id="A_sched1" name="" sourceRef="A_Schedule" targetRef="A_Wait" />
-    <bpmn:sequenceFlow id="A_sched2" name="" sourceRef="A_Wait" targetRef="A_Visit" />
+    <bpmn:sequenceFlow id="A_f09" name="" sourceRef="A_VisitMerge" targetRef="A_Schedule"/>
+    <bpmn:sequenceFlow id="A_sched1" name="" sourceRef="A_Schedule" targetRef="A_Wait"/>
+    <bpmn:sequenceFlow id="A_sched2" name="" sourceRef="A_Wait" targetRef="A_Visit"/>
   </bpmn:process>
   <bpmn:collaboration id="P1_ASIS_Collaboration">
-    <bpmn:participant id="Farmer" name="Farmer (member)" />
-    <bpmn:participant id="P1_ASIS_Cooxupe" name="Cooxupé · P1 Agricultural technical orientation" processRef="P1_ASIS_Process" />
-    <bpmn:messageFlow id="A_m1" sourceRef="Farmer" targetRef="A_Start" messageRef="A_m1_Message" />
-    <bpmn:messageFlow id="A_m2" sourceRef="A_Give" targetRef="Farmer" messageRef="A_m2_Message" />
-    <bpmn:messageFlow id="A_m3" sourceRef="A_Schedule" targetRef="Farmer" messageRef="A_m3_Message" />
-    <bpmn:messageFlow id="A_m4" sourceRef="Farmer" targetRef="A_Schedule" messageRef="A_m4_Message" />
+    <bpmn:participant id="Farmer" name="Farmer (member)"/>
+    <bpmn:participant id="P1_ASIS_Cooxupe" name="Cooxupé · P1 Agricultural technical orientation" processRef="P1_ASIS_Process"/>
+    <bpmn:messageFlow id="A_m1" sourceRef="Farmer" targetRef="A_Start" messageRef="A_m1_Message"/>
+    <bpmn:messageFlow id="A_m2" sourceRef="A_Give" targetRef="Farmer" messageRef="A_m2_Message"/>
+    <bpmn:messageFlow id="A_m3" sourceRef="A_Schedule" targetRef="Farmer" messageRef="A_m3_Message"/>
+    <bpmn:messageFlow id="A_m4" sourceRef="Farmer" targetRef="A_Schedule" messageRef="A_m4_Message"/>
     <bpmn:textAnnotation id="A_note1">
       <bpmn:text>Phone / visit flow: working-draft assumptions, not validated operation. Farmer waits for and hosts a visit. Timer assumes an agreed visit date.</bpmn:text>
     </bpmn:textAnnotation>
@@ -212,251 +170,245 @@
   <bpmndi:BPMNDiagram id="P1_ASIS_Diagram">
     <bpmndi:BPMNPlane id="P1_ASIS_Plane" bpmnElement="P1_ASIS_Collaboration">
       <bpmndi:BPMNShape id="Farmer_DI" bpmnElement="Farmer" isHorizontal="true">
-        <dc:Bounds x="155" y="45" width="2415" height="70" />
+        <dc:Bounds x="155" y="45" width="2415" height="70"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="P1_ASIS_Cooxupe_DI" bpmnElement="P1_ASIS_Cooxupe" isHorizontal="true">
-        <dc:Bounds x="155" y="150" width="2415" height="640" />
+        <dc:Bounds x="155" y="150" width="2415" height="640"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Field_DI" bpmnElement="A_Field" isHorizontal="true">
-        <dc:Bounds x="185" y="405" width="2385" height="385" />
+        <dc:Bounds x="185" y="405" width="2385" height="385"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Coord_DI" bpmnElement="A_Coord" isHorizontal="true">
-        <dc:Bounds x="185" y="150" width="2385" height="255" />
-        <bpmndi:BPMNLabel />
+        <dc:Bounds x="185" y="150" width="2385" height="255"/>
+        <bpmndi:BPMNLabel/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_AssessRequest_DI" bpmnElement="A_AssessRequest">
-        <dc:Bounds x="450" y="550" width="120" height="80" />
+        <dc:Bounds x="450" y="550" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Channel_DI" bpmnElement="A_Channel" isMarkerVisible="true">
-        <dc:Bounds x="610" y="565" width="50" height="50" />
+        <dc:Bounds x="610" y="565" width="50" height="50"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="598.5" y="625" width="73" height="14" />
+          <dc:Bounds x="598.5" y="625" width="73" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Phone_DI" bpmnElement="A_Phone">
-        <dc:Bounds x="750" y="550" width="120" height="80" />
+        <dc:Bounds x="750" y="550" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_GuidanceMerge_DI" bpmnElement="A_GuidanceMerge" isMarkerVisible="true">
-        <dc:Bounds x="1295" y="565" width="50" height="50" />
+        <dc:Bounds x="1295" y="565" width="50" height="50"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1123" y="519" width="134" height="46" />
+          <dc:Bounds x="1123" y="519" width="134" height="46"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Formulate_DI" bpmnElement="A_Formulate">
-        <dc:Bounds x="1390" y="550" width="120" height="80" />
+        <dc:Bounds x="1390" y="550" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Give_DI" bpmnElement="A_Give">
-        <dc:Bounds x="1590" y="550" width="120" height="80" />
+        <dc:Bounds x="1590" y="550" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_ReturnDecision_DI" bpmnElement="A_ReturnDecision" isMarkerVisible="true">
-        <dc:Bounds x="1815" y="565" width="50" height="50" />
+        <dc:Bounds x="1815" y="565" width="50" height="50"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1803.5" y="625" width="73" height="14" />
+          <dc:Bounds x="1803.5" y="625" width="73" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Return_DI" bpmnElement="A_Return">
-        <dc:Bounds x="1950" y="550" width="120" height="80" />
+        <dc:Bounds x="1950" y="550" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Document_DI" bpmnElement="A_Document">
-        <dc:Bounds x="2270" y="550" width="120" height="80" />
+        <dc:Bounds x="2270" y="550" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_RecordMerge_DI" bpmnElement="A_RecordMerge" isMarkerVisible="true">
-        <dc:Bounds x="2135" y="565" width="50" height="50" />
+        <dc:Bounds x="2135" y="565" width="50" height="50"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1183" y="804" width="134" height="46" />
+          <dc:Bounds x="1183" y="804" width="134" height="46"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_End_DI" bpmnElement="A_End">
-        <dc:Bounds x="2472" y="572" width="36" height="36" />
+        <dc:Bounds x="2472" y="572" width="36" height="36"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2443" y="612" width="94" height="14" />
+          <dc:Bounds x="2443" y="612" width="94" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Start_DI" bpmnElement="A_Start">
-        <dc:Bounds x="230" y="262" width="36" height="36" />
+        <dc:Bounds x="230" y="262" width="36" height="36"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="214" y="323" width="91" height="14" />
+          <dc:Bounds x="214" y="323" width="91" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Allocate_DI" bpmnElement="A_Allocate">
-        <dc:Bounds x="450" y="240" width="120" height="80" />
+        <dc:Bounds x="450" y="240" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Register_DI" bpmnElement="A_Register">
-        <dc:Bounds x="300" y="240" width="120" height="80" />
+        <dc:Bounds x="300" y="240" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_VisitMerge_DI" bpmnElement="A_VisitMerge" isMarkerVisible="true">
-        <dc:Bounds x="785" y="435" width="50" height="50" />
+        <dc:Bounds x="785" y="435" width="50" height="50"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="853" y="639" width="134" height="46" />
+          <dc:Bounds x="853" y="639" width="134" height="46"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_NeedVisit_DI" bpmnElement="A_NeedVisit" isMarkerVisible="true">
-        <dc:Bounds x="925" y="565" width="50" height="50" />
+        <dc:Bounds x="925" y="565" width="50" height="50"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="957" y="612" width="86" height="14" />
+          <dc:Bounds x="957" y="612" width="86" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Wait_DI" bpmnElement="A_Wait">
-        <dc:Bounds x="1012" y="512" width="36" height="36" />
+        <dc:Bounds x="1012" y="512" width="36" height="36"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="989" y="558" width="82" height="14" />
+          <dc:Bounds x="989" y="558" width="82" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Visit_DI" bpmnElement="A_Visit" isExpanded="false">
-        <dc:Bounds x="1100" y="490" width="120" height="80" />
+        <dc:Bounds x="1100" y="490" width="120" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Schedule_DI" bpmnElement="A_Schedule" isExpanded="false">
-        <dc:Bounds x="960" y="240" width="140" height="80" />
+        <dc:Bounds x="960" y="240" width="140" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="A_f01_DI" bpmnElement="A_f01">
-        <di:waypoint x="266" y="280" />
-        <di:waypoint x="300" y="280" />
+        <di:waypoint x="266" y="280"/>
+        <di:waypoint x="300" y="280"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f02_DI" bpmnElement="A_f02">
-        <di:waypoint x="420" y="280" />
-        <di:waypoint x="450" y="280" />
+        <di:waypoint x="420" y="280"/>
+        <di:waypoint x="450" y="280"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f03_DI" bpmnElement="A_f03">
-        <di:waypoint x="510" y="320" />
-        <di:waypoint x="510" y="550" />
+        <di:waypoint x="510" y="320"/>
+        <di:waypoint x="510" y="550"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f04_DI" bpmnElement="A_f04">
-        <di:waypoint x="660" y="590" />
-        <di:waypoint x="750" y="589" />
+        <di:waypoint x="660" y="590"/>
+        <di:waypoint x="750" y="589"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="660" y="562" width="84" height="14" />
+          <dc:Bounds x="660" y="562" width="84" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f05_DI" bpmnElement="A_f05">
-        <di:waypoint x="635" y="565" />
-        <di:waypoint x="635" y="460" />
-        <di:waypoint x="785" y="460" />
+        <di:waypoint x="635" y="565"/>
+        <di:waypoint x="635" y="460"/>
+        <di:waypoint x="785" y="460"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="609" y="516" width="21" height="14" />
+          <dc:Bounds x="609" y="516" width="21" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f06_DI" bpmnElement="A_f06">
-        <di:waypoint x="870" y="592" />
-        <di:waypoint x="927" y="592" />
+        <di:waypoint x="870" y="592"/>
+        <di:waypoint x="927" y="592"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f07_DI" bpmnElement="A_f07">
-        <di:waypoint x="950" y="565" />
-        <di:waypoint x="950" y="460" />
-        <di:waypoint x="835" y="460" />
+        <di:waypoint x="950" y="565"/>
+        <di:waypoint x="950" y="460"/>
+        <di:waypoint x="835" y="460"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="846" y="438" width="18" height="14" />
+          <dc:Bounds x="846" y="438" width="18" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f08_DI" bpmnElement="A_f08">
-        <di:waypoint x="950" y="615" />
-        <di:waypoint x="950" y="680" />
-        <di:waypoint x="1320" y="680" />
-        <di:waypoint x="1320" y="615" />
+        <di:waypoint x="950" y="615"/>
+        <di:waypoint x="950" y="680"/>
+        <di:waypoint x="1320" y="680"/>
+        <di:waypoint x="1320" y="615"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="971" y="667" width="15" height="14" />
+          <dc:Bounds x="971" y="667" width="15" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f10_DI" bpmnElement="A_f10">
-        <di:waypoint x="1220" y="529" />
-        <di:waypoint x="1320" y="529" />
-        <di:waypoint x="1320" y="565" />
+        <di:waypoint x="1220" y="529"/>
+        <di:waypoint x="1320" y="529"/>
+        <di:waypoint x="1320" y="565"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f11_DI" bpmnElement="A_f11">
-        <di:waypoint x="1345" y="590" />
-        <di:waypoint x="1390" y="590" />
+        <di:waypoint x="1345" y="590"/>
+        <di:waypoint x="1390" y="590"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f12_DI" bpmnElement="A_f12">
-        <di:waypoint x="1510" y="590" />
-        <di:waypoint x="1590" y="590" />
+        <di:waypoint x="1510" y="590"/>
+        <di:waypoint x="1590" y="590"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f09_DI" bpmnElement="A_f09">
-        <di:waypoint x="810" y="435" />
-        <di:waypoint x="810" y="280" />
-        <di:waypoint x="960" y="280" />
+        <di:waypoint x="810" y="435"/>
+        <di:waypoint x="810" y="280"/>
+        <di:waypoint x="960" y="280"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_sched1_DI" bpmnElement="A_sched1">
-        <di:waypoint x="1030" y="320" />
-        <di:waypoint x="1030" y="512" />
+        <di:waypoint x="1030" y="320"/>
+        <di:waypoint x="1030" y="512"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_sched2_DI" bpmnElement="A_sched2">
-        <di:waypoint x="1048" y="530" />
-        <di:waypoint x="1100" y="530" />
+        <di:waypoint x="1048" y="530"/>
+        <di:waypoint x="1100" y="530"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f13_DI" bpmnElement="A_f13">
-        <di:waypoint x="1710" y="590" />
-        <di:waypoint x="1815" y="590" />
+        <di:waypoint x="1710" y="590"/>
+        <di:waypoint x="1815" y="590"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_returnYes_DI" bpmnElement="A_returnYes">
-        <di:waypoint x="1865" y="590" />
-        <di:waypoint x="1950" y="590" />
+        <di:waypoint x="1865" y="590"/>
+        <di:waypoint x="1950" y="590"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1901" y="595" width="18" height="14" />
+          <dc:Bounds x="1901" y="595" width="18" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_returnNo_DI" bpmnElement="A_returnNo">
-        <di:waypoint x="1840" y="565" />
-        <di:waypoint x="1840" y="280" />
-        <di:waypoint x="1100" y="280" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1822" y="484" width="15" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
+        <di:waypoint x="1840" y="615"/><di:waypoint x="1840" y="650"/><di:waypoint x="2160" y="650"/><di:waypoint x="2160" y="615"/><bpmndi:BPMNLabel><dc:Bounds x="1850" y="633" width="20" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_returnJoin_DI" bpmnElement="A_returnJoin">
-        <di:waypoint x="2070" y="590" />
-        <di:waypoint x="2135" y="590" />
+        <di:waypoint x="2070" y="590"/>
+        <di:waypoint x="2135" y="590"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_docJoin_DI" bpmnElement="A_docJoin">
-        <di:waypoint x="2185" y="590" />
-        <di:waypoint x="2270" y="590" />
+        <di:waypoint x="2185" y="590"/>
+        <di:waypoint x="2270" y="590"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_f14_DI" bpmnElement="A_f14">
-        <di:waypoint x="2390" y="590" />
-        <di:waypoint x="2472" y="590" />
+        <di:waypoint x="2390" y="590"/>
+        <di:waypoint x="2472" y="590"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_AssessChannel_DI" bpmnElement="A_AssessChannel">
-        <di:waypoint x="570" y="590" />
-        <di:waypoint x="610" y="590" />
+        <di:waypoint x="570" y="590"/>
+        <di:waypoint x="610" y="590"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_m1_DI" bpmnElement="A_m1">
-        <di:waypoint x="248" y="115" />
-        <di:waypoint x="248" y="262" />
+        <di:waypoint x="248" y="115"/>
+        <di:waypoint x="248" y="262"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="11" y="123" width="97" height="14" />
+          <dc:Bounds x="11" y="123" width="97" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_m2_DI" bpmnElement="A_m2">
-        <di:waypoint x="1650" y="550" />
-        <di:waypoint x="1650" y="115" />
+        <di:waypoint x="1650" y="550"/>
+        <di:waypoint x="1650" y="115"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1395" y="328" width="101" height="14" />
+          <dc:Bounds x="1395" y="328" width="101" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_m3_DI" bpmnElement="A_m3">
-        <di:waypoint x="980" y="240" />
-        <di:waypoint x="980" y="115" />
+        <di:waypoint x="980" y="240"/>
+        <di:waypoint x="980" y="115"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="694" y="160" width="92" height="14" />
+          <dc:Bounds x="694" y="160" width="92" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="A_m4_DI" bpmnElement="A_m4">
-        <di:waypoint x="1080" y="115" />
-        <di:waypoint x="1080" y="240" />
+        <di:waypoint x="1080" y="115"/>
+        <di:waypoint x="1080" y="240"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="979" y="160" width="82" height="14" />
+          <dc:Bounds x="979" y="160" width="82" height="14"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="A_note1_DI" bpmnElement="A_note1">
-        <dc:Bounds x="230" y="700" width="640" height="70" />
+        <dc:Bounds x="230" y="700" width="640" height="70"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_note2_DI" bpmnElement="A_note2">
-        <dc:Bounds x="1360" y="680" width="650" height="70" />
+        <dc:Bounds x="1360" y="680" width="650" height="70"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram>
-    <bpmndi:BPMNPlane bpmnElement="A_Visit" />
+    <bpmndi:BPMNPlane bpmnElement="A_Visit"/>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram>
-    <bpmndi:BPMNPlane bpmnElement="A_Schedule" />
+    <bpmndi:BPMNPlane bpmnElement="A_Schedule"/>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
