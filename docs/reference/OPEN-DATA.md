@@ -52,7 +52,9 @@ with hidden labels only after inference. No model call is needed for the intake 
 
 ## Completion evidence
 
-No files have been imported yet. Import is complete only when selected files exist,
+Three author-hosted whole-leaf examples are downloaded locally for manual upload;
+see the [manifest](EXAMPLE-IMAGES.md). They are not seeded into farm history or
+selected as an evaluation set. The planned scenario import is complete only when selected files exist,
 hashes and provenance are recorded, synthetic scenarios and image reuse are identified,
 and the relevant display and evaluation leakage checks pass. A small convenience
 sample cannot establish population performance or measured incidence.
