@@ -66,3 +66,6 @@ First dataset preparation: [open-data intake plan](OPEN-DATA.md).
 
 Selected prototype routing direction and next specification step:
 [report-to-case routing worksheet](DMN-RULE-WORKSHEET.md). Group model alignment remains pending.
+
+[Farm history and technical case data-model draft](../design/DATA-MODEL.md) traces
+source-backed context, owner-selected direction and unresolved design proposals.

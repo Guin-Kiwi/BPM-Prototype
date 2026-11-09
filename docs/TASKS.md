@@ -65,6 +65,13 @@ manual demo acceptance remains outstanding; existing checks cover the old demo.
 Separately, BRACOT remains the next data inspection priority under the
 [open-data plan](reference/OPEN-DATA.md). Offline capture remains a disclosed gap.
 
+## Data-model draft
+
+[Farm history and technical case model](design/DATA-MODEL.md) is drafted for review,
+with source/decision trace, relationships, spatial framework and legacy-data limits.
+It does not approve case cardinalities or change the active SPECIFY phase. Review
+those choices before implementation or dataset generation; no generation is authorised.
+
 ## Selected routing step
 
 Ayla selected report-to-case routing as the next business specification step:
