@@ -72,3 +72,6 @@ source-backed context, owner-selected direction and unresolved design proposals.
 
 [New P1 AS-IS / TO-BE comparison proposals](../../models/comparison/README.md)
 include editable BPMN and previews; source assumptions and group alignment are explicit.
+
+[Planned P1 comparison edits](../design/BPMN-EDIT-PLAN.md) align detail level and
+A4 layout; the plan does not claim that the uploaded models have been revised.
