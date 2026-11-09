@@ -46,6 +46,8 @@ Group paper/model alignment and human acceptance of the revised journey remain o
 Resolve the provider and bounded demo rules in the UC-002 draft, using the
 [worksheet](reference/DMN-RULE-WORKSHEET.md#open-definitions-and-minimal-next-specify-task).
 The selected work is SPECIFY; no application implementation is claimed.
+The [local-model security review](reference/LOCAL-MODEL-SECURITY.md) records metadata
+findings and containment conditions; no model installation or execution has begun.
 
 ## Selected routing step
 

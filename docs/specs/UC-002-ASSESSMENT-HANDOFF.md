@@ -95,6 +95,9 @@ model for the first slice.
 
 ## Security / trust-boundary notes
 
+Before installing a local backend, follow the [candidate security review](../reference/LOCAL-MODEL-SECURITY.md).
+Metadata inspection is complete; weight, dependency and runtime checks remain open.
+
 Provider credentials stay server-side and outside Git. Treat farmer text and model
 output as untrusted data. Explicit live requests may incur provider charges; ordinary
 automated tests must not require paid calls. Simulated identity is not access control.
