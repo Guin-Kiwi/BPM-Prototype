@@ -1,209 +1,261 @@
 # UC-001-REPORT-INTAKE
 
 ## Goal
-Select a fictional farm and field, submit a text observation with an optional image,
-and retrieve the saved report alongside earlier reports for that field.
+
+A logged-in farmer records an observation primarily by taking a photo, with optional
+supporting text and a required approximate affected-plant estimate for the observed
+area. The report retains when and where the observation was made and is available
+in the farm's history with useful nearby context.
 
 ## Business value
-Establish attributable intake and useful field context for the P1 demonstrator,
-without presenting synthetic scenarios as real farm records.
+
+Make reporting quick for farmers while preserving attributable evidence and context
+for later technician work, without treating a report as a confirmed finding or case.
 
 ## Scope
 
 ### In scope
-- Local selection of a fictional farm and one of its fields; a small, explicitly
-  synthetic seed history and an empty-history case.
-- Observation date, required description and optional image; validation, save
-  confirmation, retrieval by report ID and earlier reports for the selected field.
-- Original submitted evidence, generated report ID and receipt timestamp; clear
-  distinction between observations and any earlier confirmed findings.
-- Attribution for any open-data images used in synthetic scenarios, with current
-  sample evaluation answers kept separate.
+
+- Camera-first report intake, optional text, account-derived farmer and farm, automatic
+  observation time and preferred GPS, with mapped-field fallback when GPS is unusable.
+- A required structured farmer estimate of affected plants as a count or percentage
+  for the observed area; optional narrative remains separate.
+- Durable original evidence, distinct capture and receipt times, report retrieval,
+  farm history and geographic grouping where possible; location remains available
+  for nearby context without requiring the farmer to name a field.
+- Synthetic demo scenarios and attributable dataset images, with evaluation safeguards.
 
 ### Out of scope
-- AI diagnosis, action selection, treatment guidance, messages and orders.
-- Creating confirmations or inferences during intake; routing and review policy.
-- Voice, GPS/pH, offline sync, aggregation, measured incidence and real farm history.
-- Authentication and deployment; this slice is a local demonstration.
+
+- Implementing authentication, offline capture/sync or voice transcription. The target
+  assumes a logged-in farmer; transcription is a future option, not available today.
+- Technician workflow, case creation, routing, relevance judgments, AI diagnosis,
+  treatment guidance, messages and orders. A report becomes a case only through
+  technician involvement; intake itself creates neither a case nor a finding.
+- Measured incidence, aggregation policy and real farm history for the local demo.
 
 ## Actors
 
-Primary: farmer role entering a report; Ayla demonstrating synthetic reports.
-Secondary: evaluator preparing attributable dataset samples and synthetic history.
+Primary: logged-in farmer recording an observation; Ayla demonstrating synthetic reports.
+Secondary: technician later involved with reports; evaluator preparing attributable
+samples and synthetic history.
 
 ## Preconditions
-Local application running with writable local storage and fictional farms, fields
-and history available. Each field belongs to a selected farm. Dataset images, if used,
-have source provenance and synthetic scenario context. No provider credentials required.
+
+Target: a valid authenticated account identifies the farmer and associated farm.
+Location context is required for submission: usable GPS is preferred, with selection
+of a known mapped field belonging to that farm as fallback. GPS permission is not a
+login or farmer-workflow prerequisite. Authentication and account management are
+dependencies outside this slice; actual field-boundary availability is for DESIGN.
+
+Current demo: local application and writable storage, fictional data, no provider
+credentials; it has no authentication, automatic GPS or mapped-boundary fallback.
+Its fictional identity is a simulation, not login or security.
 
 ## Trigger
-User opens report entry to record an observation for a field.
+
+A farmer opens report entry to record an observation.
 
 ## Main flow
 
-1. Select a fictional farm and one of its fields, enter the observation date and
-   description, and optionally select a leaf image.
-2. Validate the inputs and attachment; save the report and image with a unique ID and
-   receipt timestamp, preserving the submitted evidence.
-3. Show confirmation and saved report detail, clearly marked as synthetic/demo data.
-4. Retrieve the report by ID, including after restart. Show earlier reports for the
-   same field, separately identified as history; show any earlier confirmed findings
-   as such and preserve their distinction from submitted observations.
+1. Obtain farmer and farm from the signed-in account. Do not ask the farmer to name
+   a field. Open the camera and ask the farmer to take a new photo.
+2. Capture observation time and GPS automatically when the photo is taken; retain the
+   original photo and any optional text. Use GPS when available and sufficiently
+   accurate. Otherwise, including when permission is denied, ask the farmer to select
+   a known field belonging to their farm on a map. Location context is required before
+   submission; the farmer need not name the selected field.
+3. Ask “About how many plants are affected?” Let the farmer choose an approximate
+   count of plants or a percentage of plants in the area being observed. A brief area
+   cue such as “the rows near the shed” is a recommended way to clarify scope, not a
+   mandatory written description. No survey is required; optional narrative is separate.
+4. Validate and save the complete report with a unique ID and a separate UTC receipt
+   timestamp. Confirm only after the save succeeds.
+5. Retrieve the report by ID and from the farm's history, including after restart.
+   Retain the recorded point or field boundary for nearby context and derive geographic
+   grouping when possible;
+   clearly distinguish prior observations from confirmed findings. No intake step
+   creates a case or makes a relevance or routing judgment.
 
 ## Alternate / edge flows
 
-- Text-only reports are valid. A field with no earlier reports shows an empty history;
-  missing history does not mean there was no disease.
-- History is computed at retrieval: include same-field reports whose key
-  `(observation date, receipt timestamp, report ID)` sorts before the current
-  report’s key, newest first by that key. Dates use calendar-day precision; receipt
-  timestamps are UTC instants and IDs break exact timestamp ties lexicographically.
-  Exclude the current report and other fields. A later-submitted backdated report
-  can therefore appear in history on a subsequent retrieval.
-- Repeated submissions remain distinct; deduplication and aggregation are deferred.
-- Dataset images may illustrate synthetic reports. Reuse is identified in scenario
-  provenance and does not establish independent observations or real field incidence.
+- **Proposed demo identity:** use one clearly labelled fixed fictional farmer/account
+  and farm supplied by demo configuration. It simulates an already signed-in account;
+  it provides no login, authentication or authorization. Do not infer identity or farm
+  from GPS. Keep existing fictional data and history available through an explicit
+  mapping to that farm; mapping and migration need design.
+- **Prototype shortcut:** use a photo upload to represent a newly captured photo,
+  solely to reduce implementation complexity. Recommend clearly labelled synthetic or
+  manually supplied capture-time and location stand-ins, with their source recorded.
+  Upload/receipt time is not the original photo capture time; do not claim a simulated
+  value was automatically captured or obtained from GPS. Retain the uploaded evidence.
+- **Location fallback:** when GPS is unavailable or insufficiently accurate, offer
+  mapped-field selection for the account's farm. Preserve the farmer-selected field ID
+  and boundary as the location context, with field-level precision and source; do not
+  invent a point or centroid as the observed location. For usable GPS, preserve the
+  device point and reported accuracy with device source. Prototype boundaries may be
+  synthetic and must be labelled as such. DESIGN must define usable GPS and boundary
+  availability. If neither usable GPS nor a selectable known field is available,
+  recommend explaining and retrying without submission; exact handling remains open.
+  This is not an approved exception or a claim of offline or durable draft support.
+- Keep farm history even when a report cannot be assigned a geographic group. Grouping
+  must not fabricate a field, and unavailable nearby context must be explicit. Existing
+  same-field demo history is evidenced by the existing implementation and tests; the
+  revised farm/nearby history membership, order and proximity rules need a decision.
+- The estimate describes affected plants within the area the farmer is estimating, not the
+  proportion of land affected. A percentage is affected plants divided by all plants
+  in that area, expressed as 0–100%; the denominator is conceptual and need not be
+  counted. An approximate count is in plants, not plants per acre. Do not label the
+  percentage “per acre”: an acre is an area unit, not a plant denominator. A GPS point
+  supplies neither the area extent/acreage nor the number of plants. Neither estimate
+  is systematic measured incidence or a confirmed finding. A selected field may be
+  offered as an understandable area cue; it supplies neither a plant denominator nor
+  proof that the estimate covers the whole field.
+- Preserve the entered estimate, its kind, units, any supplied area context and
+  farmer-reported provenance on retrieval; do not convert between count and percentage
+  or infer acreage, a denominator or precision. Existing reports lacking an estimate retain an explicit
+  unavailable value; do not invent one or alter their original evidence.
+- Repeated submissions remain distinct; deduplication is deferred. Reused dataset
+  images are identified in provenance and are not independent observations or incidence.
 
 ## Errors / failure cases
 
-- Missing required values, invalid farm/field pairing or date, unsupported/corrupt
-  image or oversized upload: explain the problem without a partially saved report.
-- Unknown report ID: clear not-found result.
-- Storage failure: report failure; do not claim successful receipt.
+- Camera cancellation or capture failure: explain and allow retry; do not save without
+  a photo. In the prototype, a failed upload can be retried.
+- Unavailable, denied or insufficiently accurate GPS: offer selection of a known field
+  for the account's farm. If neither usable GPS nor a selectable known field is available,
+  the proposed behavior is explanation and retry without submission; DESIGN must resolve
+  the exact path. No arbitrary point is invented.
+- Missing or invalid estimate, invalid time, attachment or location: explain how to
+  correct it; do not partially save. The farmer must supply an estimate, even when it
+  is approximate; there is no “unable to estimate” submission alternative.
+  Unknown report ID yields not found. Storage failure must not claim successful receipt
+  or leave a retrievable partial report. No offline queuing is claimed.
 
 ## Acceptance criteria
 
-Sources: [main paper and concept](../reference/README.md) for field-linked reports
-and history; the owner’s current request authorizes the bounded intake and synthetic
-history scope. The concrete defaults below are implementation defaults accepted by Ayla for this prototype, not
-group policy. The [source map](../reference/README.md) identifies the
-paper as business-scope authority and the assignment as deliverables authority.
+Sources: the owner's current direction governs the revised farmer journey; the
+[source map](../reference/README.md) identifies the paper as business-scope authority
+and the assignment as deliverables authority. Proposed demo defaults and unresolved
+choices below are not owner-approved policy. The owner has accepted the photo-first
+framing and requires an approximate affected-plant count or percentage. The currently
+working demo and its evidence are described in [TASKS](../TASKS.md).
 
-1. Offer at least two fictional farms with two fields each; each field belongs to one
-   farm. Seed at least three earlier reports, including a fictional confirmed finding,
-   and leave at least one field empty. Label scenario records synthetic.
-2. Accept a selected farm and its field, a nonblank description, a valid observation
-   date in ISO calendar format (not later than the application’s local current date),
-   and zero or one image. Accept actual JPEG/PNG content up to and including 10 MiB;
-   reject corrupt, unsupported or larger files. Save each valid submission as a
-   distinct report with its original text, date, optional image, unique ID and UTC
-   receipt timestamp; confirm receipt only after the complete save succeeds.
-3. Retrieve by ID after restart, showing the saved evidence and image if present.
-   Show history using the ordering and membership in Alternate / edge flows, including
-   same-day ties and later-submitted backdated reports. An empty history is explicit
-   and does not imply absence of disease.
-4. Distinguish prior fictional confirmed findings from submitted observations; never
-   present an observation or inference as a confirmation. Intake creates no finding.
-5. For dataset-backed scenarios, make source attribution and synthetic context
-   available. Keep current-image disease/severity scoring labels and label-bearing
-   source names out of displayed attachment names, observations and diagnosis inputs.
-   Identify reused images in provenance. Normal intake history may show prior
-   confirmed findings even when an image repeats. For a future diagnosis evaluation,
-   exclude history entries that reveal the current image’s answer, including findings
-   tied to the same image or related images such as crops of one parent; record each
-   exclusion. Keep scoring labels and source identifiers in separate restricted
-   provenance/evaluation metadata, per the [open-data plan](../reference/OPEN-DATA.md).
-6. Invalid required input, farm/field pairing or attachment yields an actionable error
-   and leaves no partial report or image; a storage failure does not claim success and
-   leaves no retrievable partial report. An unknown ID yields a not-found result.
+1. Given a signed-in farmer, obtain identity and farm from the account, open the
+   camera and ask for a new photo. Text is optional, no field name is required, and
+   intake does not offer or claim transcription. GPS permission is not a login or
+   farmer-workflow prerequisite.
+2. A successful report preserves the original photo and optional submitted text, a
+   unique ID, observation time and separately recorded UTC receipt time. Capture and
+   receipt must not be conflated. A report requires location context: use a usable
+   device GPS point with its reported accuracy and source; when unavailable or
+   insufficiently accurate, allow selection on a map of a known field for the account's
+   farm, retaining its ID, boundary and farmer-selected source with field-level
+   precision. Do not represent a boundary or its centroid as an observed GPS point.
+   Define GPS usability and actual boundary availability in DESIGN.
+3. The farmer can retrieve a saved report after restart and access farm history.
+   Location is retained for nearby context; geographic grouping is derived only when
+   possible; the farmer need not enter a field name. Empty history does not imply
+   absence of disease. Observations and prior confirmed findings remain distinct.
+4. Intake creates neither a confirmed finding nor a case, routing decision or relevance
+   judgment. Only technician involvement can turn a report into a case; its process is
+   outside this use case.
+5. Demo scenarios are labelled synthetic. Dataset-backed scenarios provide attribution
+   and context; original text, image and metadata are preserved. Keep current-image
+   disease/severity scoring labels and label-bearing source names out of displayed
+   attachment names, observations and diagnosis inputs. Separate restricted provenance
+   and evaluation metadata as in the [open-data plan](../reference/OPEN-DATA.md).
+   Record reuse and relatedness. For future diagnosis evaluation exclude history that
+   reveals the current image's answer, including the same image or related crops of one
+   parent, and record each exclusion. Ordinary history may show prior findings even for
+   repeated images; those findings must not be presented as new confirmation.
+6. Invalid or incomplete required evidence, invalid location/time, corrupt, unsupported
+   or oversized image, and storage failure yield actionable errors without a partial
+   report or false confirmation; unknown IDs yield not found. The existing demo's JPEG/
+   PNG and 10 MiB limit remain the accepted bounds for the revised demo.
+7. The future bounded demo uses an upload to represent a new photo and a clearly
+   simulated fixed fictional identity. Label synthetic or manually supplied capture-time
+   and location stand-ins and their source; never present upload time as actual capture
+   time or a stand-in as GPS. Synthetic mapped field boundaries are explicitly labelled.
+   The current demo has no automatic location or mapped-field fallback.
+8. A new report requires a structured farmer estimate: either an approximate count
+   of affected plants (unit: plants) or an approximate percentage of affected plants
+   among all plants in the area being observed (unit: percent). Recommend a nonnegative
+   whole-number count or a percentage from 0 to 100 inclusive; reject missing, nonnumeric
+   or out-of-range values with an actionable error. No submission is allowed without
+   an estimate. Save and retrieve the value, kind, unit and farmer-reported estimate
+   provenance, and any area context supplied, without presenting them as measured
+   incidence or a confirmed finding. Do not derive a denominator, acreage, area coverage
+   or converted estimate from the GPS point. Historical reports without this input
+   remain available and show it as unavailable.
 
 ## Security / trust-boundary notes
 
-Treat uploads and text as untrusted: validate actual image content, escape rendered
-text, generate neutral storage/display names, limit upload size and prevent path
-traversal. Local synthetic data only; do not expose the unauthenticated prototype
-publicly. Keep provenance and evaluation metadata out of diagnosis inputs.
+Treat image, metadata, location and text as untrusted: validate actual image content,
+escape rendered text, generate neutral names, limit upload size and prevent path
+traversal. Location and account association are sensitive; a fixed demo identity is not
+security. Use synthetic data locally and do not expose the unauthenticated demo publicly.
+Authorization and account-to-farm access are dependencies requiring design before real
+data; do not trust client-supplied identity as proof. Keep restricted provenance and
+scoring metadata out of diagnosis inputs.
 
 ## Validation plan
 
 ### Tests
-- Unit: pairing, date and description validation, attachment boundaries and history
-  ordering, including same-day ties and backdated submissions (criteria 2, 3, 6).
-- Integration: seed coverage, atomic save/retrieve after restart, field isolation,
-  evidence types, image validation, unknown ID and storage failure (criteria 1–6).
-  For dataset-backed fixtures, check attribution, neutral names and repeat/related
-  image leakage boundaries; future diagnosis-input exclusions are deferred to the
-  evaluation slice (criterion 5).
-- E2E: demonstrate selection, text-only and image submission, retrieval, confirmed
-  history, empty history and errors; inspect synthetic labels and attribution
-  where images are sourced (criteria 1–6).
+
+- Unit: count/percentage selection, bounds, mandatory estimate and optional narrative;
+  GPS usability and source/accuracy, mapped-field ownership and boundary handling,
+  image content and size boundaries, grouping when available and no fabricated group
+  (criteria 1–3, 6–8). Define history membership and ordering before testing them.
+- Integration: account/farm association at its boundary, atomic save and restart
+  retrieval, original evidence and distinct times, farm isolation, no case/finding,
+  failure paths, estimate provenance and legacy missing estimates, and synthetic labels
+  (criteria 1–4, 6–8). Use a clearly labelled fake
+  account for demo tests, not a claim of authentication.
+- E2E/manual: exercise camera-first target and labelled upload demo; usable GPS,
+  denied/unavailable or inaccurate GPS with mapped-field selection, and neither source
+  available; both estimate choices, optional narrative, photo failure, farm history, empty
+  history and prior finding. Verify location source, precision, farm membership and
+  device/map availability; record gaps (criteria 1–4, 6–8).
+- Dataset fixtures: attribution, neutral names, reuse and related-image leakage;
+  diagnosis-input exclusions belong to the future evaluation slice (criterion 5).
 
 ### Evidence
-Current automated and live HTTP results, review limits and remaining manual
-acceptance are recorded in [TASKS](../TASKS.md).
+
+Existing automated and live HTTP evidence and manual review limits are recorded in
+[TASKS](../TASKS.md); see the current [intake implementation](../../src/app/application/intake.py)
+and [integration tests](../../tests/integration/test_intake.py). Earlier specification
+and design versions remain in git history (`git log -- docs/specs/UC-001-REPORT-INTAKE.md`).
+These verify the previous demo only; no revised-target implementation, checks, human
+acceptance or visual journey are claimed.
 
 ## Open questions / assumptions
 
-- Working defaults accepted by Ayla for prototype implementation: one
-  nonblank description, a nonfuture local calendar date, and at most one JPEG/PNG
-  up to 10 MiB. These keep entry simple and storage bounded. The local date is the
-  application host’s date; timezone and clock changes affect future-date validation.
-- The minimum seed and chronology above provide isolation, confirmed-history and
-  empty-history examples with little setup. Observation date best represents when an
-  event occurred; receipt time and ID give deterministic same-day order. Same-day
-  ordering does not claim the events actually occurred in that order.
-- Ayla accepted the design and selected DEVELOP. Synthetic text history is seeded;
-  no open-data images or dataset-backed scenarios have been imported.
-- Offline capture is a paper assumption deferred beyond this slice; disclose the gap.
+- Owner to confirm the fixed demo identity/farm, mapping existing seed history, and
+  whether one or multiple demo farms are needed. Real authentication, authorization
+  and account/farm relationships require separate design and review.
+- DESIGN must define usable GPS accuracy and actual boundary availability, how farm
+  ownership and field boundaries are verified and retained, and behavior if neither
+  location source is available. Retry without submission is a working recommendation,
+  not an approved exception; no offline draft persistence is implied.
+- DESIGN should choose how to convey the area to which an estimate applies; a brief
+  area cue is recommended but extra written narrative is not required. Do not require
+  field naming, acreage or a survey.
+- Decide farm-history membership/order for backdated and same-time observations,
+  geographic grouping source and behavior when unavailable, and nearby radius,
+  relevance and privacy boundaries with appropriate owners. Relevance policy is separate
+  work; do not silently equate nearby with relevant or invent grouping boundaries.
+- Reconcile the changed journey with the group paper/models. The accepted demo image
+  bound remains one JPEG/PNG up to 10 MiB.
 
 ## Notes for implementation
 
-Use existing domain/application/interface/infrastructure layers. Design selection,
-report persistence and history retrieval; decide persistence in DESIGN and record
-consequential decisions per the working agreement. Intake does not require a model
-provider, routing policy or new review workflow.
-
-## Design
-
-Ayla reviewed and accepted this design for prototype development; the acceptance
-criteria and working defaults govern this slice. The existing layer
-structure is sufficient with the following small additions:
-
-- **Domain:** fictional farms and their fields; reports retain submitted observations
-  and optional original image evidence. A prior fictional confirmed finding is a
-  distinct kind of history evidence, never created by intake.
-- **Application:** an intake service validates the farm/field relationship and the
-  specified inputs, then requests one complete save; a retrieval service gets a
-  report and computes its same-field history under the specified ordering. These
-  services own the use-case rules and depend on a modest repository boundary, not
-  on HTTP or a database. The repository provides farm/field lookup, atomic report
-  save, report lookup and field history; storage-specific representations stay behind it.
-- **Interface:** a local form offers farm and dependent field selection, date,
-  description and optional image. Validation errors identify the relevant input; after
-  successful save it leads to synthetic-labelled report detail. Detail is addressable
-  by report ID and shows the original evidence, distinct prior findings and ordered
-  history or its explicit empty state; unknown IDs show not found. Render text safely
-  and use neutral attachment names. FastAPI is the existing development profile;
-  server-rendered HTML is a proposed simple journey, without choosing a template engine.
-- **Infrastructure:** a local SQLite adapter owns durable fictional scenario and report
-  records and stores an optional bounded original image with its report in one
-  transaction, as accepted in [ADR-001](../adr/ADR-001-local-report-persistence.md).
-  Image content must be decoded/verified as actual JPEG or PNG, not accepted solely
-  from a filename or MIME type. Invalid input creates nothing; a failed transaction
-  leaves no retrievable partial report or image and produces no confirmation.
-
-Synthetic seed records use stable scenario-owned identities so initialization is
-idempotent across restarts and does not overwrite user submissions or duplicate seed
-history. Seed identities are not dataset identifiers. No raw dataset images are
-currently present; add source-backed images only after selection and provenance work
-in the [open-data plan](../reference/OPEN-DATA.md). Keep attribution and synthetic
-context available separately from restricted original identifiers, paths and scoring
-labels; neither label-bearing names nor current answers enter displayed observations,
-attachment names or future diagnosis inputs. Track image reuse and relatedness in
-provenance; future evaluation must record exclusions described in criterion 5.
-
-SQLite keeps report and image atomic with few moving parts, at the cost of database
-growth and a local writable file; it is a local demo choice, not a distributed store
-or backup strategy. The 10 MiB limit bounds each image, not total storage. The local
-host clock and deterministic same-day tie breaks retain the limitations stated above.
-Implementation uses python-multipart for form parsing and Pillow for image verification.
-No template engine, ORM or migration tool is selected.
-
-Acceptance mapping: seed and idempotence cover **1**; form, validation and atomic
-save cover **2 and 6**; durable lookup and history cover **3**; typed evidence
-covers **4**; separated provenance and deferred evaluation exclusions cover **5**.
-With DEVELOP selected, implement the smallest journey
-using the existing TDD workflow. Exercise the spec's unit, integration and E2E plan,
-especially image content/size boundaries, transaction failure, restart, seed reruns,
-history ties/backdating and separation of findings and source labels. No application
-behavior or acceptance checks are claimed in DESIGN.
+DESIGN should assess impacts on the existing domain, intake/retrieval services, local
+form, location sources, repository and SQLite data, including the structured estimate
+and migration and preservation of prior reports, images, findings and synthetic
+provenance. Keep synthetic seed initialization idempotent without overwriting reports.
+[ADR-001](../adr/ADR-001-local-report-persistence.md)
+remains the accepted local persistence decision; do not assume it resolves account,
+location or migration design. Identify any consequential cross-use-case decision for
+review under the [working agreement](../WORKING-AGREEMENT.md). No code or UI design
+is authorized by this specification task.

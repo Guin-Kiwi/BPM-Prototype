@@ -1,13 +1,14 @@
 # Current work
 
-PHASE: 3
+PHASE: 1
 STATUS: in-progress
 
 ## Active objective
 
-[UC-001: report intake](specs/UC-001-REPORT-INTAKE.md): select a fictional farm and
-field, save and retrieve a report, and show earlier reports for that field. Routing
-and model integration are deferred.
+[UC-001: report intake](specs/UC-001-REPORT-INTAKE.md): revise the specification for
+camera-first farmer reporting, account-derived farm, automatic observation time,
+preferred GPS with mapped-field fallback, a required approximate affected-plant count
+or percentage for the observed area, farm history and nearby context. Routing and relevance are separate work.
 
 ## Current Use Case
 
@@ -15,9 +16,17 @@ docs/specs/UC-001-REPORT-INTAKE.md
 
 ## Current slice
 
-Ayla reviewed intake/history and accepted the SQLite design, then selected DEVELOP.
-The bounded local form, durable reports/images and field history are implemented.
-Routing, AI, cases and real dataset import remain separate work.
+SPECIFY is in progress. The owner requires a camera-first target, approximate
+plant estimate and location context: usable GPS is preferred, with selection of a known
+field on a map for the account's farm when GPS is unavailable or insufficiently
+accurate. GPS permission is not a login or workflow gate. The revised target is not
+implemented. The intended prototype uses an upload to represent a new photo and labelled
+synthetic or manual capture-context stand-ins; synthetic boundaries must be labelled.
+The working demo selects a fictional farm and field, requires text and date, accepts an
+optional image, and shows same-field history. It does not collect the structured estimate
+and has no login, automatic GPS, mapped-boundary fallback, offline capture or
+transcription. Earlier acceptance of the SQLite demo design does not approve the revised
+target.
 
 ## Evidence
 
@@ -44,14 +53,17 @@ Neither constitutes human or visual acceptance.
 
 ## Next smallest step
 
-Implementation review and shared project command alignment are complete. Try the
-README run command and perform the manual browser journey when a browser is available;
-record human acceptance before considering this phase done. Phase 3 remains
-in-progress pending this visual/manual acceptance. Separately, the next data
-inspection priority is BRACOT for a small, provenance-tracked field sample; source
-selection and evaluation preparation remain outside UC-001 implementation. Follow
-the [open-data plan](reference/OPEN-DATA.md) for the single source-selection
-recommendation and its inspection limits. Offline capture remains a disclosed gap.
+Resolve the proposed demo identity and seed mapping, how to convey estimate scope
+without requiring extra narrative, usable-GPS criteria, actual field-boundary availability,
+and farm/nearby history and grouping rules. If neither usable GPS nor a selectable known
+field is available, retry without submission is a working recommendation for DESIGN,
+not an approved exception or a claim of offline draft persistence. Resolve behavior-
+affecting choices and group alignment before marking SPECIFY done. DESIGN can inspect
+affected components and alternatives, but implementation-ready DESIGN and a phase
+transition await those decisions and explicit selection of DESIGN. The earlier visual/
+manual demo acceptance remains outstanding; existing checks cover the old demo.
+Separately, BRACOT remains the next data inspection priority under the
+[open-data plan](reference/OPEN-DATA.md). Offline capture remains a disclosed gap.
 
 ## Selected routing step
 
