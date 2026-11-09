@@ -16,7 +16,7 @@ docs/specs/UC-001-REPORT-INTAKE.md
 ## Current slice
 
 Ayla reviewed intake/history and accepted the SQLite design, then selected DEVELOP.
-Implement the bounded local form, durable reports/images and field history with TDD.
+The bounded local form, durable reports/images and field history are implemented.
 Routing, AI, cases and real dataset import remain separate work.
 
 ## Evidence
@@ -34,11 +34,19 @@ in the README started on loopback and shut down cleanly under a 3-second timeout
 retrieval and history; a visual/manual browser journey has not been performed because
 no browser is connected. No human implementation review or approval is claimed.
 
+Parent verification: a temporary loopback Uvicorn server passed live HTTP form,
+image submission, redirect, escaped report detail, prior finding/history, original
+image retrieval and unknown-ID checks. Earlier startup attempts used the old entry
+point or crossed sandbox network boundaries; the final check used the documented
+factory in a single network context and passed. Temporary servers were stopped.
+Parent code review and a Luna-medium read-only review found no blocking defects.
+Neither constitutes human or visual acceptance.
+
 ## Next smallest step
 
-Parent reviews the implementation and aligns shared project commands. Perform the
-manual browser journey when a browser is available, then complete the appropriate
-review and acceptance work before considering this phase done. Offline capture and
+Implementation review and shared project command alignment are complete. Try the
+README run command and perform the manual browser journey when a browser is available;
+record human acceptance before considering this phase done. Offline capture and
 future dataset provenance/evaluation remain outside UC-001 implementation.
 
 ## Selected routing step

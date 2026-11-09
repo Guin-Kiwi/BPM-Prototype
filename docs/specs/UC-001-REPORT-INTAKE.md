@@ -129,7 +129,8 @@ publicly. Keep provenance and evaluation metadata out of diagnosis inputs.
   where images are sourced (criteria 1–6).
 
 ### Evidence
-Record executed application checks during VALIDATE. No application checks have run.
+Current automated and live HTTP results, review limits and remaining manual
+acceptance are recorded in [TASKS](../TASKS.md).
 
 ## Open questions / assumptions
 
@@ -141,9 +142,8 @@ Record executed application checks during VALIDATE. No application checks have r
   empty-history examples with little setup. Observation date best represents when an
   event occurred; receipt time and ID give deterministic same-day order. Same-day
   ordering does not claim the events actually occurred in that order.
-- No material intake policy question remains for DESIGN under these working defaults;
-  Ayla reviewed the design and selected DEVELOP. Local persistence and upload handling belong to
-  DESIGN. No images have been downloaded or scenarios imported.
+- Ayla accepted the design and selected DEVELOP. Synthetic text history is seeded;
+  no open-data images or dataset-backed scenarios have been imported.
 - Offline capture is a paper assumption deferred beyond this slice; disclose the gap.
 
 ## Notes for implementation
@@ -196,9 +196,8 @@ SQLite keeps report and image atomic with few moving parts, at the cost of datab
 growth and a local writable file; it is a local demo choice, not a distributed store
 or backup strategy. The 10 MiB limit bounds each image, not total storage. The local
 host clock and deterministic same-day tie breaks retain the limitations stated above.
-Minimal additions for DEVELOP are a multipart form parser and an image
-verification library if needed (for example python-multipart and Pillow); neither
-is installed yet, and no template engine, ORM or migration tool is selected.
+Implementation uses python-multipart for form parsing and Pillow for image verification.
+No template engine, ORM or migration tool is selected.
 
 Acceptance mapping: seed and idempotence cover **1**; form, validation and atomic
 save cover **2 and 6**; durable lookup and history cover **3**; typed evidence
