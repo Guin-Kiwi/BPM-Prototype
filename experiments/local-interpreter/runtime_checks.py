@@ -46,7 +46,7 @@ def validate_container(info, image, uid, gid, sources):
             writable = target == '/results'
             expected_mode = 'rw' if writable else 'ro'
             if (mount.get('Type') != 'bind' or mount.get('Source') != sources[target] or
-                    mount.get('RW') is not writable or mount.get('Mode') != expected_mode or
+                    mount.get('RW') is not writable or mount.get('Mode') not in ('', expected_mode) or
                     mount.get('Propagation') != 'rprivate'):
                 raise ValueError('mount source or permissions mismatch')
     except (KeyError, TypeError) as error:
