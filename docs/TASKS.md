@@ -61,13 +61,16 @@ the rule proposal, then proceed through DESIGN and TDD implementation.
 | --- | --- |
 | Existing C/F and BPMN alignment | Primary case, group C/F table and selected XML models inspected; alignment draft linked above. No replacement matrix or group-model edits. |
 | Demonstration rules and scenarios | Proposal for both responsibility routes and an attributable non-treatment guidance candidate; synthetic eligibility and provider choices await owner selection. |
-| Classifier plus bounded LLM | [Contained classifier run](../experiments/local-classifier/RESULTS.md) completed; application adapter and LLM backend remain unimplemented. |
+| Classifier plus bounded LLM | [Contained classifier run](../experiments/local-classifier/RESULTS.md) completed; [Local LLM metadata candidate](../experiments/local-interpreter/README.md) reviewed without weights or installation; application adapter and LLM backend remain unimplemented. |
 | Staff handoff and recording | UC-002 specifies it; no assessment, routing or handoff UI/storage implemented yet. |
 | Actual workflow experiments | Experiment plan drafted; connected live model/UI runs remain outstanding. |
-| Paper/presentation evidence and cost/benefit | Existing classifier evidence available; end-to-end evidence, actual AI usage/cost and explicitly assumed workload comparison remain outstanding. |
+| Paper/presentation evidence and cost/benefit | Existing classifier evidence and a worked hypothetical cost comparison available in the experiment plan; end-to-end evidence and actual AI usage/cost remain outstanding. |
 
 Classifier handoff checks passed lifecycle checks/scenarios, 47 process tests and
 73 pytest tests; actual runtime inventory matched the 28 locked distributions.
+The proposed LLM output contract now defines exact fields, bounds and warning guards;
+routing alternatives and provider choice remain unselected. The experiment plan includes
+a three-scenario arithmetic check, with every cost/time input labelled hypothetical.
 Fresh baseline check: the existing intake and architecture command passed 32 tests
 against temporary databases, as recorded in the experiment plan. SPECIFY checks passed
 lifecycle validation, generated-view checks, local link/model-ID checks and whitespace
