@@ -70,3 +70,8 @@ locked runtime, launch checks and actual [results](../../experiments/local-class
 Review suitability before application integration: blank-input overconfidence and
 preprocessing/perturbation sensitivity remain material limits. Select/review any later
 language model separately; this review applies only to the pinned classifier artifacts.
+
+The separately reviewed [local interpreter experiment](../../experiments/local-interpreter/RESULTS.md)
+records pinned artifacts, dependency/loader review and effective containment for Qwen3.
+Both bounded trials completed generation but failed the output contract throughout.
+Containment success is not model suitability or independent diagnostic confirmation.

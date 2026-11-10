@@ -124,7 +124,9 @@ E2E: existing intake through a staff-recorded handoff and reload.
 Planned: passing scoped checks and a deliberately run live example identifying model,
 prompt/rule version, input report, actual output, route and handoff. A separate
 [classifier feasibility experiment](../../experiments/local-classifier/RESULTS.md) has
-run; no application assessment, routing or handoff journey has been implemented or tested.
+run. The separate [interpreter experiment](../../experiments/local-interpreter/RESULTS.md)
+completed loading/generation but accepted 0/12 responses; it does not establish provider
+suitability. No application assessment, routing or handoff journey is implemented or tested.
 
 ## Open questions / assumptions
 

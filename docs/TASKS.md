@@ -1,6 +1,6 @@
 # Current work
 
-PHASE: 1
+PHASE: 4
 STATUS: in-progress
 
 ## Active objective
@@ -11,12 +11,12 @@ contained classifier and bounded LLM; record human handling in the app; run expe
 prepare technical and cost/benefit evidence. The baseline is Cooxupé **before** the
 published case's improvements. No leaf detector is being added; weather remains optional.
 
-Current work is SPECIFY: research prepared observation messages and propose the minimum
-deterministic demonstration rules. The owner clarified that actual model outputs and
-ordinary synthetic history must drive handling; presenter-supplied route/risk/eligibility
-profiles are excluded. Technical choices are recommendations by the implementation
-agent, not agronomic or backend decisions assigned to Ayla. Sources, prototype assumptions
-and measured results remain separate. No leaf detector or weather scope expansion.
+Current selected work is VALIDATE for the **supporting local-interpreter experiment**,
+following its DEVELOP/TDD implementation and post-green review. This phase does not
+mean UC-002's application journey has been implemented or completed. The sourced
+observation direction is selected; interpreter agreement is not independent confirmation,
+and missing issue links do not establish irrelevance. All available context remains
+visible for human relevance judgment. Profiles are isolated-test fixtures only.
 
 ## Current Use Case
 
@@ -57,16 +57,16 @@ Review the [existing-artifact alignment](reference/UC-002-ALIGNMENT.md),
 These are specifications and planned checks, not application results or approved
 business policy. The user selected the bounded sourced observation demonstration and preserved the two
 clarifications: interpreter agreement is not independent confirmation; no issue link
-does not establish irrelevance. The next technical action is the authorized contained
-interpreter feasibility run
-under the local recommendation, then DESIGN/TDD for the connected journey. No owner
+does not establish irrelevance. Two contained interpreter trials are complete; their output contract failed in all
+12 responses. The next technical step is a reviewed local model/output-generation
+comparison before app DESIGN/TDD, not weakening the contract. No owner
 validation of agronomic rules or provider-detail choice is required for this proposal.
 
 | Owner task | Current evidence / remaining work |
 | --- | --- |
 | Existing C/F and BPMN alignment | Primary case, group C/F table and selected XML models inspected; alignment draft linked above. No replacement matrix or group-model edits. |
 | Demonstration rules and scenarios | Two sourced non-treatment observation messages and ordered model-output/history rules proposed. No hand-entered desired route or eligibility and no Rust=low-risk rule. |
-| Classifier plus bounded LLM | [Contained classifier run](../experiments/local-classifier/RESULTS.md) completed; [Local LLM metadata candidate](../experiments/local-interpreter/README.md) metadata reviewed; contained acquisition/build/run now in progress. Application adapter remains unimplemented. |
+| Classifier plus bounded LLM | [Contained classifier run](../experiments/local-classifier/RESULTS.md) completed; [Local LLM metadata candidate](../experiments/local-interpreter/README.md) [Contained interpreter results](../experiments/local-interpreter/RESULTS.md): loading/generation completed, 0/12 accepted outputs. Application adapter remains unimplemented. |
 | Staff handoff and recording | UC-002 specifies it; no assessment, routing or handoff UI/storage implemented yet. |
 | Actual workflow experiments | Experiment plan drafted; connected live model/UI runs remain outstanding. |
 | Paper/presentation evidence and cost/benefit | Existing classifier evidence and a worked hypothetical cost comparison available in the experiment plan; end-to-end evidence and actual AI usage/cost remain outstanding. |
@@ -80,7 +80,10 @@ a three-scenario arithmetic check, with every cost/time input labelled hypotheti
 Fresh baseline check: the existing intake and architecture command passed 32 tests
 against temporary databases, as recorded in the experiment plan. SPECIFY checks passed
 lifecycle validation, generated-view checks, local link/model-ID checks and whitespace
-checks. No UC-002 application tests or live connected model runs are claimed.
+checks. Interpreter experiment full handoff passed 47 process and 134 pytest tests; 61 focused
+protocol/guard tests passed. Terra/high completed post-green whole-file review; Luna/high
+independently validates the actual runtime evidence. No UC-002 application tests, routing
+results or live connected application runs are claimed.
 These results establish their stated scopes only. Weather acquisition is a
 separate optional check under the preserved [weather plan](reference/EVENT-WEATHER.md).
 
