@@ -169,6 +169,30 @@ that the staff member can do other work. Mark hypothetical costs or missing prov
 prices as assumptions/unknown. This calculation estimates prototype economics only;
 it cannot establish realized cooperative savings or diagnostic value.
 
+## Worked sensitivity example (assumptions only)
+
+[Versioned inputs and derived values](cost-benefit-scenarios.json) provide a worked
+comparison for the paper, separate from unrun application results. All numeric inputs
+are arbitrary, project-authored illustrations: 100 reports/month, loaded staff value
+BRL 30/hour, AI cost BRL 1/report, and setup cost BRL 600. None is a case-study fact,
+quoted model price, measured staff time or actual prototype cost. A flat assumed AI
+cost is used so the example does not imply free local compute or an authorized paid
+provider. Replace assumptions only with properly labelled measured or sourced values.
+
+| Assumption scenario | Manual active minutes | Assisted total active minutes | Net staff minutes | Net imputed value/report | Whole reports to break even |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Conservative | 10 | 12 | -2 | BRL -2.00 | None |
+| Central | 15 | 10 | 5 | BRL 1.50 | 400 |
+| Optimistic | 20 | 8 | 12 | BRL 5.00 | 120 |
+
+The JSON decomposes assisted time into intake, assessment review, routing/handoff,
+correction/rework and failure/retry handling; each is counted once. With the illustrative
+monthly volume, the central case reaches its modeled break-even at 4 months and the
+optimistic case at 1.2 months; the conservative case never does under those inputs.
+These are arithmetic consequences of the assumptions, not benefit evidence. Staff
+capacity released is an imputed value, not automatically cash saved. No avoided visit,
+real service-time reduction, outcome improvement or diagnostic value is priced here.
+
 ## Existing evidence and planned completion
 
 ### Existing intake baseline (verified 10 November 2026)

@@ -1,0 +1,82 @@
+{
+  "version": "uc002-illustrative-economics-1",
+  "evidence_type": "illustrative_assumptions_not_observed_results",
+  "status": "proposed_sensitivity_example",
+  "source": "Project-authored sensitivity inputs; equations are defined in README.md. These are not Cooxupe measurements, wage research, model prices or prototype performance.",
+  "assumptions": {
+    "currency": "BRL",
+    "reports_per_month": 100,
+    "loaded_staff_cost_per_hour": 30,
+    "ai_cost_per_report": 1,
+    "fixed_setup_cost": 600
+  },
+  "scenarios": [
+    {
+      "scenario": "conservative",
+      "manual_active_minutes": 10,
+      "assisted_active_minutes_by_task": {
+        "intake": 2,
+        "assessment_review": 4,
+        "routing_handoff": 3,
+        "correction_rework": 2,
+        "failure_retry": 1
+      },
+      "derived": {
+        "assisted_total_active_minutes": 12,
+        "net_staff_minutes": -2,
+        "labor_capacity_value_per_report": -1.0,
+        "net_imputed_value_per_report": -2.0,
+        "net_imputed_monthly_value": -200.0,
+        "break_even_whole_reports": null,
+        "modeled_months_to_break_even": null
+      }
+    },
+    {
+      "scenario": "central",
+      "manual_active_minutes": 15,
+      "assisted_active_minutes_by_task": {
+        "intake": 2,
+        "assessment_review": 3,
+        "routing_handoff": 3,
+        "correction_rework": 1,
+        "failure_retry": 1
+      },
+      "derived": {
+        "assisted_total_active_minutes": 10,
+        "net_staff_minutes": 5,
+        "labor_capacity_value_per_report": 2.5,
+        "net_imputed_value_per_report": 1.5,
+        "net_imputed_monthly_value": 150.0,
+        "break_even_whole_reports": 400,
+        "modeled_months_to_break_even": 4.0
+      }
+    },
+    {
+      "scenario": "optimistic",
+      "manual_active_minutes": 20,
+      "assisted_active_minutes_by_task": {
+        "intake": 1,
+        "assessment_review": 2,
+        "routing_handoff": 3,
+        "correction_rework": 1,
+        "failure_retry": 1
+      },
+      "derived": {
+        "assisted_total_active_minutes": 8,
+        "net_staff_minutes": 12,
+        "labor_capacity_value_per_report": 6.0,
+        "net_imputed_value_per_report": 5.0,
+        "net_imputed_monthly_value": 500.0,
+        "break_even_whole_reports": 120,
+        "modeled_months_to_break_even": 1.2
+      }
+    }
+  ],
+  "exclusions": [
+    "Real cooperative workload and staff costs unknown",
+    "Model/provider charges and local compute energy costs unmeasured",
+    "Actual prototype development effort and deployment/maintenance costs unmeasured",
+    "No measured avoided visits, diagnostic benefit or service lead-time improvement",
+    "Released staff capacity is not cash savings unless productively used or paid costs fall"
+  ]
+}
