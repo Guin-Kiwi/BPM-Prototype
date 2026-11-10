@@ -60,8 +60,14 @@ def load_model(manifest):
         size = struct.unpack('<Q', raw)[0]
         if not 0 < size <= 1024 * 1024 or size + 8 > weights.stat().st_size:
             raise ValueError('tensor header outside bound')
-    with torch.device('meta'):
+    # Standard CPU initialization materializes non-persistent rotary buffers, which
+    # are absent from the checkpoint and cannot be restored by load_state_dict.
+    original_dtype = torch.get_default_dtype()
+    try:
+        torch.set_default_dtype(torch.bfloat16)
         model = Qwen3ForCausalLM(config)
+    finally:
+        torch.set_default_dtype(original_dtype)
     expected = {key: list(value.shape) for key, value in model.state_dict().items()}
     with safe_open(weights, framework='pt', device='cpu') as handle:
         specs = {name: (handle.get_slice(name).get_dtype(), handle.get_slice(name).get_shape()) for name in handle.keys()}
