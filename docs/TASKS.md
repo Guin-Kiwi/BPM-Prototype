@@ -11,8 +11,9 @@ contained classifier and bounded LLM; record human handling in the app; run expe
 prepare technical and cost/benefit evidence. The baseline is Cooxupé **before** the
 published case's improvements. No leaf detector is being added; weather remains optional.
 
-Current selected work is VALIDATE for the **supporting local-interpreter experiment**,
-following its DEVELOP/TDD implementation and post-green review. This phase does not
+VALIDATE for the **supporting local-interpreter experiment** is complete, following
+DEVELOP/TDD, post-green review and independent evidence validation: its accepted result
+is output-contract failure. The broader UC remains in progress. This phase does not
 mean UC-002's application journey has been implemented or completed. The sourced
 observation direction is selected; interpreter agreement is not independent confirmation,
 and missing issue links do not establish irrelevance. All available context remains
@@ -58,8 +59,10 @@ These are specifications and planned checks, not application results or approved
 business policy. The user selected the bounded sourced observation demonstration and preserved the two
 clarifications: interpreter agreement is not independent confirmation; no issue link
 does not establish irrelevance. Two contained interpreter trials are complete; their output contract failed in all
-12 responses. The next technical step is a reviewed local model/output-generation
-comparison before app DESIGN/TDD, not weakening the contract. No owner
+12 responses. Before a larger-model installation, the [single proposed next experiment](../experiments/local-interpreter/RESULTS.md#proposed-next-experiment--constrained-decisions-not-another-model)
+uses native schema constraints in the existing runtime and tests semantic usefulness
+separately from structural validity. It is not implemented or measured; no prompt-tuning
+loop or schema weakening is proposed. No owner
 validation of agronomic rules or provider-detail choice is required for this proposal.
 
 | Owner task | Current evidence / remaining work |
@@ -82,7 +85,7 @@ against temporary databases, as recorded in the experiment plan. SPECIFY checks 
 lifecycle validation, generated-view checks, local link/model-ID checks and whitespace
 checks. Interpreter experiment full handoff passed 47 process and 134 pytest tests; 61 focused
 protocol/guard tests passed. Terra/high completed post-green whole-file review; Luna/high
-independently validates the actual runtime evidence. No UC-002 application tests, routing
+independently validated the actual runtime evidence. No UC-002 application tests, routing
 results or live connected application runs are claimed.
 These results establish their stated scopes only. Weather acquisition is a
 separate optional check under the preserved [weather plan](reference/EVENT-WEATHER.md).

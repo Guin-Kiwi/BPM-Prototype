@@ -3,7 +3,10 @@
 Two offline Qwen3-0.6B trials completed. **The tooling ran within its controls, but all
 12 responses failed the required output contract.** See [results](RESULTS.md) for
 measurements, raw evidence, refactor review, validation scope and remaining gaps.
-No application integration or agricultural correctness is established.
+The experiment is accepted as complete with output-contract failure. No application
+integration or agricultural correctness is established. The [single proposed follow-up](RESULTS.md#proposed-next-experiment--constrained-decisions-not-another-model)
+assesses native constrained generation with this runtime before any larger-model installation;
+it has not been implemented or run.
 
 ## Authority and boundary
 

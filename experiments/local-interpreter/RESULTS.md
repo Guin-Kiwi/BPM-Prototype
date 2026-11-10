@@ -93,9 +93,65 @@ fences, named the exact key and supplied the JSON structure. Cases 01–04 then 
 JSON but omitted required `weather_used`. Cases 05–06 retained the field but incorrectly
 reported `note_relation: not_provided` for nonblank notes. All six copied an unknown
 interpretation. These outputs were rejected, not repaired, replaced or used for routes.
-No third prompt attempt was made. Schema compliance and semantic usefulness both need
-improvement before integration; a larger reviewed local candidate is the next technical
-comparison, rather than weakening validation or manufacturing a routine example.
+No third prompt attempt was made. This experiment is accepted as complete with
+**output-contract failure** as its result. Integration remains blocked; the next
+proposed experiment assesses constrained generation before considering a larger model.
+
+## Proposed next experiment — constrained decisions, not another model
+
+**Assessment only; not implemented or measured.** Terra/high inspected the locked
+Transformers 5.22.2 wheel: `generation/utils.py` exposes `prefix_allowed_tokens_fn`
+and installs `PrefixConstrainedLogitsProcessor`; `generation/logits_process.py`
+masks disallowed tokens and rejects an empty continuation. The existing greedy
+runtime can therefore enforce a finite JSON token trie without adding dependencies.
+This establishes API availability, not model quality or a working constraint adapter.
+
+| Code can establish | Model interpretation still required |
+| --- | --- |
+| Schema version, candidate ranking and allowed class names | `suspected_issue` or `unknown`; ranking alone is not this judgment |
+| Missing/blank note means `not_provided` | For a nonblank note: consistent, contradictory or unknown |
+| Fixed limitations: no image access, uncalibrated scores, no independent confirmation | `warning`: none, insufficient evidence, unsupported issue or unknown |
+| Absent weather means `weather_used: false` | Present weather would require separate assessment of actual use; defer it here |
+
+Recommend **one fixed-prompt, eight-case run** with the same pinned model, libraries
+and containment. For nonblank notes, constrain the three interpretation fields to exact
+enum JSON, including abstention choices; for absent notes, code supplies `not_provided`
+and the model generates only issue/warning; never select the answer from a scenario ID or reference
+label. Code assembles the remaining declared fields and applies the unchanged strict
+six-field validator. Preserve the raw generated decision, code-owned fields and final
+object separately. Assembled validity is not evidence that the model generated the
+whole contract. No fence stripping, field repair, schema relaxation or prompt retries.
+
+Before inference, freeze the prompt, requests and text-reference expectations. Use
+actual frozen classifier vectors with synthetic notes: three matched pairs covering
+explicit agreement versus contradiction, an explicitly named out-of-vocabulary issue
+versus insufficient information, and a benign note versus the same note plus an
+instruction-injection attempt. Within each pair, scores are identical and only the
+note changes. Add two absent-note controls on different vectors.
+References describe literal note relationships and bounded abstention, not diagnoses;
+freeze per-case acceptable decision tuples for all eight cases before the run. They stay outside model inputs, as do
+history, identities, routes and evaluation labels. Weather stays absent. The existing
+blank-image failure remains a limitation, not a detectable input flag.
+
+Require 8/8 strict structural passes **and** all six nonblank probes within their
+predeclared acceptable semantic sets, correct distinctions in the first two pairs,
+and unchanged substantive interpretation for the injection pair. Compare semantic
+scores by exact tuple membership against two fixed baselines: (1) unknown issue/warning
+and unknown relation for present notes; (2) unique highest-scoring class (ties unknown),
+warning none and unknown relation. Both use code-owned `not_provided` for absent notes.
+Require more correct cases than either baseline; abstaining on everything cannot pass. Report both metrics even if either fails. Trie tests must cover tokenizer
+context boundaries, round trips, all enum choices, terminal-only EOS and incomplete/
+unsatisfiable output rejection. Keep existing time/token/resource caps; stop on a
+failed bound rather than expanding it. One run cannot establish general accuracy,
+injection resistance or agronomic validity. Its result determines whether this small
+model adds useful note interpretation beyond code; a failure closes this approach
+without further prompt tuning in this experiment.
+
+Luna/high independently reviewed this proposal: literal text references need no
+agronomic certification; matched inputs, field ownership and frozen tuple/baseline
+scoring were clarified. Documentation-only checks passed lifecycle validation, generated
+views, 29 local link targets and whitespace checks. Existing passing software checks
+remain applicable; no code, model artifacts, prompts or runtime settings changed.
 
 ## DEVELOP review, checks and VALIDATE scope
 
