@@ -74,8 +74,8 @@ validation of agronomic rules or provider-detail choice is required for this pro
 Classifier handoff checks passed lifecycle checks/scenarios, 47 process tests and
 73 pytest tests; actual runtime inventory matched the 28 locked distributions.
 The proposed LLM output contract now defines exact fields, bounds and warning guards;
-routing uses actual output fields and synthetic history only. Local classifier and
-metadata-reviewed text candidate are recommended with runtime verification still pending. The experiment plan includes
+routing uses actual output fields and synthetic history only. Local interpreter artifacts and runtime controls were verified in two trials; output
+compliance and semantic usefulness remain unresolved (0/12 accepted responses). The experiment plan includes
 a three-scenario arithmetic check, with every cost/time input labelled hypothetical.
 Fresh baseline check: the existing intake and architecture command passed 32 tests
 against temporary databases, as recorded in the experiment plan. SPECIFY checks passed

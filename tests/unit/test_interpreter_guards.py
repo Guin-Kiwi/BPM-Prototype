@@ -102,10 +102,9 @@ def test_rejects_untrusted_artifact_variations(artifact_set, problem, tmp_path):
         path.symlink_to(target)
     elif problem == 'wrong-size':
         (folder / 'config.json').write_text('{}')
-        update_manifest(folder, manifest_path, manifest, 'config.json')
     elif problem == 'wrong-hash':
         path = folder / 'vocab.json'
-        path.write_text('{"x":1}')
+        path.write_text('[]')  # Same byte length isolates the digest check.
     elif problem in ('wrong-architecture', 'wrong-dimension', 'remote-code'):
         path = folder / 'config.json'
         config = json.loads(path.read_text())
@@ -133,7 +132,9 @@ def test_rejects_untrusted_artifact_variations(artifact_set, problem, tmp_path):
     else:
         manifest['files'].append(dict(manifest['files'][0]))
         manifest_path.write_text(json.dumps(manifest))
-    with pytest.raises((OSError, ValueError, KeyError, TypeError)):
+    expected = {'wrong-size': 'size does not match manifest',
+                'wrong-hash': 'SHA-256 does not match manifest'}.get(problem)
+    with pytest.raises((OSError, ValueError, KeyError, TypeError), match=expected):
         verify_module.verify(folder, manifest_path)
 
 

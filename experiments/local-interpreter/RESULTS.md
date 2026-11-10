@@ -111,14 +111,19 @@ regression reproduced Docker's empty `Mode` on structured mounts; the fix requir
 actual `RW` flag, rejects contradictory modes, and checks permissions again at runtime.
 CPU buffer initialization was corrected before the first live load. Final focused scope:
 61 tests passed. Full handoff: lifecycle checks/scenarios, 47 process tests and 134 pytest
-tests passed. The full run was repeated once after the prompt configuration changed;
-unchanged checks were reused during reviews rather than repeatedly rerun.
+tests passed. Full checks were run after runtime implementation, the changed prompt configuration,
+and strengthened artifact-mutation tests; each rerun had a changed scope to verify.
+Unchanged checks were otherwise reused during reviews.
 
 Post-green review found no additional purposeful refactor. Protocol construction/output
 validation, artifact integrity, containment, supervision and generation have distinct
 responsibilities. The corresponding classifier guards intentionally retain separate
 resource/artifact contracts; a shared abstraction would couple two security boundaries.
-Both complete test files already use cohesive fixtures and parameterised failure cases.
+Both complete test files use cohesive fixtures and parameterised failure cases. Root
+review strengthened two existing mutations: size tampering now leaves the expected
+size unchanged, and hash tampering preserves byte length. Exact error matching verifies
+that each reaches its intended gate instead of accidentally failing elsewhere. No
+production implementation change or new live model run was needed for this test fix.
 The response-cap limitation and generation-vs-contract status distinction are disclosed
 above. Larger batches would need an explicit case-count policy beyond the current byte
 and wall-time bounds; this six-case experiment does not require that expansion.
