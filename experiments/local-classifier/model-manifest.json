@@ -15,7 +15,7 @@
       "name": "model.safetensors",
       "size_bytes": 98953966,
       "sha256": "f92992f81a166b6565fdae01195505f96e8653af9f76fc848f49bf53003af3a7",
-      "verification": "expected hash from Hub metadata; weights not downloaded"
+      "verification": "expected hash from Hub metadata; actual local verification recorded in RESULTS.md"
     }
   ],
   "model_card_license": "CC-BY-4.0",
@@ -24,6 +24,6 @@
   "metadata_url": "https://huggingface.co/api/models/ixrbhii/coffee-disease-convnext?blobs=true",
   "download_url_pattern": "https://huggingface.co/{repository}/resolve/{revision}/{name}",
   "runtime_packages": ["torch", "torchvision", "timm", "safetensors", "Pillow"],
-  "runtime_status": "versions and CPU-only distribution selection deferred; no packages installed or compatibility tested",
-  "experiment_status": "preparation only; no weights, inference or diagnostic validation"
+  "runtime_status": "Separate CPU-only runtime and full dependency lock: requirements.lock; actual installed inventory and controls: evidence/first-run.json",
+  "experiment_status": "First contained feasibility run completed; findings and limitations: RESULTS.md; no application integration or diagnostic validation"
 }

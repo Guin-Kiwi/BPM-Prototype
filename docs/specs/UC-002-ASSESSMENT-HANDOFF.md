@@ -35,7 +35,9 @@ Secondary: farmer via existing intake; selected model backend and optional weath
 ## Preconditions
 
 A report with an image exists. Real model backend and configuration must be
-selected before an assessment can run; a local classifier is a candidate, not yet tested. Routine guidance and routing definitions
+selected before an assessment can run; a local classifier has completed a separate
+[contained feasibility run](../../experiments/local-classifier/RESULTS.md) but is not
+selected for integration. Routine guidance and routing definitions
 must be specified before the routine branch can be implemented.
 
 ## Trigger
@@ -96,7 +98,8 @@ model for the first slice.
 ## Security / trust-boundary notes
 
 Before installing a local backend, follow the [candidate security review](../reference/LOCAL-MODEL-SECURITY.md).
-Metadata inspection is complete; weight, dependency and runtime checks remain open.
+The contained feasibility run records artifact, dependency and effective runtime checks;
+unsupported-input behavior, diagnostic validity and provider selection remain unresolved.
 
 Provider credentials stay server-side and outside Git. Treat farmer text and model
 output as untrusted data. Explicit live requests may incur provider charges; ordinary
@@ -112,8 +115,9 @@ E2E: existing intake through a staff-recorded handoff and reload.
 ### Evidence
 
 Planned: passing scoped checks and a deliberately run live example identifying model,
-prompt/rule version, input report, actual output, route and handoff. No checks or live
-model experiments have run for this slice.
+prompt/rule version, input report, actual output, route and handoff. A separate
+[classifier feasibility experiment](../../experiments/local-classifier/RESULTS.md) has
+run; no application assessment, routing or handoff journey has been implemented or tested.
 
 ## Open questions / assumptions
 

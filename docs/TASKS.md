@@ -35,7 +35,7 @@ Targeted red: `.venv/bin/python -m pytest tests/integration/test_intake.py -q`
 failed against the old implementation (5 failed, 15 passed). After implementation,
 `.venv/bin/python -m pytest tests/integration/test_intake.py tests/unit/test_architecture.py -q`
 passed (32 tests), including backup/restore and rollback on temporary databases.
-Full handoff: `bash scripts/test.sh` passed lifecycle checks, 46 process tests and
+Full handoff: `bash scripts/test.sh` passed lifecycle checks, 47 process tests and
 32 pytest tests. A loopback Uvicorn startup against a temporary database shut down
 cleanly under a three-second timeout (expected exit 124). No visual/manual browser
 test has been performed.
@@ -46,16 +46,18 @@ Group paper/model alignment and human acceptance of the revised journey remain o
 Resolve the provider and bounded demo rules in the UC-002 draft, using the
 [worksheet](reference/DMN-RULE-WORKSHEET.md#open-definitions-and-minimal-next-specify-task).
 The selected work is SPECIFY; no application implementation is claimed.
-The [local-model security review](reference/LOCAL-MODEL-SECURITY.md) records metadata
-findings and containment conditions; no model installation or execution has begun.
-[Experiment preparation](../experiments/local-classifier/README.md) supplies the manifest
-and sandbox configuration. Next: dependency/loader review, isolated runtime build and
-verified artifact acquisition in the next experiment session, as requested by Ayla.
-Preparation is complete: manifest, artifact verifier and sandbox configuration are
-committed. `bash scripts/test.sh` passed 46 process tests and 40 pytest tests, including
-eight artifact-verifier checks; Compose configuration and manifest checks passed.
-Effective container isolation and model loading remain unverified. No model packages,
-weights or runtime image have been installed.
+The [contained classifier experiment](../experiments/local-classifier/RESULTS.md) completed
+its first run on 10 November 2026: pinned artifacts verified, separate dependency stack
+hash-locked, effective container isolation inspected, actual scores/timings/memory recorded.
+Median warmed CPU forward time was about 77 ms. Blank-input overconfidence and
+preprocessing/perturbation sensitivity limit suitability; no diagnostic validation or
+provider selection is claimed. Full handoff passed lifecycle checks/scenarios, 47 process
+tests and 73 pytest tests. Runtime inventory matched the 28 locked distributions.
+
+Next: review classifier suitability and preprocessing/invalid-input handling before
+selecting an application backend. Weather acquisition can now be checked separately
+under the preserved [weather plan](reference/EVENT-WEATHER.md); none was fetched in the
+classifier run. UC-002 remains in SPECIFY and application integration is deferred.
 
 ## Selected routing step
 
