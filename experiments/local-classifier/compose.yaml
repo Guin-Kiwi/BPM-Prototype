@@ -5,7 +5,7 @@ services:
     pull_policy: never
     user: "${COFFEE_RUN_UID:?Set nonzero host UID}:${COFFEE_RUN_GID:?Set host GID}"
     entrypoint: []
-    command: ["python", "--version"]
+    command: ["python", "/opt/experiment/run.py"]
     network_mode: none
     read_only: true
     cap_drop: [ALL]
