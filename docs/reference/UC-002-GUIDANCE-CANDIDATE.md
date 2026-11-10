@@ -1,83 +1,106 @@
-# UC-002 illustrative guidance candidate
+# UC-002 prepared guidance candidates
 
-**Status:** one proposed, non-treatment entry for review; not selected policy,
-technician-approved advice, a diagnosis, or agronomic validation. It is a static,
-attributed example for the proposed human relay in [UC-002](../specs/UC-002-ASSESSMENT-HANDOFF.md).
+These are two short, project-worded, non-treatment entries for the proposed
+communications relay in [UC-002](../specs/UC-002-ASSESSMENT-HANDOFF.md). They are
+illustrative content, not selected group policy, a diagnosis, technician approval,
+or agronomic validation.
 
-## Candidate entry
+## Candidate entries
 
-**Proposed entry ID:** `G-RUST-OBSERVE-1`.
+### G-RUST-OBSERVE-1 — possible coffee leaf rust
 
-**Topic:** observation and field monitoring for *possible coffee leaf rust*
-(*Hemileia vastatrix*) in Arabica coffee.
+**Farmer message:**
 
-**Prepared farmer message (original paraphrase):**
+> The image assessment suggests possible coffee leaf rust, but a photo cannot
+> confirm it or estimate how much of a plot is affected. Please note the plot and
+> observation date and include a clear view of the underside of an affected leaf.
+> A field survey can check sampled leaves across the plot and record the count with
+> rust signs.
 
-> To discuss possible coffee leaf rust, please note the plot and date and
-> share clear photos of the leaves, including their undersides, with the advisory
-> team. A photo alone cannot confirm rust or estimate how much of a plot is affected.
-> If a field estimate is appropriate, a technician can use a consistent plot sample
-> and record how many sampled leaves show rust signs. This message does not recommend
-> treatment.
+**Embrapa evidence:** *Manejo integrado de pragas e doenças do café arábica*,
+“Doenças do café arábica” → “Ferrugem do cafeeiro” → “Descrição e biologia” and
+“Métodos de manejo,” printed pp. 11–12. The source says the disease is caused by
+*Hemileia vastatrix* in Brazilian Arabica coffee and describes yellow, powdery
+marks on the underside of leaves. For field monitoring it describes sampling about
+25 randomly selected plants per plot, four leaves per plant from the lower third,
+and inspecting the leaf undersides; incidence is based on leaves with sporulating
+pustules over the total sampled.
 
-This message is intended for a communications staff member to relay as an
-observation prompt. The optional sample-method detail is for technician follow-up,
-not an instruction for the farmer to perform a formal survey: Embrapa's Arabica
-method samples about 25 randomly selected plants per plot, with one leaf from the
-third or fourth pair on each of the four compass-facing sides in the lower third of
-the plant; the technician inspects the lower leaf surface. The technician must
-interpret the field result.
+**Claim boundary:** The disease, visible sign, and sampling/count method above are
+source-supported. “The image assessment suggests” is a project-authored wrapper
+that may be populated only from the actual model output; it must remain explicitly
+suspected. Asking for plot/date and a clear underside view is project-authored
+communication wording, not an Embrapa recommendation. The source does not say that
+a submitted photo confirms disease, establish image-classifier validity, or prescribe
+which staff role receives the report.
 
-## Applicability and facts needed
+### G-LEAF-MINER-OBSERVE-1 — possible coffee leaf miner
 
-- **Source context:** Brazilian *Coffea arabica*; the source identifies coffee leaf
-  rust as caused by *H. vastatrix*. Its monitoring interval is fruit formation
-  through harvest. This is not a generic coffee or all-leaf-disease message.
-- **Must be explicitly known before display:** the crop is Arabica coffee and the
-  report is being discussed as possible coffee leaf rust. Neither a photo nor an
-  AI class score establishes those facts. In the theoretical demo, the staff user
-  selects these categorical facts from a clearly labeled synthetic scenario; the
-  application does not infer them as confirmed. If either fact is unknown, do not
-  show this entry; leave the issue uncertain and route to technician review.
-- **Not farm-specific:** cultivar, plot definition, fruit stage, local conditions,
-  sampling history and actual field symptoms are unknown. The message does not claim
-  that rust is present, establish incidence or severity, set a threshold, or direct
-  a treatment. The source's sampling method estimates plot incidence; it does not
-  turn a single submitted leaf photo into a plot estimate.
-- **Human boundary:** a technician assesses relevance and any follow-up. The relay
-  records communication only; it is not evidence of technician approval or case
-  resolution. No model may write or alter this guidance text.
+**Farmer message:**
 
-## Source and reuse
+> The image assessment suggests possible coffee leaf miner, but this image assessment
+> does not establish whether a mine is active or how much of a plot is affected.
+> Please note the plot and observation date and share a clear view of the affected
+> leaf for review.
+> Field monitoring checks sampled leaves for mines and whether live larvae are
+> present.
 
-Primary source: Caixeta et al., *Manejo integrado de pragas e doenças do café
-arábica*, Embrapa Café, Circular Técnica 8 (2024), 35 pp. The applicable passage is
-“Doenças do café arábica” → “Ferrugem do cafeeiro” → “Métodos de manejo,” printed
-pp. 11–12. It describes rust signs on the lower leaf surface, monitoring from fruit
-formation through harvest, and a plot sample of about 25 randomly chosen plants with
-four leaves per plant selected from the lower third. The paper also discusses
-chemical control thresholds in that
-section; **this candidate intentionally excludes thresholds and all treatment
-content**.
+**Embrapa evidence:** The same circular, “Bicho-mineiro-do-café” → “Descrição e
+biologia” and “Métodos de manejo,” printed pp. 5–6. It identifies *Leucoptera
+coffeella*, describes larvae forming mines inside coffee leaves, and says it occurs
+in Arabica-producing regions of Brazil. Its field method samples 25 randomly chosen
+plants per plot, taking leaves from specified pairs on the four compass-facing sides
+and the middle or upper third; its text distinguishes active mines with live larvae.
+The monitoring interval in the source is every 15 days during the dry period.
+
+**Claim boundary:** The species/host, leaf mines, sampling description, and
+active-mine distinction are source-supported. “The image assessment suggests” is a
+project-authored wrapper that may be populated only from actual model output; it is
+not confirmation. The current classifier does not assess live larvae; a submitted image supplies no
+representative plot sample. Asking the farmer to note plot/date and share the leaf is project-authored
+communication wording, not a quoted or prescribed Embrapa step. The source does not
+assign a communications/technician route or urgency to a model label.
+
+## Applicability and system boundary
+
+- Match a candidate only to the corresponding **suspected-issue output from the
+  actual model assessment**. Treat that output as inference, not confirmed disease
+  or pest. These messages do not tell the model what to predict.
+- If model output is unknown or does not match either entry, these entries supply no
+  message. Do not have staff hand-enter a desired issue, route, risk, confidence,
+  eligibility, or outcome to make a candidate apply.
+- Deterministic routing is a separate rule using the recorded actual model outputs
+  and synthetic report history. This content file defines no route, risk category,
+  threshold, visit decision, escalation priority, or eligibility rule. The Embrapa
+  source is agronomy context, not a routing policy.
+- The source describes Brazilian *Coffea arabica*. Farm, cultivar, location,
+  phenology, plot boundaries and field symptoms are not established by these entries.
+  Sampling methods are for field monitoring; one uploaded leaf image is not a
+  representative plot sample. Neither message includes treatment, product, dose,
+  field severity, harvest, pickup or yield instruction.
+- The project-authored message can be revised as product communication. Do not
+  reproduce the source manual, its illustrations, or its wording in the application.
+
+## Primary source and access
+
+Eveline Teixeira Caixeta et al., *Manejo integrado de pragas e doenças do café
+arábica*, Embrapa Café, Circular Técnica 8 (2024), 35 pp.
 
 - [Official Embrapa publication record](https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1167902)
 - [Full Circular Técnica 8 PDF](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1167902/1/Circular-Tecnica-8-Manejo-integrado-de-pragas.pdf)
 
-Embrapa's record identifies access as open access and lists the repository license
-as [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/); the PDF
-also states that all rights are reserved to Embrapa. This draft uses an original,
-short paraphrase with attribution; it does not reproduce source wording, illustrations
-or the manual. Do not redistribute the manual or adapted source material with the
-prototype. The repository notice does not establish permission to redistribute an adapted manual.
-This proposal includes an independently worded message and a citation, not a manual
-adaptation or a claim of legal clearance. Source-material redistribution is outside
-the current demonstration.
+The repository record identifies the item as open access and lists CC BY-NC-ND 4.0.
+This file contains original short paraphrases with source attribution and links; it
+does not include the manual or figures. The license metadata is recorded as source
+context, without asserting a legal conclusion about these independently worded
+messages.
 
-## Candidate acceptance check
+## Demonstration check
 
-For a synthetic Arabica / possible-rust scenario, staff can select this fixed entry,
-relay it, and record that it was relayed. Verify the message contains no diagnosis,
-treatment, product, dose, harvest or pickup instruction; does not present model output
-as fact; and is unavailable when crop or topic is unknown. This is a planned
-specification check, not completed application behavior or validation of the agronomic
-content.
+Using synthetic report history and an actual run's model output, show each fixed
+message only for its matching suspected-issue output, preserve the inference label,
+and record that communications relayed the selected message. Separately demonstrate
+the deterministic route from actual outputs and synthetic history. Do not use
+hand-entered desired route/risk/eligibility to construct the example. The full passages and printed page markers were checked directly, including leaf-miner
+methods on p. 6 and rust methods on p. 12. These are
+SPECIFY acceptance cues; no app behavior or agronomic validation is claimed here.

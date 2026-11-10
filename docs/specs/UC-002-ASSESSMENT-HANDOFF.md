@@ -34,14 +34,12 @@ Secondary: farmer via existing intake; selected model backend and optional weath
 
 ## Preconditions
 
-A report with an image exists. Real model backend and configuration must be
-selected before an assessment can run; a local classifier has completed a separate
-[contained feasibility run](../../experiments/local-classifier/RESULTS.md) but is not
-selected for integration. The [demo rule proposal](../reference/UC-002-DEMO-RULES.md) requires owner decisions
-on scenario profiles versus model-informed demo derivation, substantive prepared guidance,
-history and providers
-before implementation. The acknowledgement fixture tests recording only and does not
-complete the selected routine guidance journey.
+A saved report and photo exist. The recommended technical path is the pinned local
+classifier, followed by a small offline text interpreter after its dependency, artifact,
+containment and output-feasibility checks. The [guidance catalogue](../reference/UC-002-GUIDANCE-CANDIDATE.md)
+records what each source supports; the [routing proposal](../reference/UC-002-DEMO-RULES.md)
+separately defines administrative demonstration assumptions. No presenter-supplied
+risk, eligibility or desired-route profile is an application input.
 
 ## Trigger
 
@@ -68,10 +66,11 @@ Staff requests assessment of a saved report.
 
 - Reassessment creates a separate assessment record rather than overwriting evidence.
 - Unsupported guidance, missing evidence or uncertain assessment follows explicit
-  technician-routing rules; exact input definitions remain open below.
+  technician-routing rules; the routing proposal records their concrete demonstration definitions.
 - Unknown prior history remains unknown, rather than evidence of no earlier issue.
 - Missing weather permits an assessment without weather, explicitly marked unavailable.
-  Model selection and interpretation-stage behavior remain open before implementation.
+  Technical recommendations and the interpretation contract are in the routing proposal;
+  their runtime feasibility remains to be measured.
 
 ## Errors / failure cases
 
@@ -91,8 +90,10 @@ model for the first slice.
 2. Valid live output is saved as inference with provenance, not a confirmed finding.
 3. Routing is reproducible from recorded inputs and versioned rules, with a reason.
    History changes can affect routing without changing the standalone assessment. The
-   [proposed table and synthetic fixtures](../reference/UC-002-DEMO-RULES.md) cover both
-   branches, unknowns and precedence; scenario-profile versus unvalidated model-informed derivation requires owner approval.
+   [proposed table](../reference/UC-002-DEMO-RULES.md) derives handling from actual
+   image/interpretation outputs and ordinary synthetic history records. Hand-entered
+   risk, eligibility or desired routes are excluded. Communications means relay of a
+   scoped observation message, never a conclusion that agronomic risk is low.
 4. Staff can inspect evidence/history and record the appropriate handoff. Routine
    reports create no technical case; technician involvement follows the agreed linking rule.
 5. Results survive restart; errors never appear as completed assessment or delivery.
@@ -126,19 +127,20 @@ run; no application assessment, routing or handoff journey has been implemented 
 
 ## Open questions / assumptions
 
-- Local classifier feasibility and selection; second-model choice and structured output.
-  API credentials/billing are needed only if a hosted backend is selected.
-- Weather endpoint/terms/coverage, alert archive and snapshot window; see the weather
-  plan's source-backed limits. These remain unresolved; no weather integration exists.
-- Owner decisions on scenario profiles versus model-informed demo derivation and the
-  proposed substantive routine guidance, proposed
-  history/case linkage and provider suitability are detailed in the
-  [demo rule proposal](../reference/UC-002-DEMO-RULES.md#owner-decisions-before-implementation).
-  Both routine and technician handoffs remain in scope; neither is implemented.
+- Agronomic source support, project-authored message wording, routing assumptions and
+  measured results have separate authorities. Ayla is not asked to validate agronomy.
+- Local image preprocessing, local text candidate and exact interpretation schema are
+  technical recommendations; interpreter feasibility and end-to-end results are pending.
+- Same-farm repeat window, case-history completeness and human case linking are explicit
+  administrative prototype assumptions, not biological thresholds or validated policy.
+- Weather acquisition/window remains optional and follows its existing source-backed
+  plan. No weather API is required for this demonstration.
+- Wider group paper/model alignment and real agronomic effectiveness remain distinct
+  from demonstrating reproducible routing and human recording.
 
 ## Notes for implementation
 
 Existing boundaries: domain reports, application intake/repository, SQLite and local
 web adapters. Follow DESIGN and TDD after the slice's open behavior is resolved;
-the owner has requested the connected demonstration, but this draft does not resolve
-the pending behavior/provider choices or claim an implemented journey.
+the owner has requested actual model-derived assessment and synthetic history, not
+route profiles. This research/proposal work does not claim an implemented journey.

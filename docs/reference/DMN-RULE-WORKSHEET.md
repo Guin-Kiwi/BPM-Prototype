@@ -10,7 +10,8 @@ remains pending. Model assessments are inferences, not diagnoses.
 
 - [Business paper](<../../../Sharing is caring/The Case of the Brazilian Coffee Cooperative Cooxup├й.docx>): P1 guidance, selective technician involvement and approval of severe actions; P2/P3 are handovers. See the [source map](README.md).
 - [Original draft DMN](<../../../Sharing is caring/3_Modelling/DMN (Draft, not final)/P1_determine_action(1).dmn>) and [working BPMN](<../../../Sharing is caring/3_Modelling/P1_technical_orientation_to-be(2).bpmn>) are group drafts, not approved policy or this proposed routing rule.
-- [Embrapa, Caixeta et al., *Manejo integrado de pragas e doenças do café arábica*, Circular Técnica 8, October 2024, 35 pages](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1167902/1/Circular-Tecnica-8-Manejo-integrado-de-pragas.pdf); [alternate official PDF](https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1167902/1/Circular-Tecnica-8-Manejo-integrado-de-pragas.pdf). The indexed management section describes about 25 plants × 4 leaves and incidence as diseased leaves divided by sampled leaves. Its 5% threshold concerns a specific chemical management context, not severe escalation, pickup cancellation or image leaf severity. Full PDF not reviewed; pages not verified.
+- [Embrapa, Caixeta et al., *Manejo integrado de pragas e doenças do café arábica*, Circular Técnica 8, October 2024, 35 pages](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1167902/1/Circular-Tecnica-8-Manejo-integrado-de-pragas.pdf); [alternate official PDF](https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1167902/1/Circular-Tecnica-8-Manejo-integrado-de-pragas.pdf). The indexed management section describes about 25 plants × 4 leaves and incidence as diseased leaves divided by sampled leaves. Its 5% threshold concerns a specific chemical management context, not severe escalation, pickup cancellation or image leaf severity. The rust and leaf-miner passages have now been reviewed; exact sections, pages and
+  claim limits are recorded in the [guidance catalogue](UC-002-GUIDANCE-CANDIDATE.md).
 - [WCR/CATIE manual landing page](https://worldcoffeeresearch.org/resources/prevention-and-control-of-coffee-leaf-rust) describes a technician-facing manual; the full manual has not been read and no detailed rules are attributed to it.
 - [OMG DMN 1.4](https://www.omg.org/spec/DMN/1.4/PDF): FIRST selects the first matching rule; order matters.
 
@@ -36,8 +37,9 @@ remains pending. Model assessments are inferences, not diagnoses.
    integration is out of scope. A product purchase is optional, never automatic.
 5. Communications staff personally relay established guidance; they do not diagnose.
    In the real concept, technicians deliberately prepare this guidance. A prototype may
-   illustrate it with attributable published sources, subject to suitability and reuse
-   checks; no source or technician approval has been established. AI and DMN do not
+   illustrate it with attributable published sources, with its source and applicability
+   recorded in the [guidance catalogue](UC-002-GUIDANCE-CANDIDATE.md). Published source
+   support is not technician approval of an individual report. AI and DMN do not
    message farmers directly, and no product order is automatic.
 6. Full available farm and nearby history remains accessible for technician judgment.
    A needed visit is planned with case status recorded, waits for the appointment and
@@ -64,45 +66,29 @@ open. Technicians can inspect the underlying reports and judge connections the r
 have not captured. Neither model uncertainty nor deterministic execution guarantees
 that an assessment or route is correct.
 
-## Proposed operational routing rule
+## Bounded demonstration routing
 
-Route to communications only when **all** are established: low risk, applicable
-established routine guidance, sufficient evidence, and no escalation trigger. Route
-to a technician when risk is concerning or uncertain, evidence is insufficient or
-uncertain, guidance is unsupported or inapplicable, or a repeat/unresolved trigger
-applies. Missing or unknown inputs do not establish eligibility for routine advice.
-Record the reason and relevant evidence for either route. The thresholds, repeat
-window and other definitions below still need agreement; no numeric cutoff is set here.
+The owner requested actual image and interpretation outputs plus synthetic report
+history, with no hand-entered desired route, risk or eligibility. The
+[versioned demonstration proposal](UC-002-DEMO-RULES.md) owns the exact rule order,
+model contract, history assumptions and entry mapping. Its communications route means
+relay of a sourced, non-treatment observation message. It establishes neither low
+agronomic risk nor that a technician is unnecessary. The earlier proposed generic
+low-risk test is not supported by these sources and is not a demonstration input.
 
-Inputs should express evidence and history, risk, applicability of established
-guidance and escalation triggers—not the circular conclusion `visitNeeded`. Model
-self-confidence alone is not validated evidence of eligibility. Whether a cause is
-controllable is not a routing criterion: a downpour may be uncontrollable while an
-established routine response exists. A weather API is not required.
-
-Concerning or severe indications require technician involvement. Routing itself
-does not authorise a severe action or bundle: retain the existing human approval
-step before any severe action, including the paper's proposed pickup, alert and
-pre-order bundle. Risk context alone is not field severity; a photo's leaf severity
-is not measured field incidence.
-
-## Examples for discussion
-
-These outcomes assume the stated facts can be established under definitions yet to
-be agreed; they are illustrative, not agronomic protocols.
-
-| Report and available evidence | Proposed route and reason |
-| --- | --- |
-| Suspected problem; low risk, sufficient evidence, applicable routine guidance, no trigger; no problem may ultimately be found | Communications relays established advice; no product is required. |
-| Downpour; low risk and sufficient evidence, applicable routine response, no trigger | Communications; uncontrollable cause alone does not escalate. |
-| Suspected rust with concerning risk or uncertain evidence | Technician required; risk or evidence prevents routine eligibility. |
-| Apparently low risk but no applicable established guidance | Technician required; guidance is unsupported. |
-| Repeat or unresolved report, including one with severe indications | Technician required; link to an appropriate existing case or create one; severe actions still require approval. |
+Agronomic content and its limits are owned by the
+[prepared guidance catalogue](UC-002-GUIDANCE-CANDIDATE.md). Staff responsibility,
+repeat window, history completeness and exact software output guards are prototype
+assumptions. Class scores and interpretation are inferences. No score cutoff, source
+sampling incidence threshold or disease name authorizes treatment, a product order,
+pickup cancellation, a visit or severe action. Human approval remains necessary for
+severe actions; technicians judge follow-up and case relevance.
 
 ## Open definitions and minimal next SPECIFY task
 
-- Agree who defines and validates low/concerning risk, sufficient evidence and
-  applicable established guidance, including handling uncertainty and missing data.
+- For the wider concept, establish agronomic risk criteria through appropriate expertise;
+  do not make the coursework owner supply them. The bounded demo relays observation
+  messages and tests its explicit software assumptions instead of claiming clinical triage.
 - Define repeat and unresolved triggers, their time window, farm/field scope,
   missing history, and when a later report links to an existing case.
 - Define technician assignment and access boundaries, the communications handoff,
@@ -110,8 +96,8 @@ be agreed; they are illustrative, not agronomic protocols.
 - Reconcile the selected pair with the group paper and earlier BPMN/DMN, including
   their repeat gateway, action paths, input modes, offline assumption and severe handovers;
   see the [comparison trace](../../models/comparison/NOTES.md#existing-to-be-comparison-and-alignment).
-- Select and assess a published illustrative guidance source and attribution, applicability
-  and reuse terms; determine how the prototype presents its limits without implying
+- Use the researched illustrative guidance entries and their attribution, applicability
+  and reuse notes; determine how the prototype presents its limits without implying
   technician validation or treatment approval.
 
 Next agent: prepare a minimal routing UC in SPECIFY, separate from
