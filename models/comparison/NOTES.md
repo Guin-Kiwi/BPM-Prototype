@@ -4,8 +4,13 @@ The [selected edited pair](README.md) is Ayla's prototype comparison; the workin
 [group DOCX](<../../../Sharing is caring/The Case of the Brazilian Coffee Cooperative Cooxup├й.docx>)
 remains the group solution baseline. The AS-IS is reconstructed from that paper and
 group assumptions, including phone assessment and the visit decision; it is not a
-verified account of actual Cooxupé practice. The published chapter was not read in
-full, and the cloud AS-IS was unavailable.
+verified account of actual Cooxupé practice. The published chapter was read in full
+on 10 November 2026 from the owner-supplied local PDF (printed pp. 163–172; PDF
+pp. 167–176). The chapter's Table 1 reports visit scheduling and excessive monitoring
+meetings as improvement opportunities, then proactive attendance scheduling based
+on customer segmentation, process intelligence and standardized managerial meetings
+as adopted solutions. It does not document the diagnosis workflow represented in the
+group DOCX, which remains a group working model rather than a verified account.
 
 ## Selected pair
 

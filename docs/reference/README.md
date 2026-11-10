@@ -39,6 +39,11 @@ Printed chapter pages 163–172 correspond to PDF pages 167–176 in this suppli
   capacity; do not attribute them to agricultural advice. Figs. 1–2 show the overall
   coffee chain and BPM project scope, not a detailed agricultural-advisory workflow.
 
+The owner-selected AS-IS baseline is the situation **before** the chapter's adopted
+improvements. Customer segmentation, proactive attendance scheduling and the reported
+improved management are comparison evidence, not assumed starting capabilities. The
+prototype proposes its own TO-BE against that pre-improvement baseline.
+
 Design implication: evaluate how the prototype could support member service,
 responsibility allocation and process visibility. Status tracking is a proposed means
 of addressing those goals, not proof that the original organisation had no status
