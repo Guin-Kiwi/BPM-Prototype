@@ -168,6 +168,14 @@ def test_accepts_exact_container_configuration():
     checks.validate_container(info, image, 1000, 1000, sources)
 
 
+def test_accepts_structured_bind_mount_inspect_without_mode_string():
+    # Docker Mounts API reports permissions through RW with an empty Mode string.
+    info, image, sources = container_info()
+    for mount in info['Mounts']:
+        mount['Mode'] = ''
+    checks.validate_container(info, image, 1000, 1000, sources)
+
+
 @pytest.mark.parametrize('problem', [
     'network', 'rootfs', 'privileged', 'capabilities', 'no-new-privileges',
     'memory', 'swap', 'cpu', 'pids', 'pid-mode', 'ipc', 'device', 'scratch',
