@@ -53,7 +53,8 @@ Staff requests assessment of a saved report.
    Proposed second stage: interpret those scores with the farmer note and optional
    saved weather snapshot. Keep image results distinct from interpreted suspected
    issue and uncertainty; do not invent visible signs from class scores. Preserve
-   original report evidence and identify every model/prompt and snapshot used.
+   original report evidence and identify every model/prompt and snapshot used. Interpreter
+   agreement is not independent confirmation of the image classification.
 3. Code prepares defined history facts. Apply the versioned responsibility rules to
    those facts, assessment and extent estimate; save route and reason separately.
 4. Staff sees the original evidence, assessment, route and available history.
@@ -131,8 +132,9 @@ run; no application assessment, routing or handoff journey has been implemented 
   measured results have separate authorities. Ayla is not asked to validate agronomy.
 - Local image preprocessing, local text candidate and exact interpretation schema are
   technical recommendations; interpreter feasibility and end-to-end results are pending.
-- Same-farm repeat window, case-history completeness and human case linking are explicit
-  administrative prototype assumptions, not biological thresholds or validated policy.
+- Explicit unresolved-issue links, history availability and human case linking are
+  administrative prototype assumptions. Same-farm reports are not automatically repeats;
+  absent links do not establish irrelevance. All available context remains inspectable.
 - Weather acquisition/window remains optional and follows its existing source-backed
   plan. No weather API is required for this demonstration.
 - Wider group paper/model alignment and real agronomic effectiveness remain distinct

@@ -79,7 +79,9 @@ low-risk test is not supported by these sources and is not a demonstration input
 Agronomic content and its limits are owned by the
 [prepared guidance catalogue](UC-002-GUIDANCE-CANDIDATE.md). Staff responsibility,
 repeat window, history completeness and exact software output guards are prototype
-assumptions. Class scores and interpretation are inferences. No score cutoff, source
+assumptions. Class scores and interpretation are inferences; interpreter agreement is not
+independent confirmation. Missing issue links do not establish that other reports are
+irrelevant. The bounded demonstration has no farm-wide 30-day repetition rule. No score cutoff, source
 sampling incidence threshold or disease name authorizes treatment, a product order,
 pickup cancellation, a visit or severe action. Human approval remains necessary for
 severe actions; technicians judge follow-up and case relevance.

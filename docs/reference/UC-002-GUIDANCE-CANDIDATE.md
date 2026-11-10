@@ -2,8 +2,8 @@
 
 These are two short, project-worded, non-treatment entries for the proposed
 communications relay in [UC-002](../specs/UC-002-ASSESSMENT-HANDOFF.md). They are
-illustrative content, not selected group policy, a diagnosis, technician approval,
-or agronomic validation.
+selected illustrative content for the first bounded observation demonstration. This
+selection is not group policy, a diagnosis, technician approval or agronomic validation.
 
 ## Candidate entries
 

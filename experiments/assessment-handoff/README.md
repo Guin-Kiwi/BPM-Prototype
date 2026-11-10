@@ -16,6 +16,11 @@ outputs and separately declared synthetic history are inputs to routing; the rou
 derived by the versioned deterministic rule, then compared with an independent
 calculation from that same rule. The rule calculation is not a model input.
 
+Interpreter agreement is not independent confirmation; the second model receives
+the classifier scores, not independent visual evidence. Missing issue links do not
+establish irrelevance: preserve all available context for human review. Profiles remain
+permitted only for isolated rule tests, never connected-demo outcome selection.
+
 ## Questions and evidence boundaries
 
 The evaluation separates four questions:

@@ -1,13 +1,19 @@
 # UC-002 demonstration routing proposal
 
 **Status: proposed**, for the [UC-002 journey](../specs/UC-002-ASSESSMENT-HANDOFF.md);
-not implemented, agronomic policy, diagnostic validation or an executable DMN. This
+Selected direction for the first bounded observation demonstration; the detailed
+software assumptions remain proposals, not measured behavior, agronomic validation or
+an executable DMN. This
 proposal replaces the worksheet's unresolved low-risk test for this narrowly scoped
 demonstration: communications relays a matching prepared **observation** message, not
 a clearance that risk is low. No model or rule prescribes treatment. The
 [routing worksheet](DMN-RULE-WORKSHEET.md) retains the wider process and model boundary.
 
 ## Decision table: `uc002-demo-draft-2`
+
+Interpreter agreement with the classifier is **not independent confirmation**: it
+interprets the same scores and optional note/weather. It supplies no second image
+examination or calibrated increase in confidence.
 
 After successful valid image and interpretation calls, evaluate in order; save rule
 version, input facts, matched row and reasons. The inputs come from actual model outputs,
@@ -17,11 +23,11 @@ threshold is used.
 
 | Order | Condition | Route | Reason |
 | --- | --- | --- | --- |
-| 1 | Repeat report or open case established | Technician | Record each history trigger. |
-| 2 | Repeat or open-case status unknown | Technician | Identify unknown history. |
+| 1 | An explicit link to the same unresolved issue/episode is established | Technician | Record the relevant issue/case link. |
+| 2 | Relevant history/relationship data unavailable | Technician | Record what could not be checked. |
 | 3 | Interpretation unknown, contradictory or unsupported; classifier and interpreter disagree; or no unique leading class | Technician | Record the assessment condition. |
 | 4 | No matching applicable prepared observation entry, including unknown crop context | Technician | No applicable entry. |
-| 5 | Unique leading class equals interpreted candidate; interpretation has no warning or contradiction; an applicable prepared entry exists; repeat and open-case triggers known absent | Communications | Record candidate and entry ID for human relay. |
+| 5 | Unique leading class equals interpreted candidate; interpretation has no warning or contradiction; an applicable prepared entry exists; no established relevant unresolved-issue trigger and history query available | Communications | Record candidate and entry ID for human relay. |
 
 If either model call fails or output is invalid, record an error and retain the report;
 do not fabricate a successful assessment, route, or handoff. A missing farmer estimate
@@ -106,29 +112,31 @@ diagnosis or safe real-world agricultural routing. No leaf detector is assumed.
 
 ## Synthetic history and cases
 
-Seed ordinary reports and cases, not desired route or eligibility fields. For repeat,
-look at distinct reports on the same farm within the 30 days before the current
-observation time, inclusive at the start and exclusive at the end; exclude the current,
-later and simultaneous reports. The 30-day window is an administrative demo assumption,
-not disease biology. Any qualifying report establishes repeat. Otherwise repeat is
-absent only if the farm's report history is explicitly declared complete for the full
-window and potentially relevant observation times are known; otherwise unknown. Use and
-label the existing simulated observation time.
+Seed ordinary reports, cases and explicit issue/episode relationships, not desired
+routes or eligibility. An established link to the same unresolved issue/episode is a
+repeat/open-issue trigger. Farm membership, disease-label similarity and a 30-day age
+window alone do not establish repetition; no farm-wide time-window rule is selected.
 
-Any same-farm open case establishes the open-case trigger. It is absent only when case
-history is declared complete and no open case exists; otherwise unknown. An established
-trigger wins over an unknown one. On technician involvement, a person inspects same-farm
-open cases and links an appropriate one or creates another, recording the choice and
-reason. Handling does not automatically close a case. Completeness is a documented
-property of seeded demo data, not inferred from an empty query; nearby history is not
-assumed complete.
+Absence of an issue link does **not** establish that other reports are irrelevant.
+Keep all available farm context visible to the technician, including unlinked reports;
+a person may later judge relevance and record a link. Routing records only whether
+an escalation trigger is established in the currently available data. A failed history
+query or unavailable relevant relationship data remains unknown and routes to a
+technician. A successful query with no established trigger is not proof of no related
+problem, low risk or resolved illness.
+
+On technician involvement, a person inspects available cases and links an appropriate
+one or creates one, with a reason. Handling does not close the case. Scenario profiles
+and synthetic model outputs may be used for isolated rule unit tests only. The connected
+demonstration uses actual image/interpretation outputs and ordinary synthetic history;
+no presenter field chooses the desired route, risk or eligibility.
 
 ## Planned checks and existing evidence
 
 Software conformance checks will exercise: a valid matching issue and applicable entry
 with complete empty history; each unsupported/missing entry and unknown/contradictory
-interpretation; missing note; tied or mismatched candidates; repeat within 30 days,
-open case and incomplete history; missing estimate; and model failures. Check both count
+interpretation; missing note; tied or mismatched candidates; explicitly linked unresolved issue,
+unlinked reports remaining visible, unrelated same-farm reports, and unavailable history; missing estimate; and model failures. Check both count
 and percentage without converting either. Compare identical assessment outputs with
 changed history and with/without weather; weather can change interpretation, so only
 identical assessment facts must produce the same table result. Check entry provenance,
