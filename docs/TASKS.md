@@ -11,11 +11,12 @@ contained classifier and bounded LLM; record human handling in the app; run expe
 prepare technical and cost/benefit evidence. The baseline is Cooxupé **before** the
 published case's improvements. No leaf detector is being added; weather remains optional.
 
-Current work is SPECIFY: draft concrete owner-reviewable rules and acceptance scenarios,
-then resolve provider and routine-eligibility choices before DESIGN/implementation.
-UC-001 and the classifier feasibility run remain completed supporting work, not proof
-that the connected application journey exists. User-requested delegation uses
-Terra/high and Luna/high, with file ownership and root review before commits.
+Current work is SPECIFY: research prepared observation messages and propose the minimum
+deterministic demonstration rules. The owner clarified that actual model outputs and
+ordinary synthetic history must drive handling; presenter-supplied route/risk/eligibility
+profiles are excluded. Technical choices are recommendations by the implementation
+agent, not agronomic or backend decisions assigned to Ayla. Sources, prototype assumptions
+and measured results remain separate. No leaf detector or weather scope expansion.
 
 ## Current Use Case
 
@@ -54,13 +55,14 @@ Review the [existing-artifact alignment](reference/UC-002-ALIGNMENT.md),
 [prepared-guidance candidate](reference/UC-002-GUIDANCE-CANDIDATE.md) and
 [acceptance/experiment plan](../experiments/assessment-handoff/README.md).
 These are specifications and planned checks, not application results or approved
-business policy. The next action is to settle the specific owner choices recorded in
-the rule proposal, then proceed through DESIGN and TDD implementation.
+business policy. The next technical action is a contained interpreter feasibility run
+under the local recommendation, then DESIGN/TDD for the connected journey. No owner
+validation of agronomic rules or provider-detail choice is required for this proposal.
 
 | Owner task | Current evidence / remaining work |
 | --- | --- |
 | Existing C/F and BPMN alignment | Primary case, group C/F table and selected XML models inspected; alignment draft linked above. No replacement matrix or group-model edits. |
-| Demonstration rules and scenarios | Proposal for both responsibility routes and an attributable non-treatment guidance candidate; synthetic eligibility and provider choices await owner selection. |
+| Demonstration rules and scenarios | Two sourced non-treatment observation messages and ordered model-output/history rules proposed. No hand-entered desired route or eligibility and no Rust=low-risk rule. |
 | Classifier plus bounded LLM | [Contained classifier run](../experiments/local-classifier/RESULTS.md) completed; [Local LLM metadata candidate](../experiments/local-interpreter/README.md) reviewed without weights or installation; application adapter and LLM backend remain unimplemented. |
 | Staff handoff and recording | UC-002 specifies it; no assessment, routing or handoff UI/storage implemented yet. |
 | Actual workflow experiments | Experiment plan drafted; connected live model/UI runs remain outstanding. |
@@ -69,7 +71,8 @@ the rule proposal, then proceed through DESIGN and TDD implementation.
 Classifier handoff checks passed lifecycle checks/scenarios, 47 process tests and
 73 pytest tests; actual runtime inventory matched the 28 locked distributions.
 The proposed LLM output contract now defines exact fields, bounds and warning guards;
-routing alternatives and provider choice remain unselected. The experiment plan includes
+routing uses actual output fields and synthetic history only. Local classifier and
+metadata-reviewed text candidate are recommended with runtime verification still pending. The experiment plan includes
 a three-scenario arithmetic check, with every cost/time input labelled hypothetical.
 Fresh baseline check: the existing intake and architecture command passed 32 tests
 against temporary databases, as recorded in the experiment plan. SPECIFY checks passed
@@ -89,8 +92,8 @@ agent handoff. UC-001 remains intake/history only; no routing implementation yet
 
 ## Deferred decisions / backlog
 
-- Define routing inputs, uncertainty and reasons, guidance applicability, repeat handling,
-  case linkage, severe approval, access and cross-farm context with the group. Preserve
+- Reconcile the proposed demonstration definitions and wider business policy with group
+  models; clinical risk criteria and real-world validation remain outside current evidence. Preserve
   the [standalone assessment boundary](reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary):
   photo to image model; candidate scores, note and optional event weather to a proposed
   second model; extent and connected history to code/DMN. The [weather plan](reference/EVENT-WEATHER.md)

@@ -4,20 +4,17 @@
 
 This document plans evidence for the [UC-002 assessment and handoff slice](../../docs/specs/UC-002-ASSESSMENT-HANDOFF.md).
 It is a SPECIFY-phase evaluation plan, not an implementation, completed application
-experiment, approved routing policy, or claim of agronomic validity. Experiment
-execution follows owner decisions, provider selection, and implementation. Record
-outcomes in a dated run report linked from here; preserve failures and exclusions.
+experiment, approved routing policy, or claim of agronomic validity. Record outcomes
+in dated run reports linked from here; preserve failures and exclusions.
 
 The [routing worksheet](../../docs/reference/DMN-RULE-WORKSHEET.md) owns the selected
 business direction. The shared [UC-002 demonstration rules](../../docs/reference/UC-002-DEMO-RULES.md)
-currently specify proposed version `uc002-demo-draft-1`, including the connected-demo
-scenario profile and its proposed history facts. This proposal is unapproved. Use this
-exact version when describing or exercising its proposed behavior; record any later
-approved version explicitly rather than silently renaming the draft. It is an oracle
-for whether implementation matches supplied demo facts, not for learned risk, clinical
-quality, or real-report eligibility. The profile's synthetic risk/evidence/guidance
-facts are simulation controls and must never be presented as model output, diagnostic
-truth, or validated routing facts.
+currently propose `uc002-demo-draft-2`; it remains unapproved. Use the exact rule
+version under evaluation and record any later approved version explicitly. This plan
+does not add desired-route labels or hand-entered eligibility facts. Actual model
+outputs and separately declared synthetic history are inputs to routing; the route is
+derived by the versioned deterministic rule, then compared with an independent
+calculation from that same rule. The rule calculation is not a model input.
 
 ## Questions and evidence boundaries
 
@@ -32,50 +29,49 @@ The evaluation separates four questions:
    snapshot? It must not turn inference into a confirmed finding or invent signs,
    guidance, or treatment.
 3. **Deterministic routing and handoff:** does the recorded, versioned rule produce
-   the oracle route and reason from the supplied facts, and does a person complete
+   a reproducible route and reason from actual assessment outputs plus synthetic
+   history, and does a person complete
    the applicable communications or technician handoff? A route is not a diagnosis,
    severe-action approval, delivery, resolution, or case closure.
 4. **Operational feasibility:** what are actual machine/provider elapsed times,
    resource use and provider charges, and how do those compare with explicitly
    assumed staff-time scenarios? Model latency is not staff time saved.
 
-Record source/fixture truth by type: (a) source asset and attribution, (b) source
-dataset labels with their original meaning, (c) synthetic scenario profile and
-history-completeness facts, (d) the proposed/approved routing rule version, and (e) any
-independent expert diagnostic reference, if one is later obtained. Keep source labels,
-profile and routing-oracle fields out of images, filenames, model requests and other
-inference inputs. Report an unavailable truth source as a limitation; do not promote a
-model's own output to ground truth.
+Keep three evidence classes distinct in every report. **Source-backed agronomy** means
+claims and data labels that retain their original source, definitions and limits, as
+owned by the [open-data plan](../../docs/reference/OPEN-DATA.md) and selected guidance
+references. **Prototype assumptions** means synthetic report/history/case records and
+unvalidated demonstration mappings; identify each as synthetic or assumed. **Measured
+results** means actual captured model outputs, timings, resource use, rule outputs and
+human task observations from a named run. A source dataset label is not an agronomic
+oracle for a route; an actual model output is an inference, not ground truth. Keep
+history and the independent rule calculation out of image/interpretation requests.
 
 ## Scenario matrix
 
-Run each connected demonstration with live image and interpretation inference and an
-explicit, versioned scenario profile attached to the saved report, as proposed in the
-shared rules. Profile facts drive the demonstration route but are not derived from or
-sent to either model. Log the actual live assessment independently from the profile
-and route. The image and interpretation results can be evaluated for schema validity,
-traceability, ambiguity and limitations; they must not be scored as matching profile
-risk or as clinically correct. Rule conformance is checked separately: given the
-recorded profile/history facts and exact rule version, does the deterministic decision
-match that version's route and reason? Without a profile, assess the documented
-unknown-fact path after a successful live assessment. A model or storage failure is a
-failed run, not a completed route. These demonstrations do not measure real-world
-routing quality.
+For each report, run image assessment on the original photo, then run the bounded text
+interpretation on the recorded image scores, optional farmer note and optional weather
+snapshot. Use those actual outputs with controlled synthetic history/case records to
+exercise routing. Do not enter a target/expected route or synthetic risk label. Log
+the assessment before routing; freeze a successful image and interpretation output
+when making paired checks that vary history alone. Derive the route independently
+from the rule version and recorded rule inputs. Compare application and independent
+rule-calculation outputs, not the outcome against a hand-written route label. This
+checks rule consistency for those inputs; it does not measure diagnostic truth or
+real-world routing quality. Model/provider or storage failures remain failures and
+must not be converted into successful routes.
 
 | Scenario family | Input / expected evidence | Outcome to record |
 | --- | --- | --- |
-| Synthetic routine route | Attach the linked rule's explicit routine profile (including `G-DEMO`) to a saved report; run both live models; provide complete history with both triggers known absent. | Log actual model outputs separately. Check route/reason against `uc002-demo-draft-1` given the supplied profile/history; record the person's `G-DEMO-1` relay and no case. This is not evidence that a real report is low risk or eligible for advice. |
-| Escalation and precedence | Use separate explicit profiles for concerning risk, insufficient/unknown evidence, and absent/unknown guidance; pair with controlled repeat, unresolved-case, and unknown-history facts, including overlaps. Run both live models for each profile. | Log assessment independently; check matched rule/precedence, route and reason against `uc002-demo-draft-1` from supplied facts. Record human technician involvement and case choice. This does not evaluate whether supplied profile facts describe the image or a farm. A route does not authorize severe action. |
-| No-profile path | Run a successful live assessment with no profile attached; mark history completeness according to the scenario record. | Profile facts stay unknown per the linked proposal; check the resulting route against `uc002-demo-draft-1`. Do not treat model interpretation as a substitute profile or as established risk/evidence. |
-| Boundary pairs | Hold report, live assessment and profile constant while varying only connected history; compare weather-present versus weather-unavailable when weather is used. | History may change route while leaving the standalone assessment unchanged. Optional/missing weather is traceable; route behavior is checked against the exact rule version. This does not establish clinical quality or a real weather effect. |
-| Live assessment successes and ambiguity | Use only approved local examples and controls. Preserve source labels without treating them as diagnostic truth or scenario-profile facts. Include valid and ambiguous outputs if they occur. | Save finite schema-valid candidate scores and interpretation fields, model/prompt versions, preprocessing and timing. Describe ambiguity without inventing a universal confidence cutoff or claiming agreement with supplied risk. |
-| Unsuitable inputs | Synthetic blank and geometric controls, plus the licensed example JPEGs that are detached leaves on plain backgrounds. These do not represent field reports. No new dataset is authorized by this plan. | Record ordinary scores, refusal/abstention if implemented, and resulting uncertainty. Existing blank overconfidence is a known limitation; do not count it as a successful diagnosis. |
-| Failure paths | Missing report/image/configuration; malformed model output; timeout/provider unavailable; storage error; invalid/missing weather; restart/reload. Include bounded interpretation prompt-injection text as untrusted farmer content. | Visible failure state with no fabricated assessment, route, delivery or resolution; original report remains retrievable. Record retries and whether repeated requests create duplicate assessments/handoffs. |
-| Handoff lifecycle | Routine communications record and technician involvement/case handoff; later reload and restart. Reassessment uses same report evidence. | Persisted provenance, route, reason, handoff and case link survive restart. Reassessment is a separate assessment; handling/delivery does not imply closure/resolution. |
+| Actual image and interpretation | Use a permitted report image, run the pinned image model, then the selected bounded interpretation model. Existing classifier JSON contains captured image scores; reuse those frozen vectors where useful. | Preserve full scores and validated interpretation output as observed. Record ambiguity, unsupported-input responses and errors. There is no expected diagnosis or route label; report clinical accuracy only if independent suitable diagnostic truth is later established. |
+| Controlled history pairs | Hold report, source image, actual image output and actual interpretation output constant. Change only clearly marked synthetic report/case history and completeness metadata. Include history conditions relevant to the exact rule version. | Calculate routes from the recorded assessment and synthetic history using the rule version. Separately calculate them with an independent rule oracle derived from that version; compare outputs and reasons. No expected-route field is authored or passed to a model. |
+| Rule conditions and precedence | Use actual inference cases that naturally exercise different rule inputs; add only synthetic history/case records as controlled variations. If a branch cannot be reached by available actual inference, mark it unexercised rather than fabricating a model output or desired route. | Verify deterministic evaluation order and traceable inputs/reason against the same versioned rule, without claiming the supplied scenario is agronomically correct. A route does not authorize severe action. |
+| Weather boundary | Where a saved weather snapshot is available, compare separate actual interpretations with and without that snapshot. For history-only pairs, freeze interpretation output and vary history alone. | Record actual interpretation differences separately from route changes; route is derived from each saved assessment plus rule inputs. Do not infer weather causality or validity from this convenience comparison. |
+| Failure and unsuitable input | Include missing report/image/configuration, invalid model output, timeout/provider failure, storage failure, blank and geometric controls, prompt-injection text and restart/reload. | Record actual observed output/error. Failure is not a completed route. Blank/geometry checks reveal implementation limitations only; an ordinary score is not a successful valid-leaf assessment. |
 
-The scenario inventory is not a statistical sample. If later work adds examples, record
-selection rationale, exclusions and dependence. Multiple crops, perturbations or
-re-encodings from one source image are related observations, not independent samples.
+This is a scenario inventory, not a statistical sample. Record selection rationale,
+exclusions and dependence. Multiple crops, perturbations or re-encodings from one
+source image are related observations, not independent samples.
 
 ## Image inputs and source controls
 
@@ -102,21 +98,21 @@ the authority for data-source inspection; this plan selects or downloads no data
 For every recorded run, verify what actually crossed each boundary:
 
 - Image model request: photo only. No farmer note, identity, location, history,
-  extent, prior finding, weather, source label or scenario-profile/routing fact.
+  extent, prior finding, weather, source label or routing-oracle field.
 - Optional interpretation request: candidate scores, farmer note, and only the
   optional versioned event-weather snapshot. No raw identity/coordinates, connected
   farm or nearby history, earlier assessment, extent, case data, source/evaluation
-  labels, scenario profile or route oracle. The farmer note is untrusted user content
+  labels, synthetic history, rule inputs or route oracle. The farmer note is untrusted user content
   and may itself contain personal details; do not duplicate it into experiment logs.
   Include a prompt-injection probe and verify the structured response contract.
-- Code/rule: separately prepared approved facts and the authoritative rule version;
-  record inputs, matched rule, route and reason so a rerun can reproduce the decision.
+- Code/rule: current-report facts derived under the authoritative rule plus controlled
+  synthetic history/case records; record the inputs, matched rule, route and reason so a
+  rerun can reproduce the decision. Do not enter a desired route as a test input.
 
-Record random run IDs, neutral report/assessment fixture IDs, source image hash/manifest
-ID, model/provider and artifact/version, preprocessing, prompt and schema version,
-weather snapshot/provider/version or unavailable state, scenario-profile version and
-synthetic marker, supplied synthetic `risk`, `evidence` and `guidance_id` values in a
-separate profile record, history-completeness facts, exact rule/guidance version, start/end
+Record random run IDs, neutral report/assessment IDs, source image hash/manifest ID,
+model/provider and artifact/version, preprocessing, prompt and schema version, weather
+snapshot/provider/version or unavailable state, synthetic-history record IDs and
+completeness metadata, exact rule/guidance version, start/end
 timestamps, elapsed duration, outcome/error, token usage and provider-reported charge
 where available. Record CPU/RAM context for local timing. Never put credentials, raw
 farmer identity, or unnecessary raw personal data in evidence. Do not log request
@@ -193,6 +189,25 @@ These are arithmetic consequences of the assumptions, not benefit evidence. Staf
 capacity released is an imputed value, not automatically cash saved. No avoided visit,
 real service-time reduction, outcome improvement or diagnostic value is priced here.
 
+## Technical recommendation
+
+Recommend the local split path as the first candidate for implementation feasibility:
+the already pinned image classifier followed by the official Qwen3-0.6B local text
+candidate reviewed in [local-interpreter metadata notes](../local-interpreter/README.md).
+The classifier has an actual contained feasibility run; the interpreter candidate has
+only metadata review. This path keeps farmer data local and provides a concrete input
+boundary for image-only scoring followed by a text-only structured interpretation.
+It is a technical recommendation, not a provider selection or suitability finding.
+
+Before any interpreter artifact is acquired or run, verify its exact dependencies and
+advisories, reviewed standard loader with remote code disabled, actual artifact hashes,
+CPU/BF16 compatibility and memory fit under inspected offline limits. The Qwen candidate
+weight file is about 1.40 GiB against the classifier experiment's 2 GiB memory cap;
+available headroom and CPU performance remain unmeasured for Qwen. No weights, packages,
+or new LLM runs are part of this research. If the local candidate fails those checks or
+the structured contract, compare a hosted alternative using its own privacy, cost and
+latency evidence. Provider choice does not block this specification and evaluation plan.
+
 ## Existing evidence and planned completion
 
 ### Existing intake baseline (verified 10 November 2026)
@@ -226,28 +241,43 @@ run did not use `data/bpm.sqlite3`. These results verify only the covered backen
 intake/storage/restart/image-format and architecture checks. They do not verify the
 browser visually or any UC-002 assessment, route, model, case, handoff or weather path.
 
-The [first contained local-classifier run](../local-classifier/RESULTS.md) is actual
-pre-application feasibility evidence: pinned artifacts loaded within its recorded
-local limits, warmed CPU forward median was 77.07 ms on the documented machine, and
-blank input returned a high Rust score. Its perturbation and preprocessing sensitivity,
-absence of diagnostic truth, and unsupported-input limitations are also recorded.
-It did not test UC-002 storage, interpretation model, route, human handoff, weather or
-provider costs. Do not cite that run as E2E success or diagnostic performance.
+The [first contained local-classifier run](../local-classifier/RESULTS.md) and its
+[captured score vectors](../local-classifier/evidence/first-run.json) are actual
+pre-application measurements, not synthetic expected outcomes. Under config
+center-crop, `sample-02.jpg` yielded Rust 0.4353; its dimmed and blurred variants yielded
+Phoma 0.5515 and 0.4689. A synthetic white blank image yielded Rust 0.7811. These are
+observed model scores, not diagnoses or routing labels. The JSON records 28 image and
+perturbation/preprocessing predictions; reuse selected vectors unchanged for later
+history-pair routing checks rather than rerunning and describing the same image output
+as independent. Its warmed CPU forward median was 77.07 ms on the documented machine.
+The run also records preprocessing sensitivity, no independent diagnostic truth, and
+unsupported-input limits. It did not test an interpretation model, application route,
+human handoff, weather integration or provider costs. Do not cite it as E2E success or
+diagnostic performance.
 
-The plan is ready to execute when the provider/assessment contract and real-report
-fact definitions are decided, the routing/guidance oracle is approved for the scenarios
-being exercised, and the application journey exists. Until then, mark those checks
-pending; do not fill in fabricated outcomes. At execution, append a dated report and
-link evidence for:
+No Qwen inference output exists: its reviewed candidate is metadata-only. The next
+actual interpreter result must be recorded as observed output or explicit error under
+the pinned model, prompt/template and runtime; do not create a target interpretation
+for it to match. Until then, no paired-history route or end-to-end result is measured.
+
+The specification can proceed with the local path recommendation; application work and
+route evaluation await the remaining real-report rule/guidance definitions and an
+implemented journey. Qwen dependency/security/CPU/memory checks are prerequisites to a
+local interpreter run, not evidence already obtained or a reason to fabricate outputs.
+At execution, append a dated report and link evidence for:
 
 - run/environment and scenario IDs, selected/excluded inputs and known dependencies;
-- actual successes, ambiguous outputs, unsuitable inputs and each failure path;
+- actual image and interpretation outputs, ambiguous/unsuitable cases and each failure
+  path, clearly separated from source labels and synthetic history assumptions;
 - request-boundary evidence, output validation, route reproducibility and handoff
-  persistence/restart behavior;
+  persistence/restart behavior, with paired checks reusing frozen actual assessment
+  outputs and deriving route only from synthetic history plus the exact rule version;
 - timings/resource use, actual provider token/cost data or explicit unknowns, and
   assumptions behind each low/base/high cost-benefit scenario; and
 - deviations, limitations, unresolved decisions and the scope of any conclusion.
 
-No application experiment or end-to-end success is claimed by this plan. The actual
-check status and evidence belong in future dated run reports, not inferred from this
-checklist.
+No application routing, interpretation or end-to-end success is claimed by this plan.
+The local classifier scores and resource/timing data are the only actual model outputs
+currently available; interpretation and route measurements remain future evidence.
+Keep source-backed agronomy, prototype assumptions and measured results separate in
+those reports.

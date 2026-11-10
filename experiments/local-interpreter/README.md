@@ -2,8 +2,8 @@
 
 ## Status and scope
 
-This is a read-only candidate review to inform the open hosted-versus-local provider
-choice. It is not a provider decision, security clearance, installed dependency set,
+This read-only candidate review supports the local technical recommendation in the
+[demonstration proposal](../../docs/reference/UC-002-DEMO-RULES.md). It is not a provider decision, security clearance, installed dependency set,
 verified local artifact, or inference result. No weights were downloaded or loaded, no
 credentials used, and no paid or live inference called. Model, template, dependency,
 hardware and behavior claims below are limited to the cited official metadata and the
@@ -32,7 +32,7 @@ are SHA-1 identifiers, not SHA-256 content hashes.
 
 ## Candidate file allowlist and Hub metadata
 
-If a later owner-approved local experiment proceeds, allow only this pinned runtime
+If the later deliberate local feasibility experiment proceeds, allow only this pinned runtime
 file set. Reject additional files and all repository code. Sizes and identifiers are
 Hub metadata at the pinned revision, not locally verified hashes. SHA-256 values are
 given where the Hub returned them; `blobId` values are Git object identifiers.
@@ -109,9 +109,9 @@ profile, rule facts, routing oracle and source/evaluation labels. The expected r
 is the versioned structured contract in the linked demo rules, including its exact
 warning and note-relation enums; this note does not define a competing schema. Validate JSON and every field in code; reject extra keys,
 invalid enums, invented candidates, unsupported weather claims, treatment instructions,
-tool-call syntax and malformed/truncated output. The model's interpretation never executes routing or overrides synthetic profile
-facts. Depending on the owner-selected mechanism, code may derive demo facts from
-validated interpretation fields, then applies the separately versioned rule. Preserve the existing
+tool-call syntax and malformed/truncated output. The model never executes routing. Code derives guidance matching from actual validated
+output fields and applies the separately versioned rule to those outputs and synthetic
+report/case history; no scenario profile or desired-route field is accepted. Preserve the existing
 warning/contradiction guard in the shared [demo rules](../../docs/reference/UC-002-DEMO-RULES.md).
 
 The template supports thinking mode by default and has an option to suppress it. A
@@ -143,17 +143,29 @@ process and time limits. Do not resolve/download during inference. Record actual
 effective controls. A Python virtual environment alone is not isolation. Keep output
 as untrusted data with no tools, no automatic messages or route authority.
 
+## Recommended first feasibility settings (not yet measured)
+
+Use a separate disposable offline container with 2 CPUs, 6 GiB RAM, no swap, 64 PIDs,
+read-only runtime/model/request mounts, 64 MiB non-executable scratch and a dedicated
+results mount. Proposed bounds are 180 seconds internally and a 210-second host kill
+deadline, 1,024 total input tokens and 384 generated tokens, batch size one, no tools,
+non-thinking mode and deterministic greedy decoding. Reject oversized requests rather
+than silently truncating the note or structured fields. These are engineering trial
+limits, not measured capacity or guaranteed output completeness. OOM, timeout and
+truncated/invalid JSON are recorded failures. Record actual tokenizer/prompt and dtype
+behavior, model-ready time, output-validation rate and peak memory before integration.
+The classifier's runtime and its measured 2 GiB result remain separate.
+
 ## Recommendation and gaps
 
 Qwen3-0.6B is a plausible standard-architecture local candidate for a bounded
-text-only feasibility experiment, subject to owner selection and review. The concrete
+text-only feasibility experiment, subject to artifact, dependency, containment and output-feasibility checks. The concrete
 concerns are the embedded tool-capable template branch, unverified local runtime and
 dependency versions, model size near the current 2 GiB cap, and no evidence yet that
 this small candidate follows the required issue/uncertainty/limitation contract on
-these inputs. The metadata review is not an actual model run. A hosted text provider
-remains an equally open option and may be simpler to assess for operational latency,
-but provider privacy, cost, data handling and output behavior would need their own
-review. This note recommends neither provider choice nor app integration.
+these inputs. The metadata review is not an actual model run. A hosted provider is not required for the recommended first local test. A later hosted
+alternative would require its own privacy, cost and output review; no credentials or
+charges are assumed. Metadata review alone does not establish integration readiness.
 
 **Not checked:** local artifact acquisition/hash verification, exact dependency lock,
 advisory review, loader inspection, security scanning, prompt-injection behavior,
