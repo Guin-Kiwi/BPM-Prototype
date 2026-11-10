@@ -37,8 +37,10 @@ Secondary: farmer via existing intake; selected model backend and optional weath
 A report with an image exists. Real model backend and configuration must be
 selected before an assessment can run; a local classifier has completed a separate
 [contained feasibility run](../../experiments/local-classifier/RESULTS.md) but is not
-selected for integration. Routine guidance and routing definitions
-must be specified before the routine branch can be implemented.
+selected for integration. The [demo rule proposal](../reference/UC-002-DEMO-RULES.md) requires owner decisions
+on the proposed scenario profiles, substantive prepared guidance, history and providers
+before implementation. The acknowledgement fixture tests recording only and does not
+complete the selected routine guidance journey.
 
 ## Trigger
 
@@ -84,10 +86,12 @@ model for the first slice.
 
 1. Image classification receives only the photo. Any second model receives candidate
    scores, farmer note and optional saved weather snapshot. Connected history,
-   identities, earlier findings and source-label metadata enter neither model.
+   identities, earlier findings, extent and source-label metadata enter neither model.
 2. Valid live output is saved as inference with provenance, not a confirmed finding.
 3. Routing is reproducible from recorded inputs and versioned rules, with a reason.
-   History changes can affect routing without changing the standalone assessment.
+   History changes can affect routing without changing the standalone assessment. The
+   [proposed table and synthetic fixtures](../reference/UC-002-DEMO-RULES.md) cover both
+   branches, unknowns and precedence; scenario-profile and real-report eligibility choices require owner approval.
 4. Staff can inspect evidence/history and record the appropriate handoff. Routine
    reports create no technical case; technician involvement follows the agreed linking rule.
 5. Results survive restart; errors never appear as completed assessment or delivery.
@@ -125,14 +129,14 @@ run; no application assessment, routing or handoff journey has been implemented 
   API credentials/billing are needed only if a hosted backend is selected.
 - Weather endpoint/terms/coverage, alert archive and snapshot window; see the weather
   plan's source-backed limits. These remain unresolved; no weather integration exists.
-- Explicit demo routing definitions, including extent, uncertainty and history triggers.
-- Applicable published guidance entries and their deterministic mapping.
-- Minimum technician assignment/case-linking behavior for this first journey.
-- Recommendation: implement the technical handoff first if routine policy is still
-  unresolved, then add routine communication; this sequencing is proposed, not selected.
+- Owner decisions on scenario profiles and substantive routine guidance, proposed
+  history/case linkage and provider suitability are detailed in the
+  [demo rule proposal](../reference/UC-002-DEMO-RULES.md#decisions-required-before-implementation).
+  Both routine and technician handoffs remain in scope; neither is implemented.
 
 ## Notes for implementation
 
 Existing boundaries: domain reports, application intake/repository, SQLite and local
 web adapters. Follow DESIGN and TDD after the slice's open behavior is resolved;
-no application implementation is authorized or claimed by this draft.
+the owner has requested the connected demonstration, but this draft does not resolve
+the pending behavior/provider choices or claim an implemented journey.
