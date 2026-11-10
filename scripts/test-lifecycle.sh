@@ -16,7 +16,8 @@ fail() {
 
 BASE_DIR="$TEMP_DIR/base"
 mkdir -p "$BASE_DIR"
-rsync -a --exclude '.git' --exclude '.venv' "$ROOT_DIR/" "$BASE_DIR/"
+rsync -a --exclude '.git' --exclude '.venv' --exclude '/data/' --exclude '/runs/' \
+  "$ROOT_DIR/" "$BASE_DIR/"
 printf '# PROJECT.md\n\nFixture project context.\n' > "$BASE_DIR/docs/PROJECT.md"
 cp "$BASE_DIR/docs/specs/UC-TEMPLATE.md" "$BASE_DIR/docs/specs/UC-900-FIXTURE.md"
 python3 - "$BASE_DIR/docs/INDEX.json" <<'PY'
