@@ -5,11 +5,17 @@ STATUS: in-progress
 
 ## Active objective
 
-Specify [UC-002: assessment and handoff](specs/UC-002-ASSESSMENT-HANDOFF.md), the
-barebones journey from saved report to real image assessment, deterministic route
-and recorded human handoff. Provider choice and demo routing/guidance definitions
-remain open; resolve them before DESIGN/implementation. UC-001 intake completion
-and its existing evidence below are unchanged.
+Complete the owner-selected six-step [UC-002 assessment and handoff](specs/UC-002-ASSESSMENT-HANDOFF.md)
+work: reuse existing C/F and BPMN; define demonstration rules/scenarios; connect the
+contained classifier and bounded LLM; record human handling in the app; run experiments;
+prepare technical and cost/benefit evidence. The baseline is Cooxupé **before** the
+published case's improvements. No leaf detector is being added; weather remains optional.
+
+Current work is SPECIFY: draft concrete owner-reviewable rules and acceptance scenarios,
+then resolve provider and routine-eligibility choices before DESIGN/implementation.
+UC-001 and the classifier feasibility run remain completed supporting work, not proof
+that the connected application journey exists. User-requested delegation uses
+Terra/high and Luna/high, with file ownership and root review before commits.
 
 ## Current Use Case
 
@@ -35,7 +41,7 @@ Targeted red: `.venv/bin/python -m pytest tests/integration/test_intake.py -q`
 failed against the old implementation (5 failed, 15 passed). After implementation,
 `.venv/bin/python -m pytest tests/integration/test_intake.py tests/unit/test_architecture.py -q`
 passed (32 tests), including backup/restore and rollback on temporary databases.
-Full handoff: `bash scripts/test.sh` passed lifecycle checks, 47 process tests and
+Full handoff: `bash scripts/test.sh` passed lifecycle checks, 46 process tests and
 32 pytest tests. A loopback Uvicorn startup against a temporary database shut down
 cleanly under a three-second timeout (expected exit 124). No visual/manual browser
 test has been performed.
@@ -43,21 +49,31 @@ Group paper/model alignment and human acceptance of the revised journey remain o
 
 ## Next smallest step
 
-Resolve the provider and bounded demo rules in the UC-002 draft, using the
-[worksheet](reference/DMN-RULE-WORKSHEET.md#open-definitions-and-minimal-next-specify-task).
-The selected work is SPECIFY; no application implementation is claimed.
-The [contained classifier experiment](../experiments/local-classifier/RESULTS.md) completed
-its first run on 10 November 2026: pinned artifacts verified, separate dependency stack
-hash-locked, effective container isolation inspected, actual scores/timings/memory recorded.
-Median warmed CPU forward time was about 77 ms. Blank-input overconfidence and
-preprocessing/perturbation sensitivity limit suitability; no diagnostic validation or
-provider selection is claimed. Full handoff passed lifecycle checks/scenarios, 47 process
-tests and 73 pytest tests. Runtime inventory matched the 28 locked distributions.
+Review the [existing-artifact alignment](reference/UC-002-ALIGNMENT.md),
+[concrete demo-rule proposal](reference/UC-002-DEMO-RULES.md),
+[prepared-guidance candidate](reference/UC-002-GUIDANCE-CANDIDATE.md) and
+[acceptance/experiment plan](../experiments/assessment-handoff/README.md).
+These are specifications and planned checks, not application results or approved
+business policy. The next action is to settle the specific owner choices recorded in
+the rule proposal, then proceed through DESIGN and TDD implementation.
 
-Next: review classifier suitability and preprocessing/invalid-input handling before
-selecting an application backend. Weather acquisition can now be checked separately
-under the preserved [weather plan](reference/EVENT-WEATHER.md); none was fetched in the
-classifier run. UC-002 remains in SPECIFY and application integration is deferred.
+| Owner task | Current evidence / remaining work |
+| --- | --- |
+| Existing C/F and BPMN alignment | Primary case, group C/F table and selected XML models inspected; alignment draft linked above. No replacement matrix or group-model edits. |
+| Demonstration rules and scenarios | Proposal for both responsibility routes and an attributable non-treatment guidance candidate; synthetic eligibility and provider choices await owner selection. |
+| Classifier plus bounded LLM | [Contained classifier run](../experiments/local-classifier/RESULTS.md) completed; application adapter and LLM backend remain unimplemented. |
+| Staff handoff and recording | UC-002 specifies it; no assessment, routing or handoff UI/storage implemented yet. |
+| Actual workflow experiments | Experiment plan drafted; connected live model/UI runs remain outstanding. |
+| Paper/presentation evidence and cost/benefit | Existing classifier evidence available; end-to-end evidence, actual AI usage/cost and explicitly assumed workload comparison remain outstanding. |
+
+Classifier handoff checks passed lifecycle checks/scenarios, 47 process tests and
+73 pytest tests; actual runtime inventory matched the 28 locked distributions.
+Fresh baseline check: the existing intake and architecture command passed 32 tests
+against temporary databases, as recorded in the experiment plan. SPECIFY checks passed
+lifecycle validation, generated-view checks, local link/model-ID checks and whitespace
+checks. No UC-002 application tests or live connected model runs are claimed.
+These results establish their stated scopes only. Weather acquisition is a
+separate optional check under the preserved [weather plan](reference/EVENT-WEATHER.md).
 
 ## Selected routing step
 
