@@ -1,0 +1,9 @@
+*
+!Dockerfile
+!requirements.lock
+!run.py
+!protocol.py
+!prompt.txt
+!runtime_checks.py
+!verify_artifacts.py
+!model-manifest.json
