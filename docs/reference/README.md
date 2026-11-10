@@ -7,16 +7,43 @@ working models and proposed refinements must be reconciled with that scope.
 
 | Source | Authority |
 | --- | --- |
-| Published Cooxupé case, Ribeiro et al. (2025) | Organisation, reported AS-IS and observed problems; does not establish our proposed solution. |
+| Published Cooxupé case, Ribeiro et al. (2025) | Organisation, reported problems, adopted improvements and outcomes; does not establish our proposed solution. |
 | Main working group DOCX below | Group solution baseline, P1 scope and authoritative C/F matrix. |
 | Assignment and grading material | Deliverables and assessment expectations. |
 | [Selected prototype comparison pair](../../models/comparison/README.md) and owner-selected UC/routing/design direction | Prototype scope and process; differences from the group baseline require explicit alignment, not silent replacement. |
 | Other working files | Supporting drafts; reconcile conflicts instead of choosing by modification date. |
 
 The published chapter is [Toward the Full Application of BPM](https://doi.org/10.1007/978-3-031-80793-0_12),
-pp. 163–172, as cited by the main paper. Its full text has not been accessed in this
-repository session; the main paper's account is not independent verification of it.
-Consult the source when available before attributing a new organisational fact.
+pp. 163–172, in *Business Process Management Cases Vol. 3*. The owner supplied the
+[local book PDF](<../../../Business Process Management Cases Vol. 3.pdf>); the complete
+chapter was read on 10 November 2026, with visual inspection of Figs. 1–2 and Table 1.
+Printed chapter pages 163–172 correspond to PDF pages 167–176 in this supplied file.
+
+### What the primary case establishes
+
+- Table 1, printed p. 169: agricultural technical orientation spans a member's need
+  for technical support through receiving agronomic guidance. The named improvement
+  opportunities are visit scheduling and excessive process-monitoring meetings.
+- The same row reports adopted solutions: proactive attendance scheduling based on
+  customer segmentation, process intelligence and standardized managerial meetings.
+  Techniques include BPMN, RACI, OKRs and customer-segmentation analysis. It does not
+  provide the actual segment definitions, allocation rules or operational RACI.
+- Results, p. 168: the chapter reports shorter member-service lead time and improved
+  allocation decisions for agricultural technicians/engineers. It gives no numerical
+  baseline, effect size or diagnostic-performance measurements for our experiment.
+- The chapter documents improvements already undertaken. Image-based assessment and
+  report routing are our proposed extensions; they are not the case's implemented
+  solution. The case does not specify phone-versus-visit diagnosis, triage thresholds,
+  communications duties, treatment rules or our report/technical-case distinction.
+- The self-service/knowledge-bank plans below Table 1 concern IT calls and developer
+  capacity; do not attribute them to agricultural advice. Figs. 1–2 show the overall
+  coffee chain and BPM project scope, not a detailed agricultural-advisory workflow.
+
+Design implication: evaluate how the prototype could support member service,
+responsibility allocation and process visibility. Status tracking is a proposed means
+of addressing those goals, not proof that the original organisation had no status
+records. Synthetic demonstrations cannot establish real reductions in visits or lead
+time. Preserve the selected model-input and event-weather boundaries.
 
 Recent refinements change optional GPS and photo/voice/text submission to a camera-first
 journey with required location context and a mapped-field fallback, and change action
