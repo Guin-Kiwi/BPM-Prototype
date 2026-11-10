@@ -56,7 +56,7 @@ def artifact_set(tmp_path):
         'chat_template': "{% if tools %}tools may be called{% endif %}",
     }))
     (folder / 'vocab.json').write_text('{}')
-    (folder / 'merges.txt').write_text('')
+    (folder / 'merges.txt').write_text('\n')
     manifest = {
         'repository': 'Qwen/Qwen3-0.6B',
         'revision': 'c' * 40,
@@ -209,7 +209,7 @@ def effective_fixture(tmp_path):
     for i, (point, opts, fstype) in enumerate([
         ('/', 'ro,relatime', 'overlay'), ('/model', 'ro,relatime', 'ext4'),
         ('/requests', 'ro,relatime', 'ext4'), ('/results', 'rw,relatime', 'ext4'),
-        ('/tmp', 'rw,noexec,nosuid,nodev,size=67108864', 'tmpfs'),
+        ('/tmp', 'rw,noexec,nosuid,nodev,size=65536k', 'tmpfs'),
     ], 1):
         mounts.append(f'{i} 0 0:1 / {point} {opts} - {fstype} {fstype} rw')
     (proc / 'self/mountinfo').write_text('\n'.join(mounts) + '\n')
@@ -237,7 +237,7 @@ def test_effective_containment_returns_observed_controls(tmp_path):
     assert evidence['mounts']['/model']['readonly']
     assert evidence['mounts']['/requests']['readonly']
     assert not evidence['mounts']['/results']['readonly']
-    assert evidence['mounts']['/tmp']['noexec']
+    assert 'noexec' in evidence['mounts']['/tmp']['options']
 
 
 @pytest.mark.parametrize('problem', ['root-user', 'capabilities', 'no-new-privs',
@@ -253,7 +253,7 @@ def test_effective_containment_fails_closed(tmp_path, problem):
     elif problem == 'no-new-privs': status = status.replace('NoNewPrivs:\t1', 'NoNewPrivs:\t0')
     elif problem == 'seccomp': status = status.replace('Seccomp:\t2', 'Seccomp:\t0')
     elif problem == 'network':
-        (proc / 'net/dev').write_text('Inter-| Receive\neth0: 0 0\nlo: 0 0\n')
+        (proc / 'net/dev').write_text('Inter-| Receive\n face | bytes\neth0: 0 0\nlo: 0 0\n')
     elif problem == 'cpu': (cgroup / 'cpu.max').write_text('300000 100000')
     elif problem == 'memory': (cgroup / 'memory.max').write_text(str(2 * 1024**3))
     elif problem == 'swap': (cgroup / 'memory.swap.max').write_text('1')
