@@ -47,7 +47,8 @@ Full handoff: `bash scripts/test.sh` passed lifecycle checks, 46 process tests a
 32 pytest tests. A loopback Uvicorn startup against a temporary database shut down
 cleanly under a three-second timeout (expected exit 124). No visual/manual browser
 test has been performed.
-Group paper/model alignment and human acceptance of the revised journey remain open.
+The owner approved the BPMN workflow; group paper/policy alignment and acceptance of
+the implemented journey remain open.
 
 ## Next smallest step
 
@@ -67,7 +68,7 @@ validation of agronomic rules or provider-detail choice is required for this pro
 
 | Owner task | Current evidence / remaining work |
 | --- | --- |
-| Existing C/F and BPMN alignment | Primary case, group C/F table and selected XML models inspected; alignment draft linked above. No replacement matrix or group-model edits. |
+| Existing C/F and BPMN alignment | Primary case, group C/F table and owner-approved XML pair inspected; alignment linked above. Group reconciliation remains open; no replacement matrix or group-model edits. |
 | Demonstration rules and scenarios | Two sourced non-treatment observation messages and ordered model-output/history rules proposed. No hand-entered desired route or eligibility and no Rust=low-risk rule. |
 | Classifier plus bounded LLM | [Contained classifier run](../experiments/local-classifier/RESULTS.md) completed; [Local LLM metadata candidate](../experiments/local-interpreter/README.md) [Contained interpreter results](../experiments/local-interpreter/RESULTS.md): loading/generation completed, 0/12 accepted outputs. Application adapter remains unimplemented. |
 | Staff handoff and recording | UC-002 specifies it; no assessment, routing or handoff UI/storage implemented yet. |
@@ -107,8 +108,9 @@ agent handoff. UC-001 remains intake/history only; no routing implementation yet
   photo to image model; candidate scores, note and optional event weather to a proposed
   second model; extent and connected history to code/DMN. The [weather plan](reference/EVENT-WEATHER.md)
   records selected variables, sources, assumptions and open acquisition/window choices.
-- Later code: AI/provider boundary, deterministic DMN, human guidance and case/visit
-  workflows, technician view and traceable events/export. Map fallback needs known
+- Later code: AI/provider boundary, deterministic DMN, human guidance, case/visit
+  workflows including findings entry/save, conditional P2/P3 referrals, technician view
+  and traceable events/export. Map fallback needs known
   boundaries, provenance and usable presentation; manually verify the intake journey.
 - Later data: inspect and attribute suitable image and illustrative guidance sources;
   design synthetic context and permissions without generating a dataset now.

@@ -3,6 +3,8 @@
   <bpmn:message id="T_m1_Message" name="Report" />
   <bpmn:message id="T_m2_Message" name="Personalised guidance" />
   <bpmn:message id="T_m3_Message" name="Technician guidance" />
+  <bpmn:message id="T_m4_Message" name="P2 product referral (proposed)" />
+  <bpmn:message id="T_m5_Message" name="P2/P3 downstream referral (proposed)" />
   <bpmn:process id="P1_TOBE_Process" name="P1 TO-BE — Assisted technical orientation" isExecutable="false">
     <bpmn:documentation>Proposed comparison, not implemented or group-approved. Sources and unresolved alignment: docs/reference/README.md and models/comparison/NOTES.md. AI assessment is uncertain, DMN routing is proposed, not approved policy. Quantify routine technician effort, context preparation and communications handover with comparable measured scenarios; include scheduling, round-trip travel and on-site work in visit cost. Benefits remain hypotheses. Severe actions and P2/P3 handovers are outside core P1 and require human approval and group alignment; diagnosis never automatically skips pickup.</bpmn:documentation>
     <bpmn:laneSet id="P1_TOBE_LaneSet">
@@ -31,7 +33,7 @@
       <bpmn:incoming>T_f12</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:subProcess id="T_Review" name="Review context and advise farmer">
-      <bpmn:documentation>Full available farm history and nearby candidates remain accessible. The technician judges relevance and case links; photo apparent mildness or automatic non-match does not establish irrelevance. History may be unavailable; access rules need definition. Record findings and current case state. Scheduling is handled separately.</bpmn:documentation>
+      <bpmn:documentation>Full available farm history and nearby candidates remain accessible. The technician judges relevance and case links; photo apparent mildness or automatic non-match does not establish irrelevance. History may be unavailable; access rules need definition. Record findings and current case state. Scheduling is handled separately. A downstream P2 product referral or P3 harvest exception is conditional on confirmed human decisions, not automatically triggered by AI severity; any P3 skip-pickup action requires authorisation and group alignment.</bpmn:documentation>
       <bpmn:incoming>T_f08</bpmn:incoming>
       <bpmn:incoming>T_VisitToReview</bpmn:incoming>
       <bpmn:outgoing>T_f10</bpmn:outgoing>
@@ -50,29 +52,100 @@
         <bpmn:incoming>T_Review_Internal3</bpmn:incoming>
         <bpmn:outgoing>T_Review_Internal4</bpmn:outgoing>
       </bpmn:task>
-      <bpmn:task id="T_Review_Step4" name="Prepare and give available guidance">
+      <bpmn:inclusiveGateway id="T_Review_OrSplit" name="What is appropriate?" gatewayDirection="Diverging">
         <bpmn:incoming>T_Review_Internal4</bpmn:incoming>
-        <bpmn:outgoing>T_Review_Internal5</bpmn:outgoing>
+        <bpmn:outgoing>T_Review_GuidancePath</bpmn:outgoing>
+        <bpmn:outgoing>T_Review_DecisionPath</bpmn:outgoing>
+      </bpmn:inclusiveGateway>
+      <bpmn:task id="T_Review_Step4" name="Give available preliminary guidance">
+        <bpmn:incoming>T_Review_GuidancePath</bpmn:incoming>
+        <bpmn:outgoing>T_Review_GuidanceDone</bpmn:outgoing>
       </bpmn:task>
+      <bpmn:task id="T_Review_VisitDecision" name="Determine whether field visit is needed">
+        <bpmn:incoming>T_Review_DecisionPath</bpmn:incoming>
+        <bpmn:outgoing>T_Review_DecisionDone</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:inclusiveGateway id="T_Review_OrJoin" gatewayDirection="Converging">
+        <bpmn:incoming>T_Review_GuidanceDone</bpmn:incoming>
+        <bpmn:incoming>T_Review_DecisionDone</bpmn:incoming>
+        <bpmn:outgoing>T_Review_Internal5</bpmn:outgoing>
+      </bpmn:inclusiveGateway>
+      <bpmn:sequenceFlow id="T_Review_GuidancePath" sourceRef="T_Review_OrSplit" targetRef="T_Review_Step4">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">guidanceAvailable</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="T_Review_DecisionPath" sourceRef="T_Review_OrSplit" targetRef="T_Review_VisitDecision">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">true</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="T_Review_GuidanceDone" sourceRef="T_Review_Step4" targetRef="T_Review_OrJoin" />
+      <bpmn:sequenceFlow id="T_Review_DecisionDone" sourceRef="T_Review_VisitDecision" targetRef="T_Review_OrJoin" />
       <bpmn:task id="T_Review_Step5" name="Record findings and current case state">
         <bpmn:incoming>T_Review_Internal5</bpmn:incoming>
         <bpmn:outgoing>T_Review_Internal6</bpmn:outgoing>
       </bpmn:task>
-      <bpmn:endEvent id="T_Review_End">
+      <bpmn:exclusiveGateway id="T_Review_HandoffChoice" name="Downstream referral needed?" gatewayDirection="Diverging">
         <bpmn:incoming>T_Review_Internal6</bpmn:incoming>
+        <bpmn:outgoing>T_Review_NoHandoff</bpmn:outgoing>
+        <bpmn:outgoing>T_Review_YesHandoff</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:intermediateThrowEvent id="T_Review_Handoff" name="Refer to P2/P3 as appropriate">
+        <bpmn:documentation>Proposed downstream message, not a product order or automatic harvest cancellation. Send the relevant P2 referral or explicitly authorised P3 notice; if both are required, they are separate recipients/messages in the downstream integration.</bpmn:documentation>
+        <bpmn:incoming>T_Review_YesHandoff</bpmn:incoming>
+        <bpmn:outgoing>T_Review_HandoffDone</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="T_Review_HandoffDef" messageRef="T_m5_Message" />
+      </bpmn:intermediateThrowEvent>
+      <bpmn:endEvent id="T_Review_End">
+        <bpmn:incoming>T_Review_NoHandoff</bpmn:incoming>
+        <bpmn:incoming>T_Review_HandoffDone</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="T_Review_Internal1" sourceRef="T_Review_Start" targetRef="T_Review_Step1" />
       <bpmn:sequenceFlow id="T_Review_Internal2" sourceRef="T_Review_Step1" targetRef="T_Review_Step2" />
       <bpmn:sequenceFlow id="T_Review_Internal3" sourceRef="T_Review_Step2" targetRef="T_Review_Step3" />
-      <bpmn:sequenceFlow id="T_Review_Internal4" sourceRef="T_Review_Step3" targetRef="T_Review_Step4" />
-      <bpmn:sequenceFlow id="T_Review_Internal5" sourceRef="T_Review_Step4" targetRef="T_Review_Step5" />
-      <bpmn:sequenceFlow id="T_Review_Internal6" sourceRef="T_Review_Step5" targetRef="T_Review_End" />
+      <bpmn:sequenceFlow id="T_Review_Internal4" sourceRef="T_Review_Step3" targetRef="T_Review_OrSplit" />
+      <bpmn:sequenceFlow id="T_Review_Internal5" sourceRef="T_Review_OrJoin" targetRef="T_Review_Step5" />
+      <bpmn:sequenceFlow id="T_Review_Internal6" sourceRef="T_Review_Step5" targetRef="T_Review_HandoffChoice" />
+      <bpmn:sequenceFlow id="T_Review_NoHandoff" name="No" sourceRef="T_Review_HandoffChoice" targetRef="T_Review_End">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(downstreamReferralNeeded)</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="T_Review_YesHandoff" name="Yes" sourceRef="T_Review_HandoffChoice" targetRef="T_Review_Handoff">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">downstreamReferralNeeded</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="T_Review_HandoffDone" sourceRef="T_Review_Handoff" targetRef="T_Review_End" />
     </bpmn:subProcess>
-    <bpmn:userTask id="T_Routine" name="Relay established guidance">
-      <bpmn:documentation>Human communications relays established guidance without diagnosis; product advice is optional. Delivery does not establish resolution.</bpmn:documentation>
+    <bpmn:subProcess id="T_Routine" name="Relay established guidance">
+      <bpmn:documentation>Human communications relays established guidance without diagnosis; product advice is optional. A product need may be referred to P2 for fulfilment, but a referral does not create an order. Delivery does not establish resolution.</bpmn:documentation>
       <bpmn:incoming>T_f06</bpmn:incoming>
       <bpmn:outgoing>T_f09</bpmn:outgoing>
-    </bpmn:userTask>
+      <bpmn:startEvent id="T_Routine_Start">
+        <bpmn:outgoing>T_Routine_i1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="T_Routine_Relay" name="Relay established guidance">
+        <bpmn:incoming>T_Routine_i1</bpmn:incoming>
+        <bpmn:outgoing>T_Routine_i2</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:exclusiveGateway id="T_Routine_ReferChoice" name="P2 referral needed?" gatewayDirection="Diverging">
+        <bpmn:incoming>T_Routine_i2</bpmn:incoming>
+        <bpmn:outgoing>T_Routine_No</bpmn:outgoing>
+        <bpmn:outgoing>T_Routine_Yes</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:intermediateThrowEvent id="T_Routine_Refer" name="Refer product need to P2">
+        <bpmn:incoming>T_Routine_Yes</bpmn:incoming>
+        <bpmn:outgoing>T_Routine_ReferDone</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="T_Routine_ReferDef" messageRef="T_m4_Message" />
+      </bpmn:intermediateThrowEvent>
+      <bpmn:endEvent id="T_Routine_End">
+        <bpmn:incoming>T_Routine_No</bpmn:incoming>
+        <bpmn:incoming>T_Routine_ReferDone</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="T_Routine_i1" sourceRef="T_Routine_Start" targetRef="T_Routine_Relay" />
+      <bpmn:sequenceFlow id="T_Routine_i2" sourceRef="T_Routine_Relay" targetRef="T_Routine_ReferChoice" />
+      <bpmn:sequenceFlow id="T_Routine_No" name="No" sourceRef="T_Routine_ReferChoice" targetRef="T_Routine_End">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not(p2ReferralNeeded)</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="T_Routine_Yes" name="Yes" sourceRef="T_Routine_ReferChoice" targetRef="T_Routine_Refer">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">p2ReferralNeeded</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="T_Routine_ReferDone" sourceRef="T_Routine_Refer" targetRef="T_Routine_End" />
+    </bpmn:subProcess>
     <bpmn:userTask id="T_Case" name="Create or link technical case">
       <bpmn:incoming>T_f07</bpmn:incoming>
       <bpmn:outgoing>T_f08</bpmn:outgoing>
@@ -173,12 +246,16 @@
         <bpmn:incoming>T_ConductVisit_f2</bpmn:incoming>
         <bpmn:outgoing>T_ConductVisit_f3</bpmn:outgoing>
       </bpmn:task>
-      <bpmn:task id="T_ConductVisit_Findings" name="Record visit findings">
+      <bpmn:userTask id="T_ConductVisit_Findings" name="Enter visit findings">
         <bpmn:incoming>T_ConductVisit_f3</bpmn:incoming>
         <bpmn:outgoing>T_ConductVisit_f4</bpmn:outgoing>
-      </bpmn:task>
-      <bpmn:task id="T_ConductVisit_Return" name="Return from farm">
+      </bpmn:userTask>
+      <bpmn:serviceTask id="T_ConductVisit_Save" name="Save findings to case history">
         <bpmn:incoming>T_ConductVisit_f4</bpmn:incoming>
+        <bpmn:outgoing>T_ConductVisit_fSave</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:task id="T_ConductVisit_Return" name="Return from farm">
+        <bpmn:incoming>T_ConductVisit_fSave</bpmn:incoming>
         <bpmn:outgoing>T_ConductVisit_f5</bpmn:outgoing>
       </bpmn:task>
       <bpmn:endEvent id="T_ConductVisit_End">
@@ -187,7 +264,8 @@
       <bpmn:sequenceFlow id="T_ConductVisit_f1" sourceRef="T_ConductVisit_Start" targetRef="T_ConductVisit_Travel" />
       <bpmn:sequenceFlow id="T_ConductVisit_f2" sourceRef="T_ConductVisit_Travel" targetRef="T_ConductVisit_Inspect" />
       <bpmn:sequenceFlow id="T_ConductVisit_f3" sourceRef="T_ConductVisit_Inspect" targetRef="T_ConductVisit_Findings" />
-      <bpmn:sequenceFlow id="T_ConductVisit_f4" sourceRef="T_ConductVisit_Findings" targetRef="T_ConductVisit_Return" />
+      <bpmn:sequenceFlow id="T_ConductVisit_f4" sourceRef="T_ConductVisit_Findings" targetRef="T_ConductVisit_Save" />
+      <bpmn:sequenceFlow id="T_ConductVisit_fSave" sourceRef="T_ConductVisit_Save" targetRef="T_ConductVisit_Return" />
       <bpmn:sequenceFlow id="T_ConductVisit_f5" sourceRef="T_ConductVisit_Return" targetRef="T_ConductVisit_End" />
     </bpmn:subProcess>
     <bpmn:intermediateCatchEvent id="T_WaitForVisit" name="Agreed visit time">
@@ -227,15 +305,15 @@
       <bpmndi:BPMNShape id="P1_TOBE_Cooxupe_DI" bpmnElement="P1_TOBE_Cooxupe" isHorizontal="true">
         <dc:Bounds x="150" y="165" width="1255" height="685" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_Field_DI" bpmnElement="T_Field" isHorizontal="true">
-        <dc:Bounds x="180" y="550" width="1225" height="300" />
+      <bpmndi:BPMNShape id="T_App_DI" bpmnElement="T_App" isHorizontal="true">
+        <dc:Bounds x="180" y="165" width="1225" height="195" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_Coord_DI" bpmnElement="T_Coord" isHorizontal="true">
         <dc:Bounds x="180" y="360" width="1225" height="190" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_App_DI" bpmnElement="T_App" isHorizontal="true">
-        <dc:Bounds x="180" y="165" width="1225" height="195" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="T_Field_DI" bpmnElement="T_Field" isHorizontal="true">
+        <dc:Bounds x="180" y="550" width="1225" height="300" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_End_DI" bpmnElement="T_End">
         <dc:Bounds x="1302" y="230" width="36" height="36" />
@@ -243,7 +321,10 @@
           <dc:Bounds x="1288" y="295" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_Routine_DI" bpmnElement="T_Routine">
+      <bpmndi:BPMNShape id="T_Review_DI" bpmnElement="T_Review" isExpanded="false">
+        <dc:Bounds x="765" y="570" width="150" height="85" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Routine_DI" bpmnElement="T_Routine" isExpanded="false">
         <dc:Bounds x="610" y="380" width="150" height="85" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_Case_DI" bpmnElement="T_Case">
@@ -261,6 +342,9 @@
           <dc:Bounds x="201" y="270" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Triage_DI" bpmnElement="T_Triage" isExpanded="false">
+        <dc:Bounds x="285" y="205" width="155" height="85" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_Merge_DI" bpmnElement="T_Merge" isMarkerVisible="true">
         <dc:Bounds x="885" y="398" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -276,20 +360,14 @@
           <dc:Bounds x="954" y="645" width="92" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_ConductVisit_DI" bpmnElement="T_ConductVisit" isExpanded="false">
+        <dc:Bounds x="1110" y="697" width="145" height="85" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_WaitForVisit_DI" bpmnElement="T_WaitForVisit">
         <dc:Bounds x="1165" y="595" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1209" y="603" width="82" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_Review_DI" bpmnElement="T_Review" isExpanded="false">
-        <dc:Bounds x="765" y="570" width="150" height="85" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_Triage_DI" bpmnElement="T_Triage" isExpanded="false">
-        <dc:Bounds x="285" y="205" width="155" height="85" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_ConductVisit_DI" bpmnElement="T_ConductVisit" isExpanded="false">
-        <dc:Bounds x="1110" y="697" width="145" height="85" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_04kwv40_DI" bpmnElement="Flow_04kwv40">
         <di:waypoint x="1000" y="588" />
@@ -369,22 +447,20 @@
       <bpmndi:BPMNShape id="T_triage_note_DI" bpmnElement="T_triage_note">
         <dc:Bounds x="225" y="300" width="230" height="55" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_severe_DI" bpmnElement="T_severe">
-        <dc:Bounds x="875" y="805" width="390" height="40" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_routine_note_DI" bpmnElement="T_routine_note">
         <dc:Bounds x="540" y="485" width="300" height="45" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_human_DI" bpmnElement="T_human">
-        <dc:Bounds x="300" y="750" width="400" height="55" />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="T_m1_DI" bpmnElement="T_m1">
+        <di:waypoint x="233" y="130" />
+        <di:waypoint x="233" y="230" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="T_m2_DI" bpmnElement="T_m2">
-        <di:waypoint x="680" y="380" />
-        <di:waypoint x="680" y="130" />
+        <di:waypoint x="710" y="380" />
+        <di:waypoint x="710" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="T_m3_DI" bpmnElement="T_m3">
-        <di:waypoint x="840" y="570" />
-        <di:waypoint x="840" y="130" />
+        <di:waypoint x="820" y="570" />
+        <di:waypoint x="820" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="T_VisitArrangements_DI" bpmnElement="T_VisitArrangements">
         <di:waypoint x="1135" y="445" />
@@ -393,10 +469,6 @@
           <dc:Bounds x="1061" y="136" width="68" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="T_m1_DI" bpmnElement="T_m1">
-        <di:waypoint x="233" y="130" />
-        <di:waypoint x="233" y="230" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="T_VisitConfirmation_DI" bpmnElement="T_VisitConfirmation">
         <di:waypoint x="1175" y="130" />
         <di:waypoint x="1175" y="445" />
@@ -404,6 +476,12 @@
           <dc:Bounds x="1184" y="136" width="62" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="T_human_DI" bpmnElement="T_human">
+        <dc:Bounds x="300" y="780" width="400" height="55" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_severe_DI" bpmnElement="T_severe">
+        <dc:Bounds x="740" y="788" width="390" height="40" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="T_Review_DetailDiagram">
@@ -420,15 +498,56 @@
       <bpmndi:BPMNShape id="T_Review_Step3_DetailDI" bpmnElement="T_Review_Step3">
         <dc:Bounds x="600" y="130" width="140" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Review_OrSplit_DetailDI" bpmnElement="T_Review_OrSplit" isMarkerVisible="true">
+        <dc:Bounds x="785" y="145" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="839" y="156" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_Review_Step4_DetailDI" bpmnElement="T_Review_Step4">
-        <dc:Bounds x="780" y="130" width="140" height="80" />
+        <dc:Bounds x="890" y="45" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Review_VisitDecision_DetailDI" bpmnElement="T_Review_VisitDecision">
+        <dc:Bounds x="890" y="235" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Review_OrJoin_DetailDI" bpmnElement="T_Review_OrJoin" isMarkerVisible="true">
+        <dc:Bounds x="1105" y="145" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_Review_Step5_DetailDI" bpmnElement="T_Review_Step5">
-        <dc:Bounds x="960" y="130" width="140" height="80" />
+        <dc:Bounds x="1210" y="130" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Review_HandoffChoice_DetailDI" bpmnElement="T_Review_HandoffChoice" isMarkerVisible="true">
+        <dc:Bounds x="1420" y="145" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1399" y="106" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Review_Handoff_DetailDI" bpmnElement="T_Review_Handoff">
+        <dc:Bounds x="1560" y="257" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_Review_End_DetailDI" bpmnElement="T_Review_End">
-        <dc:Bounds x="1140" y="152" width="36" height="36" />
+        <dc:Bounds x="1720" y="152" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="T_Review_GuidancePath_DetailDI" bpmnElement="T_Review_GuidancePath">
+        <di:waypoint x="810" y="145" />
+        <di:waypoint x="810" y="85" />
+        <di:waypoint x="890" y="85" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Review_DecisionPath_DetailDI" bpmnElement="T_Review_DecisionPath">
+        <di:waypoint x="810" y="195" />
+        <di:waypoint x="810" y="275" />
+        <di:waypoint x="890" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Review_GuidanceDone_DetailDI" bpmnElement="T_Review_GuidanceDone">
+        <di:waypoint x="1050" y="85" />
+        <di:waypoint x="1130" y="85" />
+        <di:waypoint x="1130" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Review_DecisionDone_DetailDI" bpmnElement="T_Review_DecisionDone">
+        <di:waypoint x="1050" y="275" />
+        <di:waypoint x="1130" y="275" />
+        <di:waypoint x="1130" y="195" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="T_Review_Internal1_DetailDI" bpmnElement="T_Review_Internal1">
         <di:waypoint x="96" y="170" />
         <di:waypoint x="240" y="170" />
@@ -443,15 +562,29 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="T_Review_Internal4_DetailDI" bpmnElement="T_Review_Internal4">
         <di:waypoint x="740" y="170" />
-        <di:waypoint x="780" y="170" />
+        <di:waypoint x="785" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="T_Review_Internal5_DetailDI" bpmnElement="T_Review_Internal5">
-        <di:waypoint x="920" y="170" />
-        <di:waypoint x="960" y="170" />
+        <di:waypoint x="1155" y="170" />
+        <di:waypoint x="1210" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="T_Review_Internal6_DetailDI" bpmnElement="T_Review_Internal6">
-        <di:waypoint x="1100" y="170" />
-        <di:waypoint x="1140" y="170" />
+        <di:waypoint x="1370" y="170" />
+        <di:waypoint x="1420" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Review_NoHandoff_DetailDI" bpmnElement="T_Review_NoHandoff">
+        <di:waypoint x="1470" y="170" />
+        <di:waypoint x="1720" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Review_YesHandoff_DetailDI" bpmnElement="T_Review_YesHandoff">
+        <di:waypoint x="1445" y="195" />
+        <di:waypoint x="1445" y="275" />
+        <di:waypoint x="1560" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Review_HandoffDone_DetailDI" bpmnElement="T_Review_HandoffDone">
+        <di:waypoint x="1596" y="275" />
+        <di:waypoint x="1738" y="275" />
+        <di:waypoint x="1738" y="188" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -469,11 +602,14 @@
       <bpmndi:BPMNShape id="T_ConductVisit_Findings_DetailDI" bpmnElement="T_ConductVisit_Findings">
         <dc:Bounds x="600" y="130" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="T_ConductVisit_Return_DetailDI" bpmnElement="T_ConductVisit_Return">
+      <bpmndi:BPMNShape id="T_ConductVisit_Save_DetailDI" bpmnElement="T_ConductVisit_Save">
         <dc:Bounds x="780" y="130" width="140" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_ConductVisit_Return_DetailDI" bpmnElement="T_ConductVisit_Return">
+        <dc:Bounds x="960" y="130" width="140" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="T_ConductVisit_End_DetailDI" bpmnElement="T_ConductVisit_End">
-        <dc:Bounds x="960" y="152" width="36" height="36" />
+        <dc:Bounds x="1140" y="152" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="T_ConductVisit_f1_DetailDI" bpmnElement="T_ConductVisit_f1">
         <di:waypoint x="96" y="170" />
@@ -491,9 +627,57 @@
         <di:waypoint x="740" y="170" />
         <di:waypoint x="780" y="170" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="T_ConductVisit_f5_DetailDI" bpmnElement="T_ConductVisit_f5">
+      <bpmndi:BPMNEdge id="T_ConductVisit_fSave_DetailDI" bpmnElement="T_ConductVisit_fSave">
         <di:waypoint x="920" y="170" />
         <di:waypoint x="960" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_ConductVisit_f5_DetailDI" bpmnElement="T_ConductVisit_f5">
+        <di:waypoint x="1100" y="170" />
+        <di:waypoint x="1140" y="170" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="T_Routine_DetailDiagram">
+    <bpmndi:BPMNPlane id="T_Routine_DetailPlane" bpmnElement="T_Routine">
+      <bpmndi:BPMNShape id="T_Routine_Start_DetailDI" bpmnElement="T_Routine_Start">
+        <dc:Bounds x="60" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Routine_Relay_DetailDI" bpmnElement="T_Routine_Relay">
+        <dc:Bounds x="180" y="130" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Routine_ReferChoice_DetailDI" bpmnElement="T_Routine_ReferChoice" isMarkerVisible="true">
+        <dc:Bounds x="410" y="145" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="397" y="106" width="66" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Routine_Refer_DetailDI" bpmnElement="T_Routine_Refer">
+        <dc:Bounds x="560" y="257" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Routine_End_DetailDI" bpmnElement="T_Routine_End">
+        <dc:Bounds x="720" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="T_Routine_i1_DetailDI" bpmnElement="T_Routine_i1">
+        <di:waypoint x="96" y="170" />
+        <di:waypoint x="180" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Routine_i2_DetailDI" bpmnElement="T_Routine_i2">
+        <di:waypoint x="330" y="170" />
+        <di:waypoint x="410" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Routine_No_DetailDI" bpmnElement="T_Routine_No">
+        <di:waypoint x="460" y="170" />
+        <di:waypoint x="720" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Routine_Yes_DetailDI" bpmnElement="T_Routine_Yes">
+        <di:waypoint x="435" y="195" />
+        <di:waypoint x="435" y="275" />
+        <di:waypoint x="560" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="T_Routine_ReferDone_DetailDI" bpmnElement="T_Routine_ReferDone">
+        <di:waypoint x="596" y="275" />
+        <di:waypoint x="738" y="275" />
+        <di:waypoint x="738" y="188" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

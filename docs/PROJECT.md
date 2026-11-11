@@ -17,7 +17,7 @@ Selected concept: camera-first reporting with a required farmer estimate, automa
 identity/time and usable GPS or known-field fallback; one farmer view and one technician
 view with neighbouring farms in scope. The [routing worksheet](reference/DMN-RULE-WORKSHEET.md)
 sets out the selected responsibilities, proposed rule and open decisions. The selected
-[comparison models](../models/comparison/README.md) do not replace the group paper.
+[comparison models](../models/approved/README.md) do not replace the group paper.
 
 Implemented: a local simulated farmer uploads a required image and estimate, obtains a
 browser GPS fix, and saves/retrieves reports and farm-wide history in SQLite. Observation
@@ -26,8 +26,9 @@ nearby history and the technician view are unavailable. See [UC-001](specs/UC-00
 and [README](../README.md#run-the-local-demo) for details and limitations.
 
 AI assessment, deterministic routing, technical cases, guidance, communications,
-visit handling and experiment export are not implemented. No automatic farmer messaging
-or product orders are planned. Model output is an inference, not a confirmed diagnosis;
+visit decision/planning, visit findings entry/save, downstream P2/P3 referrals and
+experiment export are not implemented. The approved workflow retains conditional
+referrals and visit work for later; no automatic farmer messaging or product orders are planned. Model output is an inference, not a confirmed diagnosis;
 review is selective and routing thresholds remain undecided.
 
 ## Architecture

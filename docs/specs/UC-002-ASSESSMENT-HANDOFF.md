@@ -22,7 +22,10 @@ attention, with an inspectable assessment and reason for each route.
 - Recorded human handoff: routine guidance delivery or technician involvement.
 
 ### Out of scope
-- Full visit scheduling, map interface, purchases and automatic farmer messaging.
+- Visit decision and scheduling, visit findings entry/save, downstream P2/P3
+  referrals, map interface, purchases and automatic farmer messaging in this first slice.
+  The approved BPMN retains these conditional visit and referral responsibilities for
+  later work; the app does not implement them.
 - New datasets, production authentication and claims of agronomic validation.
 - These exclusions bound this first slice; neighbouring context and later workflows
   remain in the wider prototype plan.
@@ -71,7 +74,8 @@ Staff requests assessment of a saved report.
 - Unknown prior history remains unknown, rather than evidence of no earlier issue.
 - Missing weather permits an assessment without weather, explicitly marked unavailable.
   Technical recommendations and the interpretation contract are in the routing proposal;
-  their runtime feasibility remains to be measured.
+  two contained trials completed with 0/12 accepted outputs. The next constrained-output
+  experiment is proposed, not measured.
 
 ## Errors / failure cases
 
@@ -81,7 +85,7 @@ route or handoff; the saved intake report remains retrievable.
 
 ## Acceptance criteria
 
-Sources: selected [comparison pair](../../models/comparison/README.md),
+Sources: selected [comparison pair](../../models/approved/README.md),
 [routing worksheet](../reference/DMN-RULE-WORKSHEET.md) and owner selection of a real
 model for the first slice.
 

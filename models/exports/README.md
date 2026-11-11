@@ -1,8 +1,0 @@
-# P1 overview previews
-
-These stable PNG and SVG preview filenames are derived from the
-selected editable [AS-IS](<../comparison/p1_asis (2).bpmn>) and
-[TO-BE](<../comparison/p1_tobe (2).bpmn>) comparison pair. Open those BPMN files
-for subprocess details; the earlier top-level models are not the selected sources.
-See [comparison navigation](../comparison/README.md) for authority and limitations.
-Modeler import and physical print review remain open.

@@ -1,7 +1,8 @@
 # Reference sources
 
-The main paper governs business scope. Assignment requirements govern deliverables;
-working models and proposed refinements must be reconciled with that scope.
+The owner-approved BPMN pair governs the prototype workflow. The published case and
+working group DOCX retain authority over their respective facts and group baseline;
+assignment requirements govern deliverables. Reconcile remaining differences.
 
 ## Use each source for its scope
 
@@ -10,7 +11,7 @@ working models and proposed refinements must be reconciled with that scope.
 | Published Cooxupé case, Ribeiro et al. (2025) | Organisation, reported problems, adopted improvements and outcomes; does not establish our proposed solution. |
 | Main working group DOCX below | Group solution baseline, P1 scope and authoritative C/F matrix. |
 | Assignment and grading material | Deliverables and assessment expectations. |
-| [Selected prototype comparison pair](../../models/comparison/README.md) and owner-selected UC/routing/design direction | Prototype scope and process; differences from the group baseline require explicit alignment, not silent replacement. |
+| [Owner-approved prototype comparison pair](../../models/approved/README.md) | Prototype workflow; this approval does not establish agronomic thresholds or group policy. Differences from the group baseline require alignment. |
 | Other working files | Supporting drafts; reconcile conflicts instead of choosing by modification date. |
 
 The published chapter is [Toward the Full Application of BPM](https://doi.org/10.1007/978-3-031-80793-0_12),
@@ -102,11 +103,9 @@ Selected prototype routing direction and next specification step:
 [Farm history and technical case data-model draft](../design/DATA-MODEL.md) traces
 source-backed context, owner-selected direction and unresolved design proposals.
 
-[New P1 AS-IS / TO-BE comparison proposals](../../models/comparison/README.md)
-include editable BPMN and previews; source assumptions and group alignment are explicit.
-
-[P1 comparison edit plan](../design/BPMN-EDIT-PLAN.md) records the intended detail and
-review checks; evidence for earlier diagrams must not be attributed to the selected pair.
+[Approved P1 AS-IS / TO-BE comparison](../../models/approved/README.md)
+links the canonical BPMNs. Source assumptions
+and outstanding group alignment are explicit.
 
 [Event weather context](EVENT-WEATHER.md) owns selected environmental variables,
 source evidence, snapshot assumptions and the distinction from connected history.

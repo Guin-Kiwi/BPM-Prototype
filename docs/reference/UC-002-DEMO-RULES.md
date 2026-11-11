@@ -38,6 +38,10 @@ involvement means a person links an appropriate existing case or creates one, wi
 reason. No case is created for routine communication. A visit is a human decision;
 handling and delivery are not case closure or resolution. Severe actions still require
 human approval; no automatic contact, product order or severe action follows routing.
+The approved BPMN also models optional routine P2 and conditional technician P2/P3
+referral messages. Those downstream integrations and the visit decision, planning,
+findings entry/save and review loop are outside this first demonstration slice and
+unimplemented; a referral is not an order or automatic pickup cancellation.
 
 ## Assessment and guidance mapping
 
@@ -50,15 +54,11 @@ one per pinned class in order, each in [0, 1] and sum within 0.000001 of 1. Scor
 are uncalibrated model outputs, not probabilities of disease. Record the full vector;
 a tie for highest score is not a unique leading class.
 
-Recommend the already [metadata-reviewed pinned Qwen3-0.6B candidate](../../experiments/local-interpreter/README.md)
-for the first offline interpretation feasibility check: it avoids API credentials and
-charges and uses the existing CPU host. This is a recommendation, not a measured claim
-of adequate JSON compliance, model quality or memory fit. Review/lock dependencies,
-verify artifacts and tied-weight behavior, and measure a bounded local run before app
-integration. Use an independent RAM/time limit appropriate to the interpreter; do not
-assume the classifier's 2 GiB cap fits it. If it fails the structured-output checks,
-review a larger local instruction model rather than hiding failures or substituting
-hand-authored outputs. No technical provider choice is delegated to Ayla.
+The pinned Qwen3-0.6B candidate completed two contained offline trials with
+[0/12 accepted responses](../../experiments/local-interpreter/RESULTS.md). Artifact,
+dependency and runtime checks and measured resource use are recorded there; the
+candidate/prompt combination is not ready for integration. One constrained-output
+experiment is proposed, not run. Do not substitute hand-authored outputs.
 The request contains only the candidate names and scores, farmer note if provided and
 optional selected event-weather snapshot. It excludes identity, report ID, extent,
 history, earlier findings and source/evaluation labels. Do not infer visible signs from
@@ -146,8 +146,8 @@ conformance are not evidence of diagnostic correctness or field suitability.
 The actual [first-run evidence](../../experiments/local-classifier/evidence/first-run.json)
 shows, under center-crop preprocessing, original sample-02 leading Rust at 43.53%,
 sample-03 leading Rust at 90.77%, and a blank leading Rust at 78.11%. Those are
-classifier observations only: no interpreter or routing run has been performed and no
-route or text-model result is claimed. Sample-02's leading class changed under tested
+classifier observations only. Two interpreter trials produced no accepted responses;
+no routing run or successful interpretation is claimed. Sample-02's leading class changed under tested
 perturbations; none of these examples establishes independent diagnostic truth.
 
 Before implementation, reconcile this scope with the worksheet and group sources,

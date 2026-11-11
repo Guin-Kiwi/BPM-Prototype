@@ -2,8 +2,8 @@
 
 This records the owner's selected prototype direction and a proposed operational
 rule for discussion and personal DMN editing. It is not approved group policy or an
-implementation specification. The selected [comparison pair](../../models/comparison/README.md)
-expresses the prototype process; reconciliation with the group DOCX and draft DMN
+implementation specification. The selected [comparison pair](../../models/approved/README.md)
+governs the prototype workflow; reconciliation with the group DOCX and draft DMN
 remains pending. Model assessments are inferences, not diagnoses.
 
 ## Sources and limits
@@ -42,9 +42,14 @@ remains pending. Model assessments are inferences, not diagnoses.
    support is not technician approval of an individual report. AI and DMN do not
    message farmers directly, and no product order is automatic.
 6. Full available farm and nearby history remains accessible for technician judgment.
-   A needed visit is planned with case status recorded, waits for the appointment and
-   returns to review after the visit. Official guidance and recording are captured in the
-   system; incidental on-site conversation is not a separate modeled task. Review, advice
+   Following clarification, an inclusive split always selects the visit decision and
+   also selects preliminary guidance when available; selected paths join before
+   recording findings and case state. A technician may then send a conditional P2/P3
+   referral; routine staff may optionally refer a product need to P2. These message-throw events are not product
+   orders or automatic pickup cancellation; P3 notices require authorisation and group
+   alignment. A needed visit is planned with case status recorded, waits for the
+   appointment, has findings entered and saved to case history, and returns to review.
+   Official guidance and recording are captured in the system; incidental on-site conversation is not a separate modeled task. Review, advice
    and recording after the visit are intentional and may occur later, for example if the
    farmer was unavailable. Handling recorded does not mean the case is closed.
 
@@ -97,12 +102,12 @@ severe actions; technicians judge follow-up and case relevance.
   and how severe approval and receipt, delivery and resolution are recorded.
 - Reconcile the selected pair with the group paper and earlier BPMN/DMN, including
   their repeat gateway, action paths, input modes, offline assumption and severe handovers;
-  see the [comparison trace](../../models/comparison/NOTES.md#existing-to-be-comparison-and-alignment).
+  see the [comparison trace](../../models/approved/NOTES.md#existing-to-be-comparison-and-alignment).
 - Use the researched illustrative guidance entries and their attribution, applicability
   and reuse notes; determine how the prototype presents its limits without implying
   technician validation or treatment approval.
 
-Next agent: prepare a minimal routing UC in SPECIFY, separate from
+Continue the draft [UC-002](../specs/UC-002-ASSESSMENT-HANDOFF.md), separate from
 [UC-001 intake/history](../specs/UC-001-REPORT-INTAKE.md). Trace the owner direction,
 proposed rule and unresolved choices to acceptance criteria. Include an input-boundary
 check: image model receives only the photo; any second model receives candidate

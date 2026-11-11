@@ -23,7 +23,7 @@ advice; it does not assert a new Cooxupé department or make agronomic judgments
 
 | Authority or status | What it establishes here |
 | --- | --- |
-| [Source map](../reference/README.md) and [group DOCX](<../../../Sharing is caring/The Case of the Brazilian Coffee Cooperative Cooxup├й.docx>) | The group paper owns the solution baseline and C/F matrix. Its P1 proposal uses optional GPS, photo/voice/text and a three-action DMN; it adds no department or C/F case type. The published case grounds organisation and AS-IS, not the proposed solution; its full chapter was unavailable and was not read for this draft. |
+| [Source map](../reference/README.md) and [group DOCX](<../../../Sharing is caring/The Case of the Brazilian Coffee Cooperative Cooxup├й.docx>) | The group paper owns the solution baseline and C/F matrix. Its P1 proposal uses optional GPS, photo/voice/text and a three-action DMN; it adds no department or C/F case type. The published case grounds organisation and reported improvements, not the proposed solution; the full chapter was subsequently read as recorded in the source map. |
 | Owner selections, including focused views and neighbouring context: [UC-001](../specs/UC-001-REPORT-INTAKE.md), [routing worksheet](../reference/DMN-RULE-WORKSHEET.md) | Focused farmer and technician views with neighbouring context; one proposed typed history-event table; camera-first intake with required location context and estimate; responsibility routing; independent reports and technician involvement for cases. These refinements differ from the group draft and need group alignment. |
 | Agent proposals below | Field-scoped cases, link cardinalities, event type validation details, structure of relations, spatial representation and handoff. These are design recommendations, not owner or group decisions. The older [prototype concept](<../../../planning/PROTOTYPE-CONCEPT.md>) is supporting context, not authority over newer choices. |
 
@@ -55,7 +55,7 @@ The single typed event table is a proposal, not an implemented schema.
 | Case membership | `membership_id`, case, report, technician, time and reason. Recommended: a case has one or more reports; a report has zero or more memberships over time. Membership is a deliberate technician judgment, not a routing or proximity result. Whether simultaneous membership in multiple cases is allowed is open. |
 | Geographic context | Same-farm and neighbouring farm/field/report/case candidates are derived from available geometry and other source records as needed. Persisting every adjacency or proximity link is not required; candidates do not establish relevance or membership. Unmatched records remain visible. |
 | Confirmed/rejected relation | `relation_id`, two reports or cases, relation kind, confirmed/rejected judgment, technician, reason and time. These durable human judgments exist independently of automatic matches; a rejected relation does not make records generally irrelevant. |
-| Farm-history event (proposed typed table) | `event_id`, type, farm, optional field/report/case links, occurred and recorded times, actor/source and type-specific details. One farm has zero or more events. Types have distinct meanings and validation: **finding** requires confirmation provenance for a confirmed finding; unknown provenance remains uncertain, and AI inference alone is not confirmation. **Guidance** records established or technician-prepared advice; **treatment** records an action and source; **communication** records personal relay and delivery status; **outcome** records what is known about resolution. Delivery does not establish resolution. Link to original evidence and shared facts instead of copying them. Purchase-history integration is outside scope. |
+| Farm-history event (proposed typed table) | `event_id`, type, farm, optional field/report/case links, occurred and recorded times, actor/source and type-specific details. One farm has zero or more events. Types have distinct meanings and validation: **finding** requires confirmation provenance for a confirmed finding; unknown provenance remains uncertain, and AI inference alone is not confirmation. **Guidance** records established or technician-prepared advice; **treatment** records an action and source; **communication** records personal relay and delivery status; **outcome** records what is known about resolution. Delivery does not establish resolution. Link to original evidence and shared facts instead of copying them. Visit findings are entered by a person and saved to case history in the approved workflow; their provenance and current case state must be retained. Purchase-history integration is outside scope. |
 | Source asset / evaluation metadata | `asset_id`, dataset/version, original sample and parent IDs, attribution, licence status, transformations, labels and reuse links; synthetic scenario source and provenance are separately identified. Restricted labels and evaluation metadata are separated from operational report content and inference inputs. |
 
 ```mermaid
@@ -77,6 +77,11 @@ erDiagram
     TECHNICAL_CASE o|--o{ FARM_HISTORY_EVENT : relates
     SOURCE_ASSET o|--o{ PHOTO_EVIDENCE : provenance
 ```
+
+Conditional P2/P3 referrals, appointment/visit work and the visit findings save are
+modeled process responsibilities, not implemented entities or integrations here. Their
+message, recipient, authorisation and persistence design remains open; referrals do not
+create orders or cancel pickup automatically.
 
 Diagram optionality permits legacy records; new intake has stricter requirements.
 Derived context and durable human relation judgments can connect different kinds of

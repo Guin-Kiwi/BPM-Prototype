@@ -199,19 +199,15 @@ real service-time reduction, outcome improvement or diagnostic value is priced h
 Recommend the local split path as the first candidate for implementation feasibility:
 the already pinned image classifier followed by the official Qwen3-0.6B local text
 candidate reviewed in [local-interpreter metadata notes](../local-interpreter/README.md).
-The classifier has an actual contained feasibility run; the interpreter candidate has
-only metadata review. This path keeps farmer data local and provides a concrete input
+The classifier has an actual contained feasibility run; two contained interpreter
+trials completed with 0/12 accepted outputs. This path keeps farmer data local and provides a concrete input
 boundary for image-only scoring followed by a text-only structured interpretation.
 It is a technical recommendation, not a provider selection or suitability finding.
 
-Before any interpreter artifact is acquired or run, verify its exact dependencies and
-advisories, reviewed standard loader with remote code disabled, actual artifact hashes,
-CPU/BF16 compatibility and memory fit under inspected offline limits. The Qwen candidate
-weight file is about 1.40 GiB against the classifier experiment's 2 GiB memory cap;
-available headroom and CPU performance remain unmeasured for Qwen. No weights, packages,
-or new LLM runs are part of this research. If the local candidate fails those checks or
-the structured contract, compare a hosted alternative using its own privacy, cost and
-latency evidence. Provider choice does not block this specification and evaluation plan.
+The [interpreter results](../local-interpreter/RESULTS.md) record actual artifact,
+dependency, containment, CPU and memory checks and both output-contract failures. One
+constrained-output follow-up is proposed but has not been implemented or measured;
+its success must not be assumed. Provider choice remains open.
 
 ## Existing evidence and planned completion
 
@@ -260,15 +256,11 @@ unsupported-input limits. It did not test an interpretation model, application r
 human handoff, weather integration or provider costs. Do not cite it as E2E success or
 diagnostic performance.
 
-No Qwen inference output exists: its reviewed candidate is metadata-only. The next
-actual interpreter result must be recorded as observed output or explicit error under
-the pinned model, prompt/template and runtime; do not create a target interpretation
-for it to match. Until then, no paired-history route or end-to-end result is measured.
-
-The specification can proceed with the local path recommendation; application work and
-route evaluation await the remaining real-report rule/guidance definitions and an
-implemented journey. Qwen dependency/security/CPU/memory checks are prerequisites to a
-local interpreter run, not evidence already obtained or a reason to fabricate outputs.
+The two Qwen trials produced actual responses but no accepted output (0/12); see the
+[interpreter results](../local-interpreter/RESULTS.md) for errors and limitations. No
+paired-history route or end-to-end result is measured. Application work and route
+evaluation await a usable interpretation path, remaining real-report rule/guidance
+definitions and an implemented journey. Record future results or errors as observed.
 At execution, append a dated report and link evidence for:
 
 - run/environment and scenario IDs, selected/excluded inputs and known dependencies;
@@ -282,7 +274,7 @@ At execution, append a dated report and link evidence for:
 - deviations, limitations, unresolved decisions and the scope of any conclusion.
 
 No application routing, interpretation or end-to-end success is claimed by this plan.
-The local classifier scores and resource/timing data are the only actual model outputs
-currently available; interpretation and route measurements remain future evidence.
+Classifier scores and the failed interpreter trial outputs are actual model evidence;
+accepted interpretation, route and end-to-end measurements remain outstanding.
 Keep source-backed agronomy, prototype assumptions and measured results separate in
 those reports.
