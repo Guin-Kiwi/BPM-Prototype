@@ -226,7 +226,7 @@ or transformation currently exists. This is compatible with a future image-only
 adapter receiving the original photo, but does not implement one.
 
 There is no application assessment, LLM interpretation, case, routing/handoff
-behavior, or assessment/handoff UI in `src/app` today. The existing farmer intake and
+behavior, or assessment/handoff UI in `src/app`. The existing farmer intake and
 report-detail pages are present. No manual or visual browser check was performed as
 part of this baseline.
 

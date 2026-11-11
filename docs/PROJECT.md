@@ -9,7 +9,7 @@ only the photo; a proposed second model combines its scores with the farmer note
 optional [event weather](reference/EVENT-WEATHER.md). Code/DMN uses history separately.
 The [routing worksheet](reference/DMN-RULE-WORKSHEET.md#assessment-and-routing-boundary)
 owns this boundary.
-Ayla leads implementation. This is a prototype, not a deployed agricultural service.
+This is a local coursework prototype, not a deployed agricultural service.
 
 ## Scope and current capability
 

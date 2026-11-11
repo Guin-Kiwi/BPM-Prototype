@@ -78,8 +78,8 @@ a rebuild can have a different ID.
 
 ## Run deliberately
 
-Docker access and internet acquisition require execution access outside some agent
-sandboxes. A successful host terminal check does not establish that agent access works.
+Docker access and internet acquisition require runtime permissions; verify both
+before starting acquisition or container execution.
 No Docker permissions need to change when reviewed execution already provides access.
 
 Use `id -u` / `id -g` for `COFFEE_RUN_UID` / `COFFEE_RUN_GID`, and the inspected full

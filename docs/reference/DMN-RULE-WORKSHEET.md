@@ -1,6 +1,6 @@
 # P1 report routing worksheet
 
-This records the owner's selected prototype direction and a proposed operational
+This records the selected prototype direction and a proposed operational
 rule for discussion and personal DMN editing. It is not approved group policy or an
 implementation specification. The selected [comparison pair](../../models/approved/README.md)
 governs the prototype workflow; reconciliation with the group DOCX and draft DMN
@@ -73,7 +73,7 @@ that an assessment or route is correct.
 
 ## Bounded demonstration routing
 
-The owner requested actual image and interpretation outputs plus synthetic report
+The demonstration uses actual image and interpretation outputs plus synthetic report
 history, with no hand-entered desired route, risk or eligibility. The
 [versioned demonstration proposal](UC-002-DEMO-RULES.md) owns the exact rule order,
 model contract, history assumptions and entry mapping. Its communications route means
@@ -94,7 +94,7 @@ severe actions; technicians judge follow-up and case relevance.
 ## Open definitions and minimal next SPECIFY task
 
 - For the wider concept, establish agronomic risk criteria through appropriate expertise;
-  do not make the coursework owner supply them. The bounded demo relays observation
+  the bounded demo instead relays observation
   messages and tests its explicit software assumptions instead of claiming clinical triage.
 - Define repeat and unresolved triggers, their time window, farm/field scope,
   missing history, and when a later report links to an existing case.
@@ -108,7 +108,7 @@ severe actions; technicians judge follow-up and case relevance.
   technician validation or treatment approval.
 
 Continue the draft [UC-002](../specs/UC-002-ASSESSMENT-HANDOFF.md), separate from
-[UC-001 intake/history](../specs/UC-001-REPORT-INTAKE.md). Trace the owner direction,
+[UC-001 intake/history](../specs/UC-001-REPORT-INTAKE.md). Trace the selected requirements,
 proposed rule and unresolved choices to acceptance criteria. Include an input-boundary
 check: image model receives only the photo; any second model receives candidate
 scores, farmer note and optional versioned weather snapshot. Farm/nearby history and

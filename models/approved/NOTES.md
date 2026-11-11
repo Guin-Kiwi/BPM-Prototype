@@ -1,12 +1,10 @@
 # P1 comparison trace
 
-The [owner-approved pair](README.md) governs the prototype workflow; the working
+The [approved pair](README.md) governs the prototype workflow; the working
 [group DOCX](<../../../Sharing is caring/The Case of the Brazilian Coffee Cooperative Cooxup├й.docx>)
 remains the group solution baseline. The AS-IS is reconstructed from that paper and
 group assumptions, including phone assessment and the visit decision; it is not a
-verified account of actual Cooxupé practice. The published chapter was read in full
-on 10 November 2026 from the owner-supplied local PDF (printed pp. 163–172; PDF
-pp. 167–176). The chapter's Table 1 reports visit scheduling and excessive monitoring
+verified account of actual Cooxupé practice. The published chapter spans printed pp. 163–172 (PDF pp. 167–176). The chapter's Table 1 reports visit scheduling and excessive monitoring
 meetings as improvement opportunities, then proactive attendance scheduling based
 on customer segmentation, process intelligence and standardized managerial meetings
 as adopted solutions. It does not document the diagnosis workflow represented in the
@@ -61,7 +59,7 @@ not an asserted department; a technical case is not a new C/F business case type
 ## Review still needed
 
 Walk the edited models and subprocesses in a BPMN modeller, check notation and
-print legibility, and reconcile the table above with Sarah and Ayla. Clarify the
+print legibility, and reconcile the table above with the group paper. Clarify the
 assignment's event-type requirement rather than adding artificial process steps.
 Quantified cost/benefit and process-policy evidence are still needed. Earlier
 validation and generation evidence applies to earlier artifacts, not automatically

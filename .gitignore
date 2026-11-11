@@ -57,3 +57,6 @@ coverage.xml
 # Local datasets and experiment output; track curated evidence explicitly elsewhere.
 /data/
 /runs/
+
+# Personal editor workspace files belong outside the repository.
+*.code-workspace

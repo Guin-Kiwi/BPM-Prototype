@@ -83,9 +83,6 @@ was 0, with no OOM kill; the launcher removed its container. No application data
 repository, home, credentials, Docker socket or source-label metadata was mounted.
 These checks reduce exposure; they do not prove complete kernel/runtime isolation.
 
-Initial commands from the restricted agent sandbox could not reach Docker or resolve
-package hosts. Host terminal checks and subsequent reviewed execution succeeded.
-No Docker permissions or host configuration were changed to obtain access.
 
 ## Actual performance
 

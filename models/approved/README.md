@@ -1,12 +1,8 @@
 # Approved P1 process models
 
-Ayla identified `AS-IS-BPMN.bpmn` and `TO-BE-BPMN.bpmn` in the surrounding
-project folder as the approved pair on 11 November 2026. These files are the workflow authority for prototype alignment. Their approved
-process structure and layout are preserved; embedded source links and status wording
-use the current repository locations and approval state.
-The published case and working paper retain their respective source/business scopes.
-Approval selects the process models; it does not validate agronomic thresholds,
-prove model accuracy or establish application completion. Agronomic and implementation caveats remain applicable.
+These BPMNs define the prototype workflow. The published case and group paper retain
+their respective source and business scopes. Workflow approval does not establish
+agronomic validity or implementation completion.
 
 | Editable model | Current SHA-256 |
 | --- | --- |

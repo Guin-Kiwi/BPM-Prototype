@@ -86,8 +86,8 @@ route or handoff; the saved intake report remains retrievable.
 ## Acceptance criteria
 
 Sources: selected [comparison pair](../../models/approved/README.md),
-[routing worksheet](../reference/DMN-RULE-WORKSHEET.md) and owner selection of a real
-model for the first slice.
+[routing worksheet](../reference/DMN-RULE-WORKSHEET.md) and the requirement for real
+model inference.
 
 1. Image classification receives only the photo. Any second model receives candidate
    scores, farmer note and optional saved weather snapshot. Connected history,
@@ -135,7 +135,7 @@ suitability. No application assessment, routing or handoff journey is implemente
 ## Open questions / assumptions
 
 - Agronomic source support, project-authored message wording, routing assumptions and
-  measured results have separate authorities. Ayla is not asked to validate agronomy.
+  measured results have separate authorities.
 - Local image preprocessing, local text candidate and exact interpretation schema are
   technical recommendations; interpreter feasibility and end-to-end results are pending.
 - Explicit unresolved-issue links, history availability and human case linking are
@@ -150,5 +150,5 @@ suitability. No application assessment, routing or handoff journey is implemente
 
 Existing boundaries: domain reports, application intake/repository, SQLite and local
 web adapters. Follow DESIGN and TDD after the slice's open behavior is resolved;
-the owner has requested actual model-derived assessment and synthetic history, not
-route profiles. This research/proposal work does not claim an implemented journey.
+use actual model-derived assessment and synthetic history, not route profiles.
+The connected journey remains unimplemented.

@@ -28,7 +28,7 @@ for later technician work, without treating a report as a confirmed finding or c
 ### Out of scope
 
 - Implementing authentication, offline capture/sync or voice transcription. The target
-  assumes a logged-in farmer; transcription is a future option, not available today.
+  assumes a logged-in farmer; transcription is a future option, not implemented.
 - Technician workflow, case creation, routing, relevance judgments, AI diagnosis,
   treatment guidance, messages and orders. A report becomes a case only through
   technician involvement; intake itself creates neither a case nor a finding.
@@ -36,7 +36,7 @@ for later technician work, without treating a report as a confirmed finding or c
 
 ## Actors
 
-Primary: logged-in farmer recording an observation; Ayla demonstrating synthetic reports.
+Primary: farmer recording an observation; presenter demonstrating synthetic reports.
 Secondary: technician later involved with reports; evaluator preparing attributable
 samples and synthetic history.
 
@@ -135,10 +135,10 @@ A farmer opens report entry to record an observation.
 
 ## Acceptance criteria
 
-Sources: the owner's current direction governs the revised farmer journey; the
+Sources: the intake requirements below govern the farmer journey; the
 [source map](../reference/README.md) identifies the paper as business-scope authority
 and the assignment as deliverables authority. Proposed demo defaults and unresolved
-choices below are not owner-approved policy. The owner has accepted the photo-first
+choices below are not approved policy. The selected intake uses the photo-first
 framing and requires an approximate affected-plant count or percentage. The currently
 working demo and its evidence are described in [TASKS](../TASKS.md).
 
@@ -228,14 +228,12 @@ scoring metadata out of diagnosis inputs.
 
 Existing automated and live HTTP evidence and manual review limits are recorded in
 [TASKS](../TASKS.md); see the current [intake implementation](../../src/app/application/intake.py)
-and [integration tests](../../tests/integration/test_intake.py). Earlier specification
-and design versions remain in git history (`git log -- docs/specs/UC-001-REPORT-INTAKE.md`).
-These include the bounded revised intake implementation and automated checks described
-below. Full target acceptance and a visual/manual journey remain unverified.
+and [integration tests](../../tests/integration/test_intake.py). Implementation and
+automated check evidence are recorded below. Full target acceptance and a visual/manual journey remain unverified.
 
 ## Open questions / assumptions
 
-- The owner selected one primary farmer view and one technician view focused on the
+- The prototype uses one primary farmer view and one technician view focused on the
   primary farm, with neighbouring farm, field, report and case context. Exact synthetic
   counts and generation remain undecided. The demo uses the fixed simulated farm-1
   identity and preserves both farms and their original history associations. Real
@@ -336,7 +334,7 @@ as descending deterministic ties. Show date-only precision and unavailable value
 explicitly. Display legacy `finding` as a legacy finding with confirmation provenance
 unknown, never as a newly confirmed finding. Indicate nearby context/grouping is
 unavailable when no supported geometry/rules exist; do not imply no nearby reports.
-A report-only history is the smallest useful first slice. The owner-chosen typed event
+A report-only history is the smallest useful first slice. The proposed typed event
 model is the direction for a later event-producing slice: no new event table is needed
 now, and cases or copied report events must not be invented to populate it.
 

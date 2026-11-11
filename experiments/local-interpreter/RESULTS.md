@@ -99,8 +99,8 @@ proposed experiment assesses constrained generation before considering a larger 
 
 ## Proposed next experiment — constrained decisions, not another model
 
-**Assessment only; not implemented or measured.** Terra/high inspected the locked
-Transformers 5.22.2 wheel: `generation/utils.py` exposes `prefix_allowed_tokens_fn`
+**Assessment only; not implemented or measured.** The locked
+Transformers 5.22.2 wheel was inspected: `generation/utils.py` exposes `prefix_allowed_tokens_fn`
 and installs `PrefixConstrainedLogitsProcessor`; `generation/logits_process.py`
 masks disallowed tokens and rejects an empty continuation. The existing greedy
 runtime can therefore enforce a finite JSON token trie without adding dependencies.
@@ -147,20 +147,8 @@ injection resistance or agronomic validity. Its result determines whether this s
 model adds useful note interpretation beyond code; a failure closes this approach
 without further prompt tuning in this experiment.
 
-Luna/high independently reviewed this proposal: literal text references need no
-agronomic certification; matched inputs, field ownership and frozen tuple/baseline
-scoring were clarified. Documentation-only checks passed lifecycle validation, generated
-views, 29 local link targets and whitespace checks. Existing passing software checks
-remain applicable; no code, model artifacts, prompts or runtime settings changed.
 
 ## DEVELOP review, checks and VALIDATE scope
-
-Assignments: **Terra/high** implemented the protocol/runner and reviewed the affected
-implementation plus both whole test files after green. **Luna/high** implemented the
-artifact/containment gates and independently validated the delivered runtime evidence.
-Root reviewed/integrated commits, checked official artifacts/dependencies, built and ran
-the containers, and preserved results. Agent agreement concerns software/evidence review,
-not independent confirmation of any agricultural prediction.
 
 TDD red/green evidence is in the separate test and implementation commits. A further
 regression reproduced Docker's empty `Mode` on structured mounts; the fix requires the
@@ -175,8 +163,7 @@ Post-green review found no additional purposeful refactor. Protocol construction
 validation, artifact integrity, containment, supervision and generation have distinct
 responsibilities. The corresponding classifier guards intentionally retain separate
 resource/artifact contracts; a shared abstraction would couple two security boundaries.
-Both complete test files use cohesive fixtures and parameterised failure cases. Root
-review strengthened two existing mutations: size tampering now leaves the expected
+Both complete test files use cohesive fixtures and parameterised failure cases. Two existing test mutations were strengthened: size tampering now leaves the expected
 size unchanged, and hash tampering preserves byte length. Exact error matching verifies
 that each reaches its intended gate instead of accidentally failing elsewhere. No
 production implementation change or new live model run was needed for this test fix.
@@ -184,7 +171,7 @@ The response-cap limitation and generation-vs-contract status distinction are di
 above. Larger batches would need an explicit case-count policy beyond the current byte
 and wall-time bounds; this six-case experiment does not require that expansion.
 
-Luna/high independently checked both trials' actual artifact hashes/provenance,
+Independent evidence review checked both trials' actual artifact hashes/provenance,
 request vectors and field boundaries, prompt/request hashes, exact 39-package inventory,
 effective controls, exit states, raw outputs and measured statistics without rerunning
 valid tests or inference. Disposition: operational/integrity/containment checks pass

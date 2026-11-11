@@ -23,9 +23,9 @@ advice; it does not assert a new Cooxupé department or make agronomic judgments
 
 | Authority or status | What it establishes here |
 | --- | --- |
-| [Source map](../reference/README.md) and [group DOCX](<../../../Sharing is caring/The Case of the Brazilian Coffee Cooperative Cooxup├й.docx>) | The group paper owns the solution baseline and C/F matrix. Its P1 proposal uses optional GPS, photo/voice/text and a three-action DMN; it adds no department or C/F case type. The published case grounds organisation and reported improvements, not the proposed solution; the full chapter was subsequently read as recorded in the source map. |
-| Owner selections, including focused views and neighbouring context: [UC-001](../specs/UC-001-REPORT-INTAKE.md), [routing worksheet](../reference/DMN-RULE-WORKSHEET.md) | Focused farmer and technician views with neighbouring context; one proposed typed history-event table; camera-first intake with required location context and estimate; responsibility routing; independent reports and technician involvement for cases. These refinements differ from the group draft and need group alignment. |
-| Agent proposals below | Field-scoped cases, link cardinalities, event type validation details, structure of relations, spatial representation and handoff. These are design recommendations, not owner or group decisions. The older [prototype concept](<../../../planning/PROTOTYPE-CONCEPT.md>) is supporting context, not authority over newer choices. |
+| [Source map](../reference/README.md) and [group DOCX](<../../../Sharing is caring/The Case of the Brazilian Coffee Cooperative Cooxup├й.docx>) | The group paper owns the solution baseline and C/F matrix. Its P1 proposal uses optional GPS, photo/voice/text and a three-action DMN; it adds no department or C/F case type. The published case grounds organisation and reported improvements, not the proposed solution; chapter evidence is recorded in the source map. |
+| Prototype requirements, including focused views and neighbouring context: [UC-001](../specs/UC-001-REPORT-INTAKE.md), [routing worksheet](../reference/DMN-RULE-WORKSHEET.md) | Focused farmer and technician views with neighbouring context; one proposed typed history-event table; camera-first intake with required location context and estimate; responsibility routing; independent reports and technician involvement for cases. These refinements differ from the group draft and need group alignment. |
+| Design recommendations below | Field-scoped cases, link cardinalities, event type validation details, structure of relations, spatial representation and handoff. These are design recommendations pending selection. The older [prototype concept](<../../../planning/PROTOTYPE-CONCEPT.md>) is supporting context, not authority over newer choices. |
 
 The group paper also describes agronomic references, weather-zone event records,
 optional pH and voice inputs. These are deferred integration/input extensions here,
@@ -169,7 +169,7 @@ Cases, events, nearby context and routing remain unimplemented. ADR-001 selects 
 SQLite, not the wider conceptual model. Preserve legacy evidence and missing values
 as described in UC-001 when planning future changes.
 
-**Bounded handoff:** owners resolve the intake and case choices above and align the
+**Next design step:** resolve the intake and case choices above and align the
 paper/models; specify routing separately as the worksheet requests. Later DESIGN can
 map the agreed routing and guidance slice to the existing intake
 boundary and propose an ADR only if a consequential cross-use-case decision is ready

@@ -24,6 +24,14 @@ A recommendation can include a reason and proceed under an explicit working
 assumption; unresolved choices block only the behavior they materially affect.
 Follow existing approval rules rather than creating new review gates here.
 
+## Keep repository content operational
+
+Keep current requirements, assumptions, design decisions, runnable instructions,
+source citations and measured evidence in the repository. Keep chat captures, agent
+assignment narration, session summaries and personal editor workspaces in the
+surrounding `bpm-project` folder. Do not copy those working files into the repository.
+Review evidence should state checks and findings rather than narrate agent activity.
+
 ## Write for action
 
 - State the outcome first. Add background only when it explains a requirement,

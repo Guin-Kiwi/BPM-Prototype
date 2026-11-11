@@ -1,7 +1,7 @@
 # UC-002 source and group-model alignment
 
 This is a trace between the published case, the working-group C/F matrix, the
-owner-approved P1 BPMN pair, the current application slice and the planned UC-002
+approved P1 BPMN pair, the current application slice and the planned UC-002
 evidence. It records alignment questions; it does not approve group policy or
 claim that the prototype implements the case's adopted improvements.
 
