@@ -5,7 +5,7 @@
   <bpmn:message id="A_m3_Message" name="Visit arrangements" />
   <bpmn:message id="A_m4_Message" name="Slot confirmation" />
   <bpmn:process id="P1_ASIS_Process" name="P1 AS-IS — Technical orientation" isExecutable="false">
-    <bpmn:documentation>Working comparison baseline, not verified Cooxupé practice. Phone diagnosis and the phone/visit choice are group assumptions; the agreed visit timer is an assumption. Sources and activity mapping: docs/reference/README.md and models/comparison/NOTES.md. Process-level monitoring spans requests. Cost analysis must include coordination, round-trip travel and on-site work; quantify technician effort for routine requests and context preparation using comparable measured scenarios. Benefits remain hypotheses.</bpmn:documentation>
+    <bpmn:documentation>Working comparison baseline, not verified Cooxupé practice. Phone diagnosis and the phone/visit choice are group assumptions; the agreed visit timer is an assumption. Sources and activity mapping: docs/reference/README.md and models/approved/NOTES.md. Process-level monitoring spans requests. Cost analysis must include coordination, round-trip travel and on-site work; quantify technician effort for routine requests and context preparation using comparable measured scenarios. Benefits remain hypotheses.</bpmn:documentation>
     <bpmn:laneSet id="P1_ASIS_LaneSet">
       <bpmn:lane id="A_Coord" name="Advisory coordination">
         <bpmn:flowNodeRef>A_Start</bpmn:flowNodeRef>
